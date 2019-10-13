@@ -15,9 +15,10 @@ public class Homepage
     
     public void displayHomepage()
     {
+        System.out.print('\u000C');
         Scanner sc = new Scanner(System.in);
         System.out.println("*****************************************************************************************");
-        System.out.println("Welcome to the Event Management System");
+        System.out.println("Welcome to the Event Management System - Homepage");
         System.out.println("*****************************************************************************************");
 
         System.out.println("Please select from the following options:");
@@ -37,7 +38,7 @@ public class Homepage
         }
         switch(choice)
         {
-            case 1:
+            case 1:   
                 displayCustomerRegistrationPage();
                 displayHomepage();
                 break;
@@ -62,7 +63,11 @@ public class Homepage
     
     public void displayCustomerRegistrationPage()
     {
+        System.out.print('\u000C');
         Scanner sc = new Scanner(System.in);
+        System.out.println("*****************************************************************************************");
+        System.out.println("Welcome to the Event Management System - Customer Registration");
+        System.out.println("*****************************************************************************************");
         System.out.println("Enter your First Name");
         String firstName=sc.nextLine();
         while(firstName.length()<3 || firstName.length()>25)
@@ -146,7 +151,11 @@ public class Homepage
     
     public void displayOwnerRegistrationPage()
     {
+        System.out.print('\u000C');
         Scanner sc = new Scanner(System.in);
+        System.out.println("*****************************************************************************************");
+        System.out.println("Welcome to the Event Management System - Owner Registration");
+        System.out.println("*****************************************************************************************");
         System.out.println("Enter your First Name");
         String firstName=sc.nextLine();
         while(firstName.length()<3 || firstName.length()>25)
@@ -215,7 +224,11 @@ public class Homepage
     
     public void displayUserLoginPage(int userType)
     {
+        System.out.print('\u000C');
         Scanner sc = new Scanner(System.in);
+        System.out.println("*****************************************************************************************");
+        System.out.println("Welcome to the Event Management System - User Login");
+        System.out.println("*****************************************************************************************");
         System.out.println("Enter your Email");
         String userEmail = sc.next();
         while(checkEmailFormat(userEmail))
@@ -229,6 +242,10 @@ public class Homepage
     
     public void displayAdminLoginPage()
     {
+        System.out.print('\u000C');
+        System.out.println("*****************************************************************************************");
+        System.out.println("Welcome to the Event Management System - Admin Login");
+        System.out.println("*****************************************************************************************");
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter admin name");
         String adminName = sc.next();
@@ -239,6 +256,10 @@ public class Homepage
     
     public void displaySearchPage()
     {
+        System.out.print('\u000C');
+        System.out.println("*****************************************************************************************");
+        System.out.println("Welcome to the Event Management System - Search Hall");
+        System.out.println("*****************************************************************************************");
         Scanner sc = new Scanner(System.in);
         System.out.println("Please enter a hall name to search:");
         System.out.println("Press 0 to go back");
@@ -248,6 +269,10 @@ public class Homepage
     
     public void displaySearchResult(ArrayList<Hall> halls)
     {
+        System.out.print('\u000C');
+        System.out.println("*****************************************************************************************");
+        System.out.println("Welcome to the Event Management System - Search Result");
+        System.out.println("*****************************************************************************************");
         if (halls.size() != 0)
         {
             for (int i = 0; i < halls.size(); i++)

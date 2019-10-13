@@ -16,10 +16,10 @@ public class OwnerInterface
     
     public void displayOwnerPage()
     {
-       Scanner sc = new Scanner(System.in);
-        //System.out.printf("%s\n",lineBreak);
+        System.out.print('\u000C');
+        Scanner sc = new Scanner(System.in);
         System.out.printf("%s\n",lineBreak);
-        System.out.println("Welcome to the Event Management System");
+        System.out.println("Welcome to the Event Management System - Hello, " + ownerController.getOwner().getLastName());
         System.out.printf("%s\n",lineBreak);
         System.out.println("Please select from the following options:");
         System.out.println("Press 1 to Add Hall");
@@ -38,21 +38,12 @@ public class OwnerInterface
         switch(choice)
         {
             case 1:
-                System.out.printf("%s\n",lineBreak);
-                System.out.println("Event Management System - Add a hall");
-                System.out.printf("%s\n",lineBreak);
                 displayAddHallPage();
                 break;
             case 2:
-                System.out.printf("%s\n",lineBreak);
-                System.out.println("Event Management System - Update a hall");
-                System.out.printf("%s\n",lineBreak);
                 displayUpdateHallPage();
                 break;
             case 3:
-                System.out.printf("%s\n",lineBreak);
-                System.out.println("Event Management System - Remove a hall");
-                System.out.printf("%s\n",lineBreak);
                 displayDeleteHallPage();
                 break;
             case 6:
@@ -63,6 +54,10 @@ public class OwnerInterface
     
     public void displayAddHallPage()
     {
+        System.out.print('\u000C');
+        System.out.printf("%s\n",lineBreak);
+        System.out.println("Event Management System - Add a hall");
+        System.out.printf("%s\n",lineBreak);
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter hall name:");
         String name = sc.nextLine();
@@ -184,6 +179,10 @@ public class OwnerInterface
     
     public void displayUpdateHallPage()
     {
+        System.out.print('\u000C');
+        System.out.printf("%s\n",lineBreak);
+        System.out.println("Event Management System - Update a hall");
+        System.out.printf("%s\n",lineBreak);
         Scanner sc = new Scanner(System.in);
         if (ownerController.getOwner().getHalls().size() == 0)
         {
@@ -231,6 +230,12 @@ public class OwnerInterface
     
     public void displayEditHallPage(int hallNum)
     {
+        System.out.print('\u000C');
+        System.out.printf("%s\n",lineBreak);
+        System.out.println("Event Management System - Edit " +  
+                            ownerController.getOwner().getHalls().get(hallNum-1).getName() + 
+                            " hall");
+        System.out.printf("%s\n",lineBreak);
         Scanner sc = new Scanner(System.in);
         System.out.println("Press 1 to change hall name");
         System.out.println("Press 2 to change hall address");
@@ -301,6 +306,10 @@ public class OwnerInterface
     
     public void displayDeleteHallPage()
     {
+        System.out.print('\u000C');
+        System.out.printf("%s\n",lineBreak);
+        System.out.println("Event Management System - Remove a hall");
+        System.out.printf("%s\n",lineBreak);
         Scanner sc = new Scanner(System.in);
         if (ownerController.getOwner().getHalls().size() == 0)
         {

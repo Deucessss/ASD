@@ -16,6 +16,7 @@ public class CustomerInterface
     
     public void displayCustomerPage()
     {
+        System.out.print('\u000C');
         Scanner sc = new Scanner(System.in);
         System.out.println("*****************************************************************************************");
         System.out.println("Welcome to the Event Management System");
