@@ -1,0 +1,22 @@
+#BlueJ class context
+comment0.target=HomeController
+comment1.params=
+comment1.target=HomeController()
+comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ HomeController\r\n
+comment2.params=firstName\ lastName\ email\ password\ contact\ address\ concession\ answer1\ answer2\ answer3
+comment2.target=void\ registerCustomer(java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String)
+comment3.params=email
+comment3.target=boolean\ checkCustomerEmail(java.lang.String)
+comment4.params=firstName\ lastName\ email\ password\ contact\ address
+comment4.target=void\ registerOwner(java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String)
+comment5.params=email
+comment5.target=boolean\ checkOwnerEmail(java.lang.String)
+comment6.params=userType\ email\ password
+comment6.target=void\ checkLoginInfo(int,\ java.lang.String,\ java.lang.String)
+comment7.params=adminName\ adminPwd
+comment7.target=void\ adminLogin(java.lang.String,\ java.lang.String)
+comment8.params=hallName
+comment8.target=void\ searchHall(java.lang.String)
+comment9.params=
+comment9.target=void\ exitSoftware()
+numComments=10

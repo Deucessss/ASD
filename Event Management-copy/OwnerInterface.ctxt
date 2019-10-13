@@ -1,0 +1,8 @@
+#BlueJ class context
+comment0.target=OwnerInterface
+comment1.params=
+comment1.target=OwnerInterface()
+comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ OwnerInterface\r\n
+comment2.params=
+comment2.target=void\ displayOwnerPage()
+numComments=3
