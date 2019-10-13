@@ -42,8 +42,7 @@ public class AdminInterface
         switch(choice)
         {
             case 5:
-                Homepage hp = new Homepage();
-                hp.displayHomepage();
+                adminController.logout();
                 break;
         }
     }

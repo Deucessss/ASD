@@ -104,7 +104,7 @@ public class HomeController
                         Accounts.getOwners().get(i).getPassword().equalsIgnoreCase(password))
                     {
                         loginSuccess = true;
-                        OwnerInterface oi = new OwnerInterface();
+                        OwnerInterface oi = new OwnerInterface(Accounts.getOwners().get(i));
                         oi.displayOwnerPage();
                     }
                 }

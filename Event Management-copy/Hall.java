@@ -26,7 +26,9 @@ public class Hall
     /**
      * Constructor for objects of class Hall
      */
-    public Hall(String name, String address, String contact, String description, boolean availability, float hallDiscount,boolean cateringService,boolean decorationService,boolean photographyService,float price,int hallCapacity)
+    public Hall(String name, String address, String contact, String description, boolean availability,
+                float hallDiscount,boolean cateringService,boolean decorationService,
+                boolean photographyService,float price, int hallCapacity)
     {
         // initialise instance variables
         this.name = name;

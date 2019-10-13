@@ -38,25 +38,25 @@ public class Homepage
         switch(choice)
         {
             case 1:
-            displayCustomerRegistrationPage();
-            displayHomepage();
-            break;
+                displayCustomerRegistrationPage();
+                displayHomepage();
+                break;
             case 2:
-            displayOwnerRegistrationPage();
-            displayHomepage();
-            break;
+                displayOwnerRegistrationPage();
+                displayHomepage();
+                break;
             case 3: case 4:
-            displayUserLoginPage(choice);
-            break;
-            // case 5:
-                // adminLogin();
-                // break;
-            // case 6:
-                // searchHall();
-                // break;
-            // case 7:
-                // exitSoftware();
-                // break;
+                displayUserLoginPage(choice);
+                break;
+            case 5:
+                displayAdminLoginPage();
+                break;
+            case 6:
+                displaySearchPage();
+                break;
+            case 7:
+                homeController.exitSoftware();
+                break;
         }
     }
     
@@ -200,7 +200,7 @@ public class Homepage
                                      contact, address);
     }
     
-    public static boolean checkEmailFormat(String email)
+    public boolean checkEmailFormat(String email)
     {
         if(email.matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$"))
         {

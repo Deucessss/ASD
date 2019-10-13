@@ -2,7 +2,7 @@
 comment0.target=Homepage
 comment1.params=
 comment1.target=Homepage()
-comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ Homepage\r\n
+comment1.text=\n\ Constructor\ for\ objects\ of\ class\ Homepage\n
 comment2.params=
 comment2.target=void\ displayHomepage()
 comment3.params=
