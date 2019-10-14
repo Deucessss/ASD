@@ -154,6 +154,11 @@ public class HomeController
         }
     }
     
+    public void viewAllHalls()
+    {
+        Accounts.viewHalls();
+    }
+    
     public void exitSoftware()
     {
         System.exit(0);

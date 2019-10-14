@@ -61,4 +61,28 @@ public class Accounts
         return searchResult;
     }
     
+    public static void viewHalls()
+    {
+        int count = 1;
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.printf("%-5s %-15s %-30s", "  ","Hall Name", "Hall Address");
+        System.out.println();
+        System.out.println("-----------------------------------------------------------------------------");
+        for (int i = 0; i < owners.size(); i++)
+        {
+            for (int j = 0; j< owners.get(i).getHalls().size(); j++)
+            {
+                String hallName = owners.get(i).getHalls().get(j).getName();
+                String hallAddress = owners.get(i).getHalls().get(j).getAddress();
+                
+
+                System.out.format("%-5s %-15s %-30s", count, hallName, hallAddress);
+                System.out.println();
+                count++;
+            }
+        }
+        System.out.println("-----------------------------------------------------------------------------");
+
+    }
+    
 }

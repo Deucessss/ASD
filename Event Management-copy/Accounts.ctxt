@@ -15,4 +15,6 @@ comment6.params=
 comment6.target=Admin\ getAdmin()
 comment7.params=hallName
 comment7.target=java.util.ArrayList\ searchHall(java.lang.String)
-numComments=8
+comment8.params=
+comment8.target=void\ viewHalls()
+numComments=9

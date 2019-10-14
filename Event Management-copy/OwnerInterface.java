@@ -87,15 +87,15 @@ public class OwnerInterface
             System.out.println("Description character limit is 250. Please re-enter");
             description = sc.nextLine();
         }
-        System.out.println("Enter hall availability:(yes/no)");
+        System.out.println("Enter hall availability:(y/n)");
         String Availability = sc.nextLine();
         boolean availability;
-        while(!(Availability.equalsIgnoreCase("yes") || Availability.equalsIgnoreCase("no")))
+        while(!(Availability.equalsIgnoreCase("y") || Availability.equalsIgnoreCase("n")))
         {
-         System.out.println("Enter the Photography Serice of the hall (yes/no):");
+         System.out.println("Enter the Photography Serice of the hall (y/n):");
          Availability = sc.nextLine();
         }
-        if(Availability.equalsIgnoreCase("yes") )
+        if(Availability.equalsIgnoreCase("y") )
         {
             availability = true;
         }
@@ -103,22 +103,15 @@ public class OwnerInterface
         {
             availability = false;
         }
-        System.out.println("Enter hall Discount:");
-        float hallDiscount = sc.nextFloat();
-        while(hallDiscount < 0 && hallDiscount > 100)
-        {
-         System.out.println("Enter hall Discount in between 1 and 100:");
-         hallDiscount = sc.nextFloat();
-        }
-        System.out.println("Enter the Photography Serice of the hall (yes/no):");
+        System.out.println("Enter the Photography Serice of the hall (y/n):");
         String photography = sc.nextLine();
         boolean photographyService;
-        while(!(photography.equalsIgnoreCase("yes") || photography.equalsIgnoreCase("no")))
+        while(!(photography.equalsIgnoreCase("y") || photography.equalsIgnoreCase("n")))
         {
-         System.out.println("Enter the Photography Serice of the hall (yes/no):");
+         System.out.println("Enter the Photography Serice of the hall (y/n):");
          photography = sc.nextLine();
         }
-        if(photography.equalsIgnoreCase("yes") )
+        if(photography.equalsIgnoreCase("y") )
         {
             photographyService = true;
         }
@@ -126,15 +119,15 @@ public class OwnerInterface
         {
             photographyService = false;
         }
-        System.out.println("Enter the Catering Serice of the hall (yes/no):");
+        System.out.println("Enter the Catering Serice of the hall (y/n):");
         String catering = sc.nextLine();
         boolean cateringService;
-        while(!(photography.equalsIgnoreCase("yes") || photography.equalsIgnoreCase("no")))
+        while(!(catering.equalsIgnoreCase("y") || catering.equalsIgnoreCase("n")))
         {
-         System.out.println("Enter the Photography Serice of the hall (yes/no):");
+         System.out.println("Enter the Catering Serice of the hall (y/n):");
          catering = sc.nextLine();
         }
-        if(catering.equalsIgnoreCase("yes") )
+        if(catering.equalsIgnoreCase("y") )
         {
             cateringService = true;
         }
@@ -143,15 +136,15 @@ public class OwnerInterface
             cateringService = false;
         }
         
-        System.out.println("Enter the Decoration Serice of the hall(yes/no):");
+        System.out.println("Enter the Decoration Serice of the hall(y/n):");
         String decoration = sc.nextLine();
         boolean decorationService;
-        while(!(decoration.equalsIgnoreCase("yes") || decoration.equalsIgnoreCase("no")))
+        while(!(decoration.equalsIgnoreCase("y") || decoration.equalsIgnoreCase("n")))
         {
-             System.out.println("Enter the Decoration Serice of the hall (yes/no):");
+             System.out.println("Enter the Decoration Serice of the hall (y/n):");
              decoration = sc.nextLine();
         }
-        if(decoration.equalsIgnoreCase("yes") )
+        if(decoration.equalsIgnoreCase("y") )
         {
             decorationService = true;
         }
@@ -168,6 +161,13 @@ public class OwnerInterface
         }
         System.out.println("Please Enter the Price of the Hall");
         float price = sc.nextFloat();
+        System.out.println("Enter hall Discount:");
+        float hallDiscount = sc.nextFloat();
+        while(hallDiscount < 0 && hallDiscount > 100)
+        {
+         System.out.println("Enter hall Discount in between 1 and 100:");
+         hallDiscount = sc.nextFloat();
+        }
         ownerController.addHall(name,address,contact,description, availability,
                                 hallDiscount,cateringService,decorationService,
                                 photographyService,price,hallCapacity);
@@ -186,7 +186,7 @@ public class OwnerInterface
         Scanner sc = new Scanner(System.in);
         if (ownerController.getOwner().getHalls().size() == 0)
         {
-            System.out.println("Sorry, you have not added any hall yet");
+            System.out.println("Sorry, you have nt added any hall yet");
             System.out.println("Press 1 to add a hall");
             System.out.println("Press 2 to go back");
             int option = sc.nextInt();
@@ -313,7 +313,7 @@ public class OwnerInterface
         Scanner sc = new Scanner(System.in);
         if (ownerController.getOwner().getHalls().size() == 0)
         {
-            System.out.println("Sorry, you have not added any hall yet");
+            System.out.println("Sorry, you have nt added any hall yet");
             System.out.println("Press 1 to add a hall");
             System.out.println("Press 2 to go back");
             int option = sc.nextInt();
@@ -367,7 +367,7 @@ public class OwnerInterface
                     }
                     else
                     {
-                        System.out.println("Hall not removed");
+                        System.out.println("Hall nt removed");
                         displayOwnerPage();
                     }
             }

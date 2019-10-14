@@ -23,10 +23,17 @@ public class OwnerController
     
     public void printHalls()
     {
+        System.out.println("-------------------------------------------------------------------------------------");
+        System.out.printf("%-5s %-15s %-25s %-15s %-30s", "id","Hall Name", "Hall Address",
+                          "Contact Number", "Description");
+        System.out.println();
+        System.out.println("-------------------------------------------------------------------------------------");
         for (int i = 0; i < this.owner.getHalls().size(); i++)
         {
             printHall(i);
         }
+        System.out.println();
+        System.out.println("-------------------------------------------------------------------------------------");
     }
     
     public void printHall(int index)
@@ -35,9 +42,9 @@ public class OwnerController
             String address = this.owner.getHalls().get(index).getAddress();
             String contact = this.owner.getHalls().get(index).getContact();
             String description = this.owner.getHalls().get(index).getDescription();
-            System.out.printf("%d.\nName: %s\nAddress: %s\nContact: %s\nDescription: %s\n",
+            
+            System.out.printf("%-5d %-15s %-25s %-15s %-30s",
                             index+1,name,address,contact,description);
-            System.out.println("--------------------------------------------------------------------------------");
     }
     
     public void logout()

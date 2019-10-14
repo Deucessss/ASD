@@ -53,7 +53,8 @@ public class Homepage
                 displayAdminLoginPage();
                 break;
             case 6:
-                displaySearchPage();
+                displayViewHallPage();
+                //displaySearchPage();
                 break;
             case 7:
                 homeController.exitSoftware();
@@ -68,19 +69,11 @@ public class Homepage
         System.out.println("*****************************************************************************************");
         System.out.println("Welcome to the Event Management System - Customer Registration");
         System.out.println("*****************************************************************************************");
-        System.out.println("Enter your First Name");
-        String firstName=sc.nextLine();
-        while(firstName.length()<3 || firstName.length()>25)
+        System.out.println("Enter Your Email");
+        String email=sc.nextLine();
+        while(checkEmailFormat(email) && homeController.checkCustomerEmail(email))
         {
-            System.out.println("Please enter First Name between 1 to 25 characters");
-            firstName=sc.nextLine();
-        }
-        System.out.println("Enter your Last Name");
-        String lastName=sc.nextLine();
-        while(lastName.length()<1 || lastName.length()>25)
-        {
-            System.out.println("Please enter Last Name between 1 to 25 characters");
-            lastName=sc.nextLine();
+            email=sc.nextLine();
         }
         System.out.println("Enter the Password");
         String password=sc.nextLine();
@@ -96,11 +89,19 @@ public class Homepage
             System.out.println("Passsword and Confirm Password does not match. Please re-enter:");
             confirmPassword = sc.nextLine();
         }
-        System.out.println("Enter Your Email");
-        String email=sc.nextLine();
-        while(checkEmailFormat(email) && homeController.checkCustomerEmail(email))
+        System.out.println("Enter your First Name");
+        String firstName=sc.nextLine();
+        while(firstName.length()<3 || firstName.length()>25)
         {
-            email=sc.nextLine();
+            System.out.println("Please enter First Name between 1 to 25 characters");
+            firstName=sc.nextLine();
+        }
+        System.out.println("Enter your Last Name");
+        String lastName=sc.nextLine();
+        while(lastName.length()<1 || lastName.length()>25)
+        {
+            System.out.println("Please enter Last Name between 1 to 25 characters");
+            lastName=sc.nextLine();
         }
         System.out.println("Enter Your Contact Number(Optional)");
         String contact=sc.nextLine();
@@ -156,19 +157,11 @@ public class Homepage
         System.out.println("*****************************************************************************************");
         System.out.println("Welcome to the Event Management System - Owner Registration");
         System.out.println("*****************************************************************************************");
-        System.out.println("Enter your First Name");
-        String firstName=sc.nextLine();
-        while(firstName.length()<3 || firstName.length()>25)
+        System.out.println("Enter Your Email");
+        String email=sc.nextLine();
+        while(checkEmailFormat(email) && homeController.checkOwnerEmail(email))
         {
-            System.out.println("Please enter First Name between 1 to 25 characters");
-            firstName=sc.nextLine();
-        }
-        System.out.println("Enter your Last Name");
-        String lastName=sc.nextLine();
-        while(lastName.length()<1 || lastName.length()>25)
-        {
-            System.out.println("Please enter Last Name between 1 to 25 characters");
-            lastName=sc.nextLine();
+            email=sc.nextLine();
         }
         System.out.println("Enter the Password");
         String password=sc.nextLine();
@@ -184,11 +177,19 @@ public class Homepage
             System.out.println("Passsword and Confirm Password does not match. Please re-enter:");
             confirmPassword = sc.nextLine();
         }
-        System.out.println("Enter Your Email");
-        String email=sc.nextLine();
-        while(checkEmailFormat(email) && homeController.checkOwnerEmail(email))
+        System.out.println("Enter your First Name");
+        String firstName=sc.nextLine();
+        while(firstName.length()<3 || firstName.length()>25)
         {
-            email=sc.nextLine();
+            System.out.println("Please enter First Name between 1 to 25 characters");
+            firstName=sc.nextLine();
+        }
+        System.out.println("Enter your Last Name");
+        String lastName=sc.nextLine();
+        while(lastName.length()<1 || lastName.length()>25)
+        {
+            System.out.println("Please enter Last Name between 1 to 25 characters");
+            lastName=sc.nextLine();
         }
         System.out.println("Enter Your Contact Number");
         String contact=sc.nextLine();
@@ -291,6 +292,32 @@ public class Homepage
             System.out.printf("Sorry, there is no such hall. Please try another hall name");
             displaySearchPage();
         }
+    }
+    
+    public void displayViewHallPage()
+    {
+        System.out.print('\u000C');
+        Scanner sc = new Scanner(System.in);
+        System.out.println("*****************************************************************************************");
+        System.out.println("Welcome to the Event Management System - View Hall");
+        System.out.println("*****************************************************************************************");
+        homeController.viewAllHalls();
+        System.out.println("Enter 0 to go back");
+        int choice = sc.nextInt();
+        while (choice != 0 )
+        {
+            System.out.println("Invalid option. Press 0 to go back");
+            choice = sc.nextInt();
+        }
+        
+        switch(choice)
+        {
+            case 0:
+                displayHomepage();
+                break;
+            
+        }
+        
     }
     
 }
