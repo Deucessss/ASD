@@ -1,9 +1,10 @@
-import java.util.*;
-public class Homepage
-{
+    import java.util.*;
+    import java.awt.event.*;
+    public class Homepage
+    {
     // instance variables - replace the example below with your own
     private HomeController homeController;
-
+    public boolean esc = false;
     /**
      * Constructor for objects of class Homepage
      */
@@ -20,20 +21,21 @@ public class Homepage
         System.out.println("*****************************************************************************************");
         System.out.println("Welcome to the Event Management System - Homepage");
         System.out.println("*****************************************************************************************");
-
+    
         System.out.println("Please select from the following options:");
         System.out.println("Press 1 to Register Customer");
         System.out.println("Press 2 to Register Owner");
         System.out.println("Press 3 to User Login");
         System.out.println("Press 4 to Owner Login");
         System.out.println("Press 5 to Admin Login");
-        System.out.println("Press 6 to Search for Halls");
-        System.out.println("Press 7 to Exit");
+        System.out.println("Press 6 to View Halls");
+        System.out.println("Press 7 to Search Hall");
+        System.out.println("Press 8 to Exit");
         System.out.println("Please enter your choice:");
         int choice=sc.nextInt();
-        while(choice > 7)
+        while(choice > 8)
         {
-            System.out.println("Please choose from 1 to 7");
+            System.out.println("Please choose from 1 to 8");
             choice = sc.nextInt();
         }
         switch(choice)
@@ -54,9 +56,11 @@ public class Homepage
                 break;
             case 6:
                 displayViewHallPage();
-                //displaySearchPage();
                 break;
             case 7:
+                displaySearchPage();
+                break;
+            case 8:
                 homeController.exitSoftware();
                 break;
         }
@@ -266,36 +270,70 @@ public class Homepage
         System.out.println("Press 0 to go back");
         String hallName = sc.nextLine();
         homeController.searchHall(hallName);
+        //String choice = sc.nextLine();
+        switch (hallName)
+        {
+            case "0":
+                displayHomepage();
+                break;
+            default:
+                homeController.searchHall(hallName);
+                break;
+        }
     }
     
-    public void displaySearchResult(ArrayList<Hall> halls)
+    public void displayNoSearchResultPage()
     {
         System.out.print('\u000C');
         System.out.println("*****************************************************************************************");
         System.out.println("Welcome to the Event Management System - Search Result");
         System.out.println("*****************************************************************************************");
-        if (halls.size() != 0)
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Sorry, there is no such hall.");
+        System.out.println("Press 0 to search again");
+        System.out.println("Press 1 to go back to homepage");
+        int choice = sc.nextInt();
+        switch(choice)
         {
-            for (int i = 0; i < halls.size(); i++)
-            {
-                String name = halls.get(i).getName();
-                String address = halls.get(i).getAddress();
-                String contact = halls.get(i).getContact();
-                String description = halls.get(i).getAddress();
-                System.out.printf("%d.\nName: %s\nAddress: %s\nContact: %s\nDescription: %s\n",
-                                    i+1,name,address,contact,description);
-                System.out.println("--------------------------------------------------------------------------------");
-            }
+            case 0:
+                displaySearchPage();
+                break;
+            case 1:
+                displayHomepage();
+                break;
         }
-        else
+    }
+    
+    public void displaySearchResultPage(String hallName)
+    {
+        System.out.print('\u000C');
+        System.out.println("*****************************************************************************************");
+        System.out.println("Welcome to the Event Management System - Search Result");
+        System.out.println("*****************************************************************************************");
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.printf("%-15s %-30s", "Hall Name", "Hall Address");
+        System.out.println();
+        System.out.println("-----------------------------------------------------------------------------");
+        homeController.displaySearchResult(hallName);
+        System.out.println();
+        System.out.println("Enter hall name to view hall details");
+        System.out.println("Enter 0 to search again");
+        System.out.println("Enter 1 to go back to home page");
+        String hallDetailName = sc.nextLine();
+        switch(hallDetailName)
         {
-            System.out.printf("Sorry, there is no such hall. Please try another hall name");
-            displaySearchPage();
+            default:
+                displaySearchPage();
+                break;
         }
     }
     
     public void displayViewHallPage()
     {
+        
         System.out.print('\u000C');
         Scanner sc = new Scanner(System.in);
         System.out.println("*****************************************************************************************");
@@ -313,11 +351,10 @@ public class Homepage
         switch(choice)
         {
             case 0:
-                displayHomepage();
-                break;
-            
+            displayHomepage();
+            break;
+        
         }
         
     }
-    
 }

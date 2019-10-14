@@ -26,11 +26,10 @@ public class OwnerInterface
         System.out.println("Press 2 to Update a Hall");
         System.out.println("Press 3 to Delete a Hall");
         System.out.println("Press 4 to Update personal Details");
-        System.out.println("Press 5 to Get Help");
-        System.out.println("Press 6 to Logout");
+        System.out.println("Press 5 to Logout");
         System.out.println("Please enter your choice:");
         int choice = sc.nextInt();
-        while(choice < 1 || choice > 6)
+        while(choice < 1 || choice > 5)
         {
             System.out.println("Invalid input. Please re-enter a number between 1 and 6");
             choice = sc.nextInt();
@@ -46,7 +45,7 @@ public class OwnerInterface
             case 3:
                 displayDeleteHallPage();
                 break;
-            case 6:
+            case 5:
                 ownerController.logout();
                 break;
         } 

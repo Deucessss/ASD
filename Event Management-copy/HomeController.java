@@ -1,5 +1,5 @@
-
-/**
+        
+        /**
  * Write a description of class HomeController here.
  *
  * @author (your name)
@@ -8,8 +8,8 @@
 import java.util.*;
 public class HomeController
 {
-// instance variables - replace the example below with your own
-    
+        // instance variables - replace the example below with your own
+            
     /**
      * Constructor for objects of class HomeController
      */
@@ -17,11 +17,11 @@ public class HomeController
     {
         // initialise instance variables
         
-    }
-    
-    public void registerCustomer(String firstName, String lastName, 
-                    String email, String password,
-                    String contact, String address, String concession,
+        }
+        
+        public void registerCustomer(String firstName, String lastName, 
+                        String email, String password,
+                        String contact, String address, String concession,
                     String answer1, String answer2, String answer3)
     {
         Customer customer = new Customer(firstName, lastName, email, password, contact, 
@@ -44,12 +44,12 @@ public class HomeController
         }
         return true; 
     }
-    
-    public void registerOwner(String firstName, String lastName, String email, String password,
-                 String contact, String address)
-    {
-        ArrayList<Hall> halls = new ArrayList<Hall>();
-        Owner owner = new Owner(firstName,lastName, email, password, contact, address, halls);
+        
+        public void registerOwner(String firstName, String lastName, String email, String password,
+                     String contact, String address)
+        {
+            ArrayList<Hall> halls = new ArrayList<Hall>();
+            Owner owner = new Owner(firstName,lastName, email, password, contact, address, halls);
         Accounts.addOwner(owner);
     }
     
@@ -139,8 +139,8 @@ public class HomeController
             hp.displayAdminLoginPage();
         }
     }
-    
-    public void searchHall(String hallName)
+            
+    public static void searchHall(String hallName)
     {
         Homepage hp = new Homepage();
         switch(hallName)
@@ -149,10 +149,29 @@ public class HomeController
                 hp.displayHomepage();
                 break;
             default:
-                hp.displaySearchResult(Accounts.searchHall(hallName));
+                if (Accounts.searchHall(hallName) == null)
+                {
+                    hp.displayNoSearchResultPage();
+                }
+                else
+                {
+                    hp.displaySearchResultPage(hallName);
+                }
                 break;
+                
         }
     }
+    
+    public void displaySearchResult(String hallName)
+    {
+
+        System.out.format("%-15s %-30s\n", Accounts.searchHall(hallName).getName(), 
+                            Accounts.searchHall(hallName).getAddress());
+        
+        System.out.println("-----------------------------------------------------------------------------");
+        
+    }
+    
     
     public void viewAllHalls()
     {

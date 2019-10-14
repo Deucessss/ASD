@@ -28,8 +28,7 @@ public class CustomerInterface
         System.out.println("Press 3 to Update a Booking");
         System.out.println("Press 4 to view booking History");
         System.out.println("Press 5 to Update personal Details");
-        System.out.println("Press 6 to Get Help");
-        System.out.println("Press 7 to Logout");
+        System.out.println("Press 6 to Logout");
         System.out.println("Please enter your choice:");
         int choice = sc.nextInt();
         
@@ -38,7 +37,7 @@ public class CustomerInterface
             // case 1:
                 // searchHall();
                 // break;
-            case 7:
+            case 6:
                 customerController.logout();
                 break;
         }

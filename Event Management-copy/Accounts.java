@@ -38,34 +38,26 @@ public class Accounts
         return admin;
     }
     
-    public static ArrayList<Hall> searchHall(String hallName)
+    public static Hall searchHall(String hallName)
     {
-        int i = 0;
-        int count = 0;
-        ArrayList<Hall> searchResult = new ArrayList<Hall>();
-        while(i<owners.size())
-        {   
-            if(owners.get(i).getHalls().size()!=0)
+        for (Owner owner : owners)
+        {
+            for (Hall hall : owner.getHalls())
             {
-                for (int j=0;j<owners.get(i).getHalls().size();j++)
+                if (hall.getName().equalsIgnoreCase(hallName))
                 {
-                    if (owners.get(i).getHalls().get(j).getName().equalsIgnoreCase(hallName))
-                    {
-                        count++;
-                        searchResult.add(owners.get(i).getHalls().get(j));
-                    }
+                    return hall;
                 }
             }
-            i++;
         }
-        return searchResult;
+        return null;
     }
     
     public static void viewHalls()
     {
         int count = 1;
         System.out.println("-----------------------------------------------------------------------------");
-        System.out.printf("%-5s %-15s %-30s", "  ","Hall Name", "Hall Address");
+        System.out.printf("%-15s %-30s", "Hall Name", "Hall Address");
         System.out.println();
         System.out.println("-----------------------------------------------------------------------------");
         for (int i = 0; i < owners.size(); i++)
@@ -76,7 +68,7 @@ public class Accounts
                 String hallAddress = owners.get(i).getHalls().get(j).getAddress();
                 
 
-                System.out.format("%-5s %-15s %-30s", count, hallName, hallAddress);
+                System.out.format("%-15s %-30s", hallName, hallAddress);
                 System.out.println();
                 count++;
             }
