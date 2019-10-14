@@ -8,9 +8,9 @@ public class OwnerInterface
     /**
      * Constructor for objects of class OwnerInterface
      */
-    public OwnerInterface(Owner owner)
+    public OwnerInterface()
     {
-        this.ownerController = new OwnerController(owner);// initialise instance variables
+        this.ownerController = new OwnerController();// initialise instance variables
     }
     
     
@@ -371,5 +371,10 @@ public class OwnerInterface
                     }
             }
         }
+    }
+    
+    public OwnerController getOwnerController()
+    {
+        return this.ownerController;
     }
 }

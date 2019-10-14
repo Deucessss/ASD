@@ -5,6 +5,7 @@
  * @author (your name)
  * @version (a version number or a date)
  */
+import java.util.*;
 public class Customer extends User
 {
     // instance variables - replace the example below with your own
@@ -18,6 +19,7 @@ public class Customer extends User
     private String answer1;
     private String answer2;
     private String answer3;
+    private ArrayList<Quotation> quotations = new ArrayList<Quotation>();
     // private ArrayList<Bookings> customerBookings = new ArrayList<Bookings>();
     /**
      * Constructor for objects of class Customer
@@ -58,6 +60,10 @@ public class Customer extends User
         this.answer3 = answer3;
     }
     
+    public ArrayList<Quotation> getQuotations()
+    {
+        return this.quotations;
+    }
     // public ArrayList<Bookings> getBookings() {
         // return customerBookings;
     // }

@@ -5,6 +5,7 @@
  * @author (your name)
  * @version (a version number or a date)
  */
+import java.util.*;
 public class Hall
 {
     // instance variables - replace the example below with your own
@@ -20,6 +21,8 @@ public class Hall
     private float price;
     private int hallCapacity;
     private int hallRating;
+    private ArrayList<Quotation> quotations = new ArrayList<Quotation>();
+    private ArrayList<Quotation> pastQuotations = new ArrayList<Quotation>();
     // private OwnerDiscount ownerDiscount;
     // private AdminDiscount adminDiscount;
 
@@ -160,5 +163,10 @@ public class Hall
     public void setPrice(float price)
     {
         this.price = price;
+    }
+    
+    public ArrayList<Quotation> getQuotations()
+    {
+        return this.quotations;
     }
 }

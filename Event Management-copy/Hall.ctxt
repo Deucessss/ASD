@@ -1,6 +1,5 @@
 #BlueJ class context
 comment0.target=Hall
-comment0.text=\n\ Write\ a\ description\ of\ class\ Hall\ here.\n\n\ @author\ (your\ name)\n\ @version\ (a\ version\ number\ or\ a\ date)\n
 comment1.params=name\ address\ contact\ description\ availability\ hallDiscount\ cateringService\ decorationService\ photographyService\ price\ hallCapacity
 comment1.target=Hall(java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ boolean,\ float,\ boolean,\ boolean,\ boolean,\ float,\ int)
 comment1.text=\n\ Constructor\ for\ objects\ of\ class\ Hall\n
@@ -38,6 +37,8 @@ comment24.params=
 comment24.target=float\ getPrice()
 comment25.params=price
 comment25.target=void\ setPrice(float)
+comment26.params=
+comment26.target=java.util.ArrayList\ getQuotations()
 comment3.params=newName
 comment3.target=void\ setName(java.lang.String)
 comment4.params=
@@ -52,4 +53,4 @@ comment8.params=
 comment8.target=java.lang.String\ getContact()
 comment9.params=newContact
 comment9.target=void\ setContact(java.lang.String)
-numComments=26
+numComments=27

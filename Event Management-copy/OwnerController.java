@@ -7,9 +7,9 @@ public class OwnerController
     /**
      * Constructor for objects of class OwnerController
      */
-    public OwnerController(Owner owner)
+    public OwnerController()
     {
-        this.owner = owner;// initialise instance variables
+        // initialise instance variables
     }
     
     public void addHall(String name, String address, String contact, String description, boolean availability,
@@ -56,5 +56,10 @@ public class OwnerController
     public Owner getOwner()
     {
         return this.owner;
+    }
+    
+    public void setOwner(Owner owner)
+    {
+        this.owner = owner;
     }
 }

@@ -1,8 +1,8 @@
-    import java.util.*;
-    import java.awt.event.*;
-    public class Homepage
-    {
-    // instance variables - replace the example below with your own
+import java.util.*;
+import java.awt.event.*;
+public class Homepage
+{
+// instance variables - replace the example below with your own
     private HomeController homeController;
     public boolean esc = false;
     /**
@@ -269,8 +269,7 @@
         System.out.println("Please enter a hall name to search:");
         System.out.println("Press 0 to go back");
         String hallName = sc.nextLine();
-        homeController.searchHall(hallName);
-        //String choice = sc.nextLine();
+ 
         switch (hallName)
         {
             case "0":
@@ -282,25 +281,25 @@
         }
     }
     
-    public void displayNoSearchResultPage()
+    public void displayNoSearchResultPage(String hallName)
     {
         System.out.print('\u000C');
         System.out.println("*****************************************************************************************");
         System.out.println("Welcome to the Event Management System - Search Result");
         System.out.println("*****************************************************************************************");
         Scanner sc = new Scanner(System.in);
-
-        System.out.println("Sorry, there is no such hall.");
-        System.out.println("Press 0 to search again");
-        System.out.println("Press 1 to go back to homepage");
-        int choice = sc.nextInt();
-        switch(choice)
+    
+        System.out.println("Sorry, there is hall named '"+hallName+ "'");
+        System.out.println("Enter a hall name to search again");
+        System.out.println("Press 0 to go back to homepage");
+        String newHallName = sc.nextLine();
+        switch(newHallName)
         {
-            case 0:
-                displaySearchPage();
-                break;
-            case 1:
+            case "0":
                 displayHomepage();
+                break;
+            default:
+                homeController.searchHall(newHallName);
                 break;
         }
     }
@@ -312,18 +311,32 @@
         System.out.println("Welcome to the Event Management System - Hal: " + hallName);
         System.out.println("*****************************************************************************************");
         Scanner sc = new Scanner(System.in);
-
+    
         System.out.println("-----------------------------------------------------------------------------");
         System.out.printf("%-10s %-30s", "Hall Name", "Hall Address");
         System.out.println();
         System.out.println("-----------------------------------------------------------------------------");
         homeController.displaySearchResult(hallName);
         System.out.println();
-        System.out.println("Enter 0 to go back to home page");
+        System.out.println("Please log in to book this hall");
+        System.out.println("Enter 0 to Register");
+        System.out.println("Enter 1 to Log in");
+        System.out.println("Enter 2 to go back to home page");
         int choice = sc.nextInt();
+        while (choice < 0 || choice > 2)
+        {
+            System.out.println("Invalid option, please enter a choice between 0 and 2");
+            choice = sc.nextInt();
+        }
         switch(choice)
         {
-            default:
+            case 0:
+                displayUserLoginPage(3);
+                break;
+            case 1:
+                displayCustomerRegistrationPage();
+                break;
+            case 2:
                 displayHomepage();
                 break;
         }

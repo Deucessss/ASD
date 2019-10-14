@@ -83,6 +83,7 @@ public class HomeController
                     {
                         loginSuccess = true;
                         CustomerInterface ci = new CustomerInterface();
+                        ci.getCustomerController().setCustomer(Accounts.getCustomers().get(i));
                         ci.displayCustomerPage();
                     }
                 }
@@ -104,7 +105,8 @@ public class HomeController
                         Accounts.getOwners().get(i).getPassword().equalsIgnoreCase(password))
                     {
                         loginSuccess = true;
-                        OwnerInterface oi = new OwnerInterface(Accounts.getOwners().get(i));
+                        OwnerInterface oi = new OwnerInterface();
+                        oi.getOwnerController().setOwner(Accounts.getOwners().get(i));
                         oi.displayOwnerPage();
                     }
                 }
@@ -151,7 +153,7 @@ public class HomeController
             default:
                 if (Accounts.searchHall(hallName) == null)
                 {
-                    hp.displayNoSearchResultPage();
+                    hp.displayNoSearchResultPage(hallName);
                 }
                 else
                 {
@@ -172,7 +174,7 @@ public class HomeController
         
     }
     
-    public void displaySearchResult(String hallName)
+    public static void displaySearchResult(String hallName)
     {
 
         System.out.format("%-10s %-30s\n", Accounts.searchHall(hallName).getName(), 
