@@ -57,7 +57,7 @@ public class Accounts
     {
         int count = 1;
         System.out.println("-----------------------------------------------------------------------------");
-        System.out.printf("%-15s %-30s", "Hall Name", "Hall Address");
+        System.out.printf("%-10s %-30s", "Hall Name", "Hall Address");
         System.out.println();
         System.out.println("-----------------------------------------------------------------------------");
         for (int i = 0; i < owners.size(); i++)
@@ -68,7 +68,7 @@ public class Accounts
                 String hallAddress = owners.get(i).getHalls().get(j).getAddress();
                 
 
-                System.out.format("%-15s %-30s", hallName, hallAddress);
+                System.out.format("%-10s %-30s", hallName, hallAddress);
                 System.out.println();
                 count++;
             }

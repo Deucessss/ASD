@@ -155,17 +155,27 @@ public class HomeController
                 }
                 else
                 {
-                    hp.displaySearchResultPage(hallName);
+                    hp.displayHallPage(hallName);
                 }
                 break;
                 
         }
     }
     
+    public static boolean checkHallExist(String hallName)
+    {
+        if (Accounts.searchHall(hallName) != null)
+        {
+            return true;
+        }
+        return false;
+        
+    }
+    
     public void displaySearchResult(String hallName)
     {
 
-        System.out.format("%-15s %-30s\n", Accounts.searchHall(hallName).getName(), 
+        System.out.format("%-10s %-30s\n", Accounts.searchHall(hallName).getName(), 
                             Accounts.searchHall(hallName).getAddress());
         
         System.out.println("-----------------------------------------------------------------------------");

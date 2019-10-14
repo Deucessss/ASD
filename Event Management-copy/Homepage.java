@@ -305,28 +305,26 @@
         }
     }
     
-    public void displaySearchResultPage(String hallName)
+    public void displayHallPage(String hallName)
     {
         System.out.print('\u000C');
         System.out.println("*****************************************************************************************");
-        System.out.println("Welcome to the Event Management System - Search Result");
+        System.out.println("Welcome to the Event Management System - Hal: " + hallName);
         System.out.println("*****************************************************************************************");
         Scanner sc = new Scanner(System.in);
 
         System.out.println("-----------------------------------------------------------------------------");
-        System.out.printf("%-15s %-30s", "Hall Name", "Hall Address");
+        System.out.printf("%-10s %-30s", "Hall Name", "Hall Address");
         System.out.println();
         System.out.println("-----------------------------------------------------------------------------");
         homeController.displaySearchResult(hallName);
         System.out.println();
-        System.out.println("Enter hall name to view hall details");
-        System.out.println("Enter 0 to search again");
-        System.out.println("Enter 1 to go back to home page");
-        String hallDetailName = sc.nextLine();
-        switch(hallDetailName)
+        System.out.println("Enter 0 to go back to home page");
+        int choice = sc.nextInt();
+        switch(choice)
         {
             default:
-                displaySearchPage();
+                displayHomepage();
                 break;
         }
     }
@@ -337,23 +335,26 @@
         System.out.print('\u000C');
         Scanner sc = new Scanner(System.in);
         System.out.println("*****************************************************************************************");
-        System.out.println("Welcome to the Event Management System - View Hall");
+        System.out.println("Welcome to the Event Management System - View Halls");
         System.out.println("*****************************************************************************************");
         homeController.viewAllHalls();
         System.out.println("Enter 0 to go back");
-        int choice = sc.nextInt();
-        while (choice != 0 )
-        {
-            System.out.println("Invalid option. Press 0 to go back");
-            choice = sc.nextInt();
-        }
+        String hallName = sc.nextLine();
         
-        switch(choice)
+        while(!homeController.checkHallExist(hallName) && !hallName.equalsIgnoreCase("0"))
+                {
+                    System.out.println("Sorry, there is no hall named "+ hallName);
+                    System.out.println("Please re-enter a hall name:");
+                    hallName = sc.nextLine();
+                }
+        switch(hallName)
         {
-            case 0:
-            displayHomepage();
-            break;
-        
+            case "0":
+                displayHomepage();
+                break;
+            default:
+                displayHallPage(hallName);
+                break;
         }
         
     }
