@@ -26,10 +26,12 @@ public class OwnerInterface
         System.out.println("Press 2 to Update a Hall");
         System.out.println("Press 3 to Delete a Hall");
         System.out.println("Press 4 to Update personal Details");
-        System.out.println("Press 5 to Logout");
+        System.out.println("Press 5 to View Quotations Received("+ownerController.unrepliedQuotations() +
+                           " unreplied quotations)");
+        System.out.println("Press 6 to Logout");
         System.out.println("Please enter your choice:");
         int choice = sc.nextInt();
-        while(choice < 1 || choice > 5)
+        while(choice < 1 || choice > 6)
         {
             System.out.println("Invalid input. Please re-enter a number between 1 and 6");
             choice = sc.nextInt();
@@ -46,6 +48,9 @@ public class OwnerInterface
                 displayDeleteHallPage();
                 break;
             case 5:
+                displayQuotationsReceived();
+                break;
+            case 6:
                 ownerController.logout();
                 break;
         } 
@@ -91,7 +96,7 @@ public class OwnerInterface
         boolean availability;
         while(!(Availability.equalsIgnoreCase("y") || Availability.equalsIgnoreCase("n")))
         {
-         System.out.println("Enter the Photography Serice of the hall (y/n):");
+         System.out.println("Please re-enter y/n for hall availability:");
          Availability = sc.nextLine();
         }
         if(Availability.equalsIgnoreCase("y") )
@@ -107,7 +112,7 @@ public class OwnerInterface
         boolean photographyService;
         while(!(photography.equalsIgnoreCase("y") || photography.equalsIgnoreCase("n")))
         {
-         System.out.println("Enter the Photography Serice of the hall (y/n):");
+         System.out.println("Please re-enter the photography service of the hall(y/n):");
          photography = sc.nextLine();
         }
         if(photography.equalsIgnoreCase("y") )
@@ -123,7 +128,7 @@ public class OwnerInterface
         boolean cateringService;
         while(!(catering.equalsIgnoreCase("y") || catering.equalsIgnoreCase("n")))
         {
-         System.out.println("Enter the Catering Serice of the hall (y/n):");
+         System.out.println("Please re-enter the catering service of the hall(y/n):");
          catering = sc.nextLine();
         }
         if(catering.equalsIgnoreCase("y") )
@@ -140,7 +145,7 @@ public class OwnerInterface
         boolean decorationService;
         while(!(decoration.equalsIgnoreCase("y") || decoration.equalsIgnoreCase("n")))
         {
-             System.out.println("Enter the Decoration Serice of the hall (y/n):");
+             System.out.println("Please re-enter the decoration service of the hall(y/n):");
              decoration = sc.nextLine();
         }
         if(decoration.equalsIgnoreCase("y") )
@@ -371,6 +376,53 @@ public class OwnerInterface
                     }
             }
         }
+    }
+    
+    public void displayQuotationsReceived()
+    {
+        System.out.print('\u000C');
+        System.out.printf("%s\n",lineBreak);
+        System.out.println("Event Management System - Quotations");
+        System.out.printf("%s\n",lineBreak);
+        Scanner sc = new Scanner(System.in);
+        
+        ownerController.displayQuotations();
+        
+        System.out.println("Enter a Hall ID to view quotation details");
+        System.out.println("Enter 0 to go back");
+        int choice = sc.nextInt();
+        switch(choice)
+        {
+            case 0:
+                displayOwnerPage();
+                break;
+            default:
+                System.out.println("Enter a Quotation ID to view quotation details");
+                int quotID = sc.nextInt();
+                displayQuotationDetails(choice, quotID);
+                break;
+        }
+    }
+    
+    public void displayQuotationDetails(int hallID, int quotID)
+    {
+        System.out.print('\u000C');
+        System.out.printf("%s\n",lineBreak);
+        System.out.println("Event Management System - Quotations");
+        System.out.printf("%s\n",lineBreak);
+        Scanner sc = new Scanner(System.in);
+        
+        
+        ownerController.displayQuotationDetail(hallID, quotID);
+        System.out.println("Enter 0 to go back");
+        int choice = sc.nextInt();
+        switch(choice)
+        {
+            case 0:
+                displayQuotationsReceived();
+                break;
+        }
+        
     }
     
     public OwnerController getOwnerController()

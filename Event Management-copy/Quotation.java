@@ -10,6 +10,7 @@ import java.util.*;
 public class Quotation
 {
     // instance variables - replace the example below with your own
+    private int id;
     private String occasion;
     private int guestNum;
     private boolean cateringService;
@@ -21,13 +22,16 @@ public class Quotation
     private boolean replied = false;
     private float hallOwnerOffer;
     
+    private Customer customer;
+    private Hall hall;
+    
 
     /**
      * Constructor for objects of class Quotation
      */
     public Quotation(String occasion, int guestNum, boolean cateringSerivce,
                      boolean photographyService, boolean decorationService,
-                     Date startDate, Date endDate, float budget)
+                     Date startDate, Date endDate, float budget, Hall hall, Customer customer)
     {
         this.occasion = occasion;
         this.guestNum = guestNum;
@@ -37,9 +41,17 @@ public class Quotation
         this.startDate = startDate;
         this.endDate = endDate;
         this.budget = budget;
-        
+        this.hall = hall;
+        this.id = hall.getQuotations().size() + 1;
+        this.customer = customer;
     }
 
+    public int getId()
+    {
+        return this.id;
+    }
+    
+    
     public String getOccasion()
     {
         return this.occasion;
@@ -120,4 +132,13 @@ public class Quotation
         this.budget = budget;
     }
     
+    public boolean getReplied()
+    {
+        return this.replied;
+    }
+    
+    public void setReplied(boolean replied)
+    {
+        this.replied = replied;
+    }
 }

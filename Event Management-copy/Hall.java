@@ -13,6 +13,7 @@ public class Hall
     private String address;
     private String contact;
     private String description;
+    private int id;
     private boolean availability;
     private float hallDiscount;
     private boolean cateringService;
@@ -37,7 +38,7 @@ public class Hall
         this.name = name;
         this.address = address;
         this.contact = contact;
-        this.description = description;
+        this.description = description.replaceAll("(.{50})", String.format("$1|\n|%22s|  ", ""));
         this.availability = availability;
         this.hallDiscount = hallDiscount;
         this.cateringService = cateringService;
@@ -45,6 +46,16 @@ public class Hall
         this.photographyService = photographyService;
         this.price =price;
         this.hallCapacity = hallCapacity;
+    }
+    
+    public int getId()
+    {
+        return this.id;
+    }
+    
+    public void setId(int id)
+    {
+        this.id = id;
     }
     
     public String getName()

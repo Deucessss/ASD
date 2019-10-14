@@ -312,11 +312,7 @@ public class Homepage
         System.out.println("*****************************************************************************************");
         Scanner sc = new Scanner(System.in);
     
-        System.out.println("-----------------------------------------------------------------------------");
-        System.out.printf("%-10s %-30s", "Hall Name", "Hall Address");
-        System.out.println();
-        System.out.println("-----------------------------------------------------------------------------");
-        homeController.displaySearchResult(hallName);
+        homeController.displayHallDetail(hallName);
         System.out.println();
         System.out.println("Please log in to book this hall");
         System.out.println("Enter 0 to Register");
@@ -351,6 +347,7 @@ public class Homepage
         System.out.println("Welcome to the Event Management System - View Halls");
         System.out.println("*****************************************************************************************");
         homeController.viewAllHalls();
+        System.out.println("Enter hall name to view hall details");
         System.out.println("Enter 0 to go back");
         String hallName = sc.nextLine();
         

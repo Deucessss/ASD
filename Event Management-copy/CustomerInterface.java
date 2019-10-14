@@ -29,6 +29,7 @@ public class CustomerInterface
         System.out.println("*****************************************************************************************");
         
         System.out.println("Please select from the following options:");
+        System.out.println("Press 0 to View All Halls");
         System.out.println("Press 1 to Search for Hall");
         System.out.println("Press 2 to Book a Hall");
         System.out.println("Press 3 to Update a Booking");
@@ -40,6 +41,9 @@ public class CustomerInterface
         
         switch(choice)
         {
+            case 0:
+                displayViewAllHalls();
+                break;
             case 1:
                 displaySearchPage();
                 break;
@@ -100,12 +104,7 @@ public class CustomerInterface
         System.out.println("Welcome to the Event Management System - Hall: " + hallName);
         System.out.println("*****************************************************************************************");
         Scanner sc = new Scanner(System.in);
-
-        System.out.println("-----------------------------------------------------------------------------");
-        System.out.printf("%-10s %-30s", "Hall Name", "Hall Address");
-        System.out.println();
-        System.out.println("-----------------------------------------------------------------------------");
-        HomeController.displaySearchResult(hallName);
+        HomeController.displayHallDetail(hallName);
         System.out.println();
         System.out.println("Enter 0 to ask for quotation");
         System.out.println("Enter 1 to go back to home page");
@@ -227,7 +226,36 @@ public class CustomerInterface
         
         displayHallPage(hallName);
     }
-   
+    
+    public void displayViewAllHalls()
+    {
+        System.out.print('\u000C');
+        Scanner sc = new Scanner(System.in);
+        System.out.println("*****************************************************************************************");
+        System.out.println("Welcome to the Event Management System - View Halls");
+        System.out.println("*****************************************************************************************");
+        customerController.viewAllHalls();
+        System.out.println("Enter hall name to view hall details");
+        System.out.println("Enter 0 to go back");
+        String hallName = sc.nextLine();
+        
+        while(!customerController.checkHallExist(hallName) && !hallName.equalsIgnoreCase("0"))
+                {
+                    System.out.println("Sorry, there is no hall named "+ hallName);
+                    System.out.println("Please re-enter a hall name:");
+                    hallName = sc.nextLine();
+                }
+        switch(hallName)
+        {
+            case "0":
+                displayCustomerPage();
+                break;
+            default:
+                displayHallPage(hallName);
+                break;
+        }
+    }
+    
     public CustomerController getCustomerController()
     {
         return this.customerController;

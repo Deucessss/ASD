@@ -48,7 +48,7 @@ public class CustomerController
     {
         Hall requestedHall = Accounts.searchHall(hallName);
         Quotation quotation = new Quotation(occasion, guestNum, cateringService, photographyService,
-                                            decorationService, startDate, endDate, budget);
+                                            decorationService, startDate, endDate, budget, requestedHall, customer);
         requestedHall.getQuotations().add(quotation);
         customer.getQuotations().add(quotation);
     }
@@ -61,6 +61,20 @@ public class CustomerController
         services.add(requestedHall.getPhotographyService());
         services.add(requestedHall.getDecorationService());
         return services;
+    }
+    
+    public void viewAllHalls()
+    {
+        Accounts.viewHalls();
+    }
+    
+    public boolean checkHallExist(String hallName)
+    {
+        if (Accounts.searchHall(hallName) != null)
+        {
+            return true;
+        }
+        return false;
     }
     
     public void logout()

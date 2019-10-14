@@ -174,14 +174,34 @@ public class HomeController
         
     }
     
-    public static void displaySearchResult(String hallName)
+    public static void displayHallDetail(String hallName)
     {
-
-        System.out.format("%-10s %-30s\n", Accounts.searchHall(hallName).getName(), 
-                            Accounts.searchHall(hallName).getAddress());
+        Hall result = Accounts.searchHall(hallName);
+        String name = result.getName();
+        String address = result.getAddress();
+        String contactNum = result.getContact();
+        String des = result.getDescription();
+        String catering = (result.getCateringService() ? "yes" : "no");
+        String photography = (result.getPhotographyService() ? "yes" : "no");
+        String decoration = (result.getDecorationService() ? "yes" : "no");
+        
+        
         
         System.out.println("-----------------------------------------------------------------------------");
-        
+        System.out.format("|  %-20s|  %-50s|\n", "Hall Name", name);
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-20s|  %-50s|\n", "Hall Address", address);
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-20s|  %-50s|\n", "Contact Number", contactNum);
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-20s|  %-50s%-50s|\n", "Description", des, "|");
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-20s|  %-50s|\n", "Catering Serivce", catering);
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-20s|  %-50s|\n", "Photography Serivce", photography);
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-20s|  %-50s|\n", "Decoration Serivce", decoration);
+        System.out.println("-----------------------------------------------------------------------------");
     }
     
     
