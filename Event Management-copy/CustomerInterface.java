@@ -38,8 +38,25 @@ public class CustomerInterface
         System.out.println("Press 5 to Update personal Details");
         System.out.println("Press 6 to Logout");
         System.out.println("Please enter your choice:");
-        int choice = sc.nextInt();
-        
+        int choice;
+        while (true)
+        {
+            try{
+                choice = sc.nextInt();
+                if (choice < 0 || choice > 6)
+                {
+                    throw(new java.util.InputMismatchException());
+                }
+                else
+                {
+                    break;
+                }
+            }catch (java.util.InputMismatchException e){
+                sc.nextLine();
+                System.out.println("Invalid option. Please re-enter a number between 1 and 6");
+                continue;
+            }
+        }
         switch(choice)
         {
             case 0:
@@ -113,11 +130,24 @@ public class CustomerInterface
         System.out.println("Enter 0 to ask for quotation");
         System.out.println("Enter 1 to go back to home page");
         
-        int choice = sc.nextInt();
-        while (choice != 0 && choice != 1)
+        int choice;
+        while (true)
         {
-            System.out.println("Invalid option, please enter a choice between 0 and 2");
-            choice = sc.nextInt();
+            try{
+                choice = sc.nextInt();
+                if (choice != 0 && choice !=1)
+                {
+                    throw(new java.util.InputMismatchException());
+                }
+                else
+                {
+                    break;
+                }
+            }catch (java.util.InputMismatchException e){
+                sc.nextLine();
+                System.out.println("Invalid option. Please re-enter a number from 0 to 1");
+                continue;
+            }
         }
         switch(choice)
         {
@@ -153,10 +183,23 @@ public class CustomerInterface
         occasion = sc.nextLine();
         System.out.println("Enter the number of guest that will attend the event:");
         guestNum = sc.nextInt();
-        while (guestNum < 0)
+        while (true)
         {
-            System.out.println("Guset number must be greater than zero. Please re-enter:");
-            guestNum = sc.nextInt();
+            try{
+                guestNum = sc.nextInt();
+                if (guestNum < 0)
+                {
+                    throw(new java.util.InputMismatchException());
+                }
+                else
+                {
+                    break;
+                }
+            }catch (java.util.InputMismatchException e){
+                sc.nextLine();
+                System.out.println("Invalid input. Please enter a number that is greater than 0");
+                continue;
+            }
         }
         sc.nextLine();
         System.out.println("Enter the start date for the event(dd/mm/yyyy):");
@@ -169,6 +212,7 @@ public class CustomerInterface
                 startDate = formatter.parse(sStartDate);
                 break;
             } catch (ParseException e){
+                sc.nextLine();
                 System.out.println("Invalid date format. Date format must be dd/mm/yyyy");
                 System.out.println("Please re-enter a date according to the format:");
                 sStartDate = sc.nextLine();
@@ -176,16 +220,48 @@ public class CustomerInterface
         }
         
         System.out.println("Enter the duration of the event in days:");
-        duration = sc.nextInt();
+        while (true)
+        {
+            try{
+                duration = sc.nextInt();
+                if (duration < 0)
+                {
+                    throw(new java.util.InputMismatchException());
+                }
+                else
+                {
+                    break;
+                }
+            }catch (java.util.InputMismatchException e){
+                sc.nextLine();
+                System.out.println("Invalid input. Duration must be a number greater than 0");
+                continue;
+            }
+        }
         Calendar c = Calendar.getInstance();
         c.setTime(startDate);
         c.add(Calendar.DATE, duration);
         endDate = c.getTime();
-        sEndDate = formatter.format(c.getTime());
-        System.out.println(sEndDate);
         
         System.out.println("Enter your budget:");
-        budget = sc.nextFloat();
+        while (true)
+        {
+            try{
+                budget = sc.nextFloat();
+                if (budget < 0)
+                {
+                    throw(new java.util.InputMismatchException());
+                }
+                else
+                {
+                    break;
+                }
+            }catch (java.util.InputMismatchException e){
+                sc.nextLine();
+                System.out.println("Invalid input. Budget must be a number greater than 0");
+                continue;
+            }
+        }
         sc.nextLine();
         if (customerController.serviceProvided(hallName).get(0))
         {
@@ -271,7 +347,18 @@ public class CustomerInterface
         customerController.displayQuotations();
         System.out.println("Enter a hall id to accept");
         System.out.println("Enter 0 to go back");
-        int hallId = sc.nextInt();
+        int hallId;
+        while (true)
+        {
+            try{
+                hallId = sc.nextInt();
+                break;
+            }catch (java.util.InputMismatchException e){
+                sc.nextLine();
+                System.out.println("Invalid option. Input must be a number");
+                continue;
+            }
+        }
         switch(hallId)
         {
             case 0:
@@ -279,7 +366,18 @@ public class CustomerInterface
                 break;
             default:
                 System.out.println("Enter a quotation id to accept");
-                int quotationId = sc.nextInt();
+                int quotationId;
+                while (true)
+                {
+                    try{
+                        quotationId = sc.nextInt();
+                        break;
+                    }catch (java.util.InputMismatchException e){
+                        sc.nextLine();
+                        System.out.println("Invalid option. Input must be a number");
+                        continue;
+                    }
+                }
                 if (customerController.searchAcceptableQuotation(hallId, quotationId) == null)
                 {
                     System.out.print('\u000C');

@@ -32,11 +32,23 @@ public class Homepage
         System.out.println("Press 7 to Search Hall");
         System.out.println("Press 8 to Exit");
         System.out.println("Please enter your choice:");
-        int choice=sc.nextInt();
-        while(choice > 8)
+        int choice;
+        while(true)
         {
-            System.out.println("Please choose from 1 to 8");
-            choice = sc.nextInt();
+            try{
+                choice = sc.nextInt();
+                if (choice < 1 || choice > 8)
+                {
+                    throw(new java.util.InputMismatchException());
+                }
+                else
+                {
+                    break;
+                }
+            } catch (java.util.InputMismatchException e){
+                sc.nextLine();
+                System.out.println("Please choose from 1 to 8");
+            }
         }
         switch(choice)
         {
@@ -63,6 +75,7 @@ public class Homepage
             case 8:
                 homeController.exitSoftware();
                 break;
+            
         }
     }
     
@@ -318,11 +331,24 @@ public class Homepage
         System.out.println("Enter 0 to Register");
         System.out.println("Enter 1 to Log in");
         System.out.println("Enter 2 to go back to home page");
-        int choice = sc.nextInt();
-        while (choice < 0 || choice > 2)
+        int choice; //= sc.nextInt();
+        while (true)
         {
-            System.out.println("Invalid option, please enter a choice between 0 and 2");
-            choice = sc.nextInt();
+            try{
+                choice = sc.nextInt();
+                if (choice < 0 || choice > 2)
+                {
+                    throw(new java.util.InputMismatchException());
+                }
+                else
+                {
+                    break;
+                }
+            } catch (java.util.InputMismatchException e){
+                sc.nextLine();
+                System.out.println("Please choose from 0 to 2");
+                continue;
+            }
         }
         switch(choice)
         {
