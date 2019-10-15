@@ -20,7 +20,12 @@ public class Quotation
     private Date endDate;
     private float budget;
     private boolean replied = false;
-    private float hallOwnerOffer;
+    private float cateringCost;
+    private float photographyCost;
+    private float decorationCost;
+    private float venueCost;
+    private float totalAmount;
+    private boolean quotationAccepted;
     
     private Customer customer;
     private Hall hall;
@@ -51,6 +56,10 @@ public class Quotation
         return this.id;
     }
     
+    public void setId(int id)
+    {
+        this.id = id;
+    }
     
     public String getOccasion()
     {
@@ -140,5 +149,70 @@ public class Quotation
     public void setReplied(boolean replied)
     {
         this.replied = replied;
+    }
+    
+    public float getCateringCost()
+    {
+        return this.cateringCost;
+    }
+    
+    public void setCateringCost(float cateringCost)
+    {
+        this.cateringCost = cateringCost;
+    }
+    
+    public float getPhotographyCost()
+    {
+        return this.photographyCost;
+    }
+    
+    public void setPhotographyCost(float photographyCost)
+    {
+        this.photographyCost = photographyCost;
+    }
+    
+    public float getDecorationCost()
+    {
+        return this.decorationCost;
+    }
+    
+    public void setDecorationCost(float decorationCost)
+    {
+        this.decorationCost = decorationCost;
+    }
+    
+    public float getVenueCost()
+    {
+        return this.venueCost;
+    }
+    
+    public void setVenueCost(float venueCost)
+    {
+        this.venueCost = venueCost;
+    }
+    
+    public float getTotalAmount()
+    {
+        return this.totalAmount;
+    }
+    
+    public void setTotalAmount(float totalAmount)
+    {
+        this.totalAmount = totalAmount;
+    }
+    
+    public boolean getQuotationAccepted()
+    {
+        return this.quotationAccepted;
+    }
+    
+    public void setQuotationAccepted(boolean quotationAccepted)
+    {
+        this.quotationAccepted = quotationAccepted;
+    }
+    
+    public Hall getHall()
+    {
+        return this.hall;
     }
 }

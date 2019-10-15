@@ -31,7 +31,8 @@ public class CustomerInterface
         System.out.println("Please select from the following options:");
         System.out.println("Press 0 to View All Halls");
         System.out.println("Press 1 to Search for Hall");
-        System.out.println("Press 2 to Book a Hall");
+        System.out.println("Press 2 to View Quotations");
+        System.out.println("Press 3 to View Bookings");
         System.out.println("Press 3 to Update a Booking");
         System.out.println("Press 4 to view booking History");
         System.out.println("Press 5 to Update personal Details");
@@ -46,6 +47,9 @@ public class CustomerInterface
                 break;
             case 1:
                 displaySearchPage();
+                break;
+            case 2:
+                displayQuotationsPage();
                 break;
             case 6:
                 customerController.logout();
@@ -118,7 +122,7 @@ public class CustomerInterface
         switch(choice)
         {
             case 0:
-                displayQuotationPage(hallName);
+                displaySendQuotationPage(hallName);
                 break;
             case 1:
                 displayCustomerPage();
@@ -126,7 +130,7 @@ public class CustomerInterface
         }
     }
     
-    public void displayQuotationPage(String hallName)
+    public void displaySendQuotationPage(String hallName)
     {
         System.out.print('\u000C');
         System.out.println("*****************************************************************************************");
@@ -219,7 +223,7 @@ public class CustomerInterface
         System.out.println("Quotation successfully sent!");
         
         try{
-            TimeUnit.SECONDS.sleep(3);
+            TimeUnit.SECONDS.sleep(2);
         } catch(InterruptedException ie){
             Thread.currentThread().interrupt();
         }
@@ -252,6 +256,90 @@ public class CustomerInterface
                 break;
             default:
                 displayHallPage(hallName);
+                break;
+        }
+    }
+    
+    public void displayQuotationsPage()
+    {
+        System.out.print('\u000C');
+        Scanner sc = new Scanner(System.in);
+        System.out.println("*****************************************************************************************");
+        System.out.println("Welcome to the Event Management System - Quotations Page");
+        System.out.println("*****************************************************************************************");
+        
+        customerController.displayQuotations();
+        System.out.println("Enter a hall id to accept");
+        System.out.println("Enter 0 to go back");
+        int hallId = sc.nextInt();
+        switch(hallId)
+        {
+            case 0:
+                displayCustomerPage();
+                break;
+            default:
+                System.out.println("Enter a quotation id to accept");
+                int quotationId = sc.nextInt();
+                if (customerController.searchAcceptableQuotation(hallId, quotationId) == null)
+                {
+                    System.out.print('\u000C');
+                    System.out.println("Quotation does not exist or has not been replied by the hall owner "+
+                                "or has been accepted already");
+                    System.out.println("Taking you back to quotation page");
+                    try{
+                    TimeUnit.SECONDS.sleep(2);
+                    } catch(InterruptedException ie){
+                        Thread.currentThread().interrupt();
+                    }
+                    displayQuotationsPage();
+                }
+                
+                else
+                {
+                    displayAcceptQuotationPage(hallId, quotationId);
+                }
+        }
+        
+    }
+    
+    public void displayAcceptQuotationPage(int hallId, int quotationId)
+    {
+        System.out.print('\u000C');
+        Scanner sc = new Scanner(System.in);
+        System.out.println("*****************************************************************************************");
+        System.out.println("Welcome to the Event Management System - Accept Quotation");
+        System.out.println("*****************************************************************************************");
+        
+        customerController.displayRepliedQuotation(customerController.searchAcceptableQuotation(hallId, quotationId));
+        
+        System.out.println("Enter y to accept quotation and make a booking");
+        //System.out.println("Enter n to decline quotation and and go back");
+        System.out.println("Enter 0 to go back");
+        String choice = sc.nextLine();
+        while (!choice.equalsIgnoreCase("0") && !choice.equalsIgnoreCase("y"))
+        {
+            System.out.println("Invalid Option. Please enter either \"y\" to accept quotation and make booking " +
+                                                "or 0 to go back");
+            choice = sc.nextLine();
+        }
+        switch(choice)
+        {
+            case "0":
+                displayQuotationsPage();
+                break;
+            case "y":
+                customerController.acceptQuotation(customerController.searchAcceptableQuotation(hallId, quotationId));
+                System.out.print('\u000C');
+                System.out.println("Quotation has been successfully accepted and a booking has been made for you!");
+                System.out.println("Taking you back to quotation page");
+                try{
+                    TimeUnit.SECONDS.sleep(2);
+                } catch(InterruptedException ie){
+                    Thread.currentThread().interrupt();
+                }
+                
+                displayQuotationsPage();
+                
                 break;
         }
     }

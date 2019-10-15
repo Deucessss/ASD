@@ -180,4 +180,9 @@ public class Hall
     {
         return this.quotations;
     }
+    
+    public ArrayList<Quotation> getPastQuotations()
+    {
+        return this.pastQuotations;
+    }
 }

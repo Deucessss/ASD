@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 public class OwnerInterface
 {
     // instance variables - replace the example below with your own
@@ -26,7 +27,7 @@ public class OwnerInterface
         System.out.println("Press 2 to Update a Hall");
         System.out.println("Press 3 to Delete a Hall");
         System.out.println("Press 4 to Update personal Details");
-        System.out.println("Press 5 to View Quotations Received("+ownerController.unrepliedQuotations() +
+        System.out.println("Press 5 to View Quotations Received("+ownerController.unrepliedQuotationsCount() +
                            " unreplied quotations)");
         System.out.println("Press 6 to Logout");
         System.out.println("Please enter your choice:");
@@ -48,7 +49,7 @@ public class OwnerInterface
                 displayDeleteHallPage();
                 break;
             case 5:
-                displayQuotationsReceived();
+                displayQuotationsPage();
                 break;
             case 6:
                 ownerController.logout();
@@ -378,7 +379,7 @@ public class OwnerInterface
         }
     }
     
-    public void displayQuotationsReceived()
+    public void displayQuotationsPage()
     {
         System.out.print('\u000C');
         System.out.printf("%s\n",lineBreak);
@@ -399,27 +400,77 @@ public class OwnerInterface
             default:
                 System.out.println("Enter a Quotation ID to view quotation details");
                 int quotID = sc.nextInt();
-                displayQuotationDetails(choice, quotID);
+                displayReplyQuotationPage(choice, quotID);
                 break;
         }
     }
     
-    public void displayQuotationDetails(int hallID, int quotID)
+    public void displayReplyQuotationPage(int hallID, int quotID)
     {
         System.out.print('\u000C');
         System.out.printf("%s\n",lineBreak);
-        System.out.println("Event Management System - Quotations");
+        System.out.println("Event Management System - Reply to a quotation");
         System.out.printf("%s\n",lineBreak);
         Scanner sc = new Scanner(System.in);
         
         
-        ownerController.displayQuotationDetail(hallID, quotID);
+        if (ownerController.searchUnrepliedQuotation(hallID, quotID) == null)
+        {
+            System.out.println("Sorry, the quotation you asked for is either already replied or does not exist");
+            System.out.println("Taking you back to quotation page");
+            try{
+            TimeUnit.SECONDS.sleep(2);
+            } catch(InterruptedException ie){
+                Thread.currentThread().interrupt();
+            }
+            displayQuotationsPage();
+        }
+        else{
+            ownerController.displayUnrepliedQuotation(ownerController.searchUnrepliedQuotation(hallID, quotID));
+            float cateringCost = 0;
+            float photographyCost = 0;
+            float decorationCost = 0;
+            float venueCost;
+            if (ownerController.searchUnrepliedQuotation(hallID, quotID).getCateringService())
+            {    
+                System.out.println("Enter the cost for catering");
+                cateringCost = sc.nextFloat();
+            }
+            if (ownerController.searchUnrepliedQuotation(hallID, quotID).getPhotographyService())
+            {
+                System.out.println("Enter the cost for photography");
+                photographyCost = sc.nextFloat(); 
+            }
+            if (ownerController.searchUnrepliedQuotation(hallID, quotID).getDecorationService()) 
+            {
+                System.out.println("Enter the cost for decoration");
+                decorationCost = sc.nextFloat();
+            }
+            System.out.println("Enter the venue cost");
+            venueCost = sc.nextFloat();
+            
+            ownerController.replyQuotation(ownerController.searchUnrepliedQuotation(hallID, quotID),
+                                        cateringCost, photographyCost, decorationCost, venueCost);
+                                        
+            System.out.println("Quotation Successfully replied!");
+            System.out.println("Taking you back to quotation page");
+            
+            try{
+            TimeUnit.SECONDS.sleep(2);
+            } catch(InterruptedException ie){
+                Thread.currentThread().interrupt();
+            }
+            
+            displayQuotationsPage();
+        }
+        
+        
         System.out.println("Enter 0 to go back");
         int choice = sc.nextInt();
         switch(choice)
         {
             case 0:
-                displayQuotationsReceived();
+                displayQuotationsPage();
                 break;
         }
         

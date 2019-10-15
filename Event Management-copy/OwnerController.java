@@ -50,84 +50,98 @@ public class OwnerController
                             index+1,name,address,contact,description);
     }
     
-    public void displayQuotations()
+    public Quotation searchUnrepliedQuotation(int hallID, int quotationID)
     {
-        System.out.println("-----------------------------------------------------------------------------");
-        System.out.println("");
         for (Hall hall : owner.getHalls())
         {
-            for (Quotation quotation: hall.getQuotations())
-            {
-                System.out.println(hall.getId());
-                System.out.println(quotation.getId());
-                System.out.println(quotation.getGuestNum());
-            }
-            System.out.println("-----------------------------------------------------------------------------");
-        }
-        
-        System.out.println();
-    }
-    
-    public void displayQuotationDetail(int hallId, int quotationId)
-    {
-        
-        for (Hall hall : owner.getHalls())
-        {
-            if (hall.getId() == hallId)
+            if (hall.getId() == hallID)
             {
                 for (Quotation quot : hall.getQuotations())
                 {
-                    if (quot.getId() == quotationId){
-                        int id = quot.getId();
-                        String occasion = quot.getOccasion();
-                        int guestNum = quot.getGuestNum();
-                        String catering = ((quot.getCateringService()) ? "yes" : "no");
-                        String photography = ((quot.getPhotographyService()) ? "yes" : "no");
-                        String decoration = ((quot.getDecorationService()) ? "yes" : "no");
-                        Date startDate = quot.getStartDate();
-                        Date endDate = quot.getEndDate();
-                        float budget = quot.getBudget();
-   
-                        System.out.println("-----------------------------------------------------------------------------");
-                        System.out.format("|  %-28s|  %-42s|\n", "Quotation Id", id);
-                        System.out.println("-----------------------------------------------------------------------------");
-                        System.out.format("|  %-28s|  %-42s|\n", "Occasion", occasion);
-                        System.out.println("-----------------------------------------------------------------------------");
-                        System.out.format("|  %-28s|  %-42d|\n", "Guest Number", guestNum);
-                        System.out.println("-----------------------------------------------------------------------------");
-                        System.out.format("|  %-28s|  %-42s|\n", "Require Catering Service", catering);
-                        System.out.println("-----------------------------------------------------------------------------");
-                        System.out.format("|  %-28s|  %-42s|\n", "Require Photography Service", photography);
-                        System.out.println("-----------------------------------------------------------------------------");
-                        System.out.format("|  %-28s|  %-42s|\n", "Require Decoration Service", decoration);
-                        System.out.println("-----------------------------------------------------------------------------");
-                        System.out.format("|  %-28s|  %-42s|\n", "Start Date", startDate);
-                        System.out.println("-----------------------------------------------------------------------------");
-                        System.out.format("|  %-28s|  %-42s|\n", "End Date", endDate);
-                        System.out.println("-----------------------------------------------------------------------------");
-                        System.out.format("|  %-28s|  %-42.2f|\n", "Budget", budget);
-                        System.out.println("-----------------------------------------------------------------------------");
-                        
-                        break;
+                    if (quot.getId() == quotationID)
+                    {
+                        return quot;
                     }
                 }
             }
         }
-
+        return null;
     }
     
-    public int unrepliedQuotations()
+    public void displayQuotations()
+    {
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println("Quotations waiting for reply");
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println();
+        for (Hall hall : owner.getHalls())
+        {
+            for (Quotation quotation : hall.getQuotations())
+            {
+                displayUnrepliedQuotation(quotation);
+            }
+        }
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println("Replied Quotations");
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println();
+        for (Hall hall : owner.getHalls())
+        for (Quotation quotation : hall.getPastQuotations())
+        {
+            System.out.format("%-8d %-13d\n",quotation.getHall().getId(), quotation.getId());
+        }
+        System.out.println("-----------------------------------------------------------------------------");
+    }
+    
+    public void displayUnrepliedQuotation(Quotation quotation)
+    {
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "Hall Id", quotation.getHall().getId());
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "Quotation Id", quotation.getId());
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "Occasion", quotation.getOccasion());
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42d|\n", "Guest Number", quotation.getGuestNum());
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "Require Catering Service",
+                            ((quotation.getCateringService()) ? "Required" : "Not Required"));
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "Require Photography Service", 
+                            ((quotation.getPhotographyService()) ? "Required" : "Not Required"));
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "Require Decoration Service", 
+                            ((quotation.getDecorationService()) ? "Required" : "Not Required")) ;
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "Start Date", quotation.getStartDate());
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "End Date", quotation.getEndDate());
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42.2f|\n", "Budget", quotation.getBudget());
+        System.out.println("-----------------------------------------------------------------------------");
+    }
+    
+    public void replyQuotation(Quotation quotation, float cateringCost, float photographyCost, float decorationCost,
+                                float venueCost)
+    {
+        quotation.setCateringCost(cateringCost);
+        quotation.setPhotographyCost(photographyCost);
+        quotation.setDecorationCost(decorationCost);
+        quotation.setVenueCost(venueCost);
+        quotation.setTotalAmount(cateringCost + decorationCost + photographyCost + venueCost);
+        quotation.setReplied(true);
+        
+        quotation.setId(quotation.getHall().getPastQuotations().size() + 1);
+        quotation.getHall().getPastQuotations().add(quotation);
+        quotation.getHall().getQuotations().remove(quotation);
+    }
+    
+    public int unrepliedQuotationsCount()
     {
         int count = 0;
         for (Hall hall : owner.getHalls())
         {
-            for (Quotation quot : hall.getQuotations())
-            {
-                if (!quot.getReplied())
-                {
-                    count++;
-                }
-            }
+            count = count + hall.getQuotations().size();
         }
         return count;
     }
