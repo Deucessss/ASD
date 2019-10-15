@@ -6,6 +6,7 @@
  * @version (a version number or a date)
  */
 import java.util.*;
+
 public class CustomerController
 {
     private Customer customer;// instance variables - replace the example below with your own
@@ -113,11 +114,9 @@ public class CustomerController
         System.out.println("-----------------------------------------------------------------------------");
         System.out.format("|  %-28s|  %-42s|\n", "Hall Name", quotation.getHall().getName());
         System.out.println("-----------------------------------------------------------------------------");
-        System.out.format("|  %-28s|  %-42s|\n", "End Date", quotation.getEndDate());
+        System.out.format("|  %-28s|  %-42s|\n", "Start Date", CustomerInterface.formatter.format(quotation.getStartDate()));
         System.out.println("-----------------------------------------------------------------------------");
-        System.out.format("|  %-28s|  %-42s|\n", "Start Date", quotation.getStartDate());
-        System.out.println("-----------------------------------------------------------------------------");
-        System.out.format("|  %-28s|  %-42s|\n", "End Date", quotation.getEndDate());
+        System.out.format("|  %-28s|  %-42s|\n", "End Date", CustomerInterface.formatter.format(quotation.getEndDate()));
         System.out.println("-----------------------------------------------------------------------------");
         System.out.format("|  %-28s|  %-42s|\n", "Occasion", quotation.getOccasion());
         System.out.println("-----------------------------------------------------------------------------");
@@ -156,6 +155,12 @@ public class CustomerController
         System.out.println("-----------------------------------------------------------------------------");
         System.out.format("|  %-28s|  %-42s|\n", "Quotation Id", quotation.getId());
         System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "Hall Name", quotation.getHall().getName());
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "Start Date", CustomerInterface.formatter.format(quotation.getStartDate()));
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "End Date", CustomerInterface.formatter.format(quotation.getEndDate()));
+        System.out.println("-----------------------------------------------------------------------------");
         System.out.format("|  %-28s|  %-42s|\n", "Occasion", quotation.getOccasion());
         System.out.println("-----------------------------------------------------------------------------");
         System.out.format("|  %-28s|  %-42d|\n", "Guest Number", quotation.getGuestNum());
@@ -168,11 +173,6 @@ public class CustomerController
         System.out.println("-----------------------------------------------------------------------------");
         System.out.format("|  %-28s|  %-42s|\n", "Require Decoration Service", 
                             ((quotation.getDecorationService()) ? "Required" : "Not Required")) ;
-        System.out.println("-----------------------------------------------------------------------------");
-        System.out.format("|  %-28s|  %-42s|\n", "Start Date", quotation.getStartDate());
-        System.out.println("-----------------------------------------------------------------------------");
-        System.out.format("|  %-28s|  %-42s|\n", "End Date", quotation.getEndDate());
-        System.out.println("-----------------------------------------------------------------------------");
         System.out.format("|  %-28s|  %-42.2f|\n", "Budget", quotation.getBudget());
         System.out.println("-----------------------------------------------------------------------------");
     }
@@ -193,9 +193,96 @@ public class CustomerController
     public void acceptQuotation(Quotation quotation)
     {
         quotation.setQuotationAccepted(true);
+        
+        Booking booking = new Booking(quotation.getOccasion(), quotation.getGuestNum(),
+                                      quotation.getCateringService(), quotation.getCateringCost(),
+                                      quotation.getPhotographyService(), quotation.getPhotographyCost(),
+                                      quotation.getDecorationService(), quotation.getDecorationCost(),
+                                      quotation.getVenueCost(), quotation.getStartDate(), quotation.getEndDate(),
+                                      quotation.getHall());
+        
+        
+                                      
+        customer.getBookings().add(booking);
+        quotation.getHall().getBookings().add(booking);
+        
+        //customer.getQuotations().remove(quotation);
+        //quotation.getHall().getQuotations().remove(quotation);
+        //quotation.getHall().getPastQuotations().add(quotation);
+        //booking.setId(customer.getBookings.size());
     }
     
+    public void displayBookings()
+    {
+        if (customer.getBookings().size() > 0)
+        {
+            System.out.println("-----------------------------------------------------------------------------");
+            System.out.println("Active Booking");
+            System.out.println("-----------------------------------------------------------------------------");
+            for (Booking booking : customer.getBookings())
+            {
+                displayBooking(booking);
+            }
+        }
+        else
+        {
+            System.out.println("You have no active booking yet");
+        }
+        
+        if (customer.getPastBookings().size() > 0)
+        {
+            System.out.println("-----------------------------------------------------------------------------");
+            System.out.println("Past Booking");
+            System.out.println("-----------------------------------------------------------------------------");
+            for (Booking booking : customer.getPastBookings())
+            {
+                displayBooking(booking);
+            }
+        }
+        else
+        {
+            System.out.println("You have no past booking yet");
+        }
+        
+    }
     
+    public void displayBooking(Booking booking)
+    {
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "Hall Id", booking.getHall().getId());
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "Quotation Id", booking.getId());
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "Hall Name", booking.getHall().getName());
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "Start Date", CustomerInterface.formatter.format(booking.getStartDate()));
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "End Date", CustomerInterface.formatter.format(booking.getEndDate()));
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "Occasion", booking.getOccasion());
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42d|\n", "Guest Number", booking.getGuestNum());
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "Require Catering Service",
+                            ((booking.getCateringService()) ? "Required" : "Not Required"));
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "Catering Cost", booking.getCateringCost());
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "Require Photography Service", 
+                            ((booking.getPhotographyService()) ? "Required" : "Not Required"));
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "Photography Cost", booking.getPhotographyCost());
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "Require Decoration Service", 
+                            ((booking.getDecorationService()) ? "Required" : "Not Required")) ;
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "Decoration Cost", booking.getDecorationCost());
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "Venue Cost", booking.getVenueCost());
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "Total Amount", booking.getTotalAmount());
+        System.out.println("-----------------------------------------------------------------------------");
+    }
     
     public void logout()
     {

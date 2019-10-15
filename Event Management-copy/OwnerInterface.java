@@ -30,14 +30,14 @@ public void displayOwnerPage()
     System.out.println("Press 5 to View Quotations Received("+ownerController.unrepliedQuotationsCount() +
                        " unreplied quotations)");
     System.out.println("Press 6 to Logout");
+    System.out.println("Press 7 to Exit");
     System.out.println("Please enter your choice:");
     int choice;
-    
     while (true)
     {
         try{
             choice = sc.nextInt();
-            if (choice < 1 || choice > 6)
+            if (choice < 1 || choice > 7)
             {
                 throw(new java.util.InputMismatchException());
             }
@@ -67,6 +67,9 @@ public void displayOwnerPage()
             break;
         case 6:
             ownerController.logout();
+            break;
+        case 7:
+            HomeController.exitSoftware();
             break;
     } 
 }

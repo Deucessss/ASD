@@ -28,15 +28,20 @@ public class Booking
     /**
      * Constructor for objects of class Booking
      */
-    public Booking(String occasion, int guestNum, boolean cateringSerivce,
-                     boolean photographyService, boolean decorationService,
-                     Date startDate, Date endDate, float budget, Hall hall)
+    public Booking(String occasion, int guestNum, boolean cateringSerivce, float cateringCost,
+                     boolean photographyService, float photographyCost, boolean decorationService,
+                     float decorationCost, float venueCost, Date startDate, Date endDate, Hall hall)
     {
         this.occasion = occasion;
         this.guestNum = guestNum;
         this.cateringService = cateringService;
+        this.cateringCost = cateringCost;
         this.photographyService = photographyService;
+        this.photographyCost = photographyCost;
         this.decorationService = decorationService;
+        this.decorationCost = decorationCost;
+        this.venueCost = venueCost;
+        this.totalAmount = cateringCost + photographyCost + decorationCost + venueCost;
         this.startDate = startDate;
         this.endDate = endDate;
         this.hall = hall;

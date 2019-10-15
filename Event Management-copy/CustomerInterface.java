@@ -29,21 +29,22 @@ public class CustomerInterface
         System.out.println("*****************************************************************************************");
         
         System.out.println("Please select from the following options:");
-        System.out.println("Press 0 to View All Halls");
-        System.out.println("Press 1 to Search for Hall");
-        System.out.println("Press 2 to View Quotations");
-        System.out.println("Press 3 to View Bookings");
-        System.out.println("Press 3 to Update a Booking");
-        System.out.println("Press 4 to view booking History");
-        System.out.println("Press 5 to Update personal Details");
-        System.out.println("Press 6 to Logout");
+        System.out.println("Press 1 to View All Halls");
+        System.out.println("Press 2 to Search for Hall");
+        System.out.println("Press 3 to View Quotations");
+        System.out.println("Press 4 to View Bookings");
+        System.out.println("Press 5 to Update a Booking");
+        System.out.println("Press 6 to view booking History");
+        System.out.println("Press 7 to Update personal Details");
+        System.out.println("Press 8 to Logout");
+        System.out.println("press 9 to Exit");
         System.out.println("Please enter your choice:");
         int choice;
         while (true)
         {
             try{
                 choice = sc.nextInt();
-                if (choice < 0 || choice > 6)
+                if (choice < 1 || choice > 9)
                 {
                     throw(new java.util.InputMismatchException());
                 }
@@ -59,17 +60,23 @@ public class CustomerInterface
         }
         switch(choice)
         {
-            case 0:
+            case 1:
                 displayViewAllHalls();
                 break;
-            case 1:
+            case 2:
                 displaySearchPage();
                 break;
-            case 2:
+            case 3:
                 displayQuotationsPage();
                 break;
-            case 6:
+            case 4:
+                displayBookingsPage();
+                break;
+            case 8:
                 customerController.logout();
+                break;
+            case 9:
+                HomeController.exitSoftware();
                 break;
         }
     }
@@ -182,7 +189,6 @@ public class CustomerInterface
         System.out.println("Enter the occasion for the event:");
         occasion = sc.nextLine();
         System.out.println("Enter the number of guest that will attend the event:");
-        guestNum = sc.nextInt();
         while (true)
         {
             try{
@@ -211,6 +217,7 @@ public class CustomerInterface
             {
                 startDate = formatter.parse(sStartDate);
                 break;
+                
             } catch (ParseException e){
                 sc.nextLine();
                 System.out.println("Invalid date format. Date format must be dd/mm/yyyy");
@@ -440,6 +447,28 @@ public class CustomerInterface
                 
                 break;
         }
+    }
+    
+    public void displayBookingsPage()
+    {
+        System.out.print('\u000C');
+        Scanner sc = new Scanner(System.in);
+        System.out.println("*****************************************************************************************");
+        System.out.println("Welcome to the Event Management System - Your Bookings");
+        System.out.println("*****************************************************************************************");
+        
+        customerController.displayBookings();
+        
+        System.out.println("Enter the booking id from the active booking list to edit your booking:");
+        System.out.println("Enter 0 to go back");
+        
+        String choice = sc.nextLine();
+        switch(choice)
+        {
+            default:
+                displayCustomerPage();
+        }
+        
     }
     
     public CustomerController getCustomerController()

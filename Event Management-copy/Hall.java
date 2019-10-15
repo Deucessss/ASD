@@ -24,6 +24,8 @@ public class Hall
     private int hallRating;
     private ArrayList<Quotation> quotations = new ArrayList<Quotation>();
     private ArrayList<Quotation> pastQuotations = new ArrayList<Quotation>();
+    private ArrayList<Booking> bookings = new ArrayList<Booking>();
+    private ArrayList<Booking> pastBookings = new ArrayList<Booking>();
     // private OwnerDiscount ownerDiscount;
     // private AdminDiscount adminDiscount;
 
@@ -46,6 +48,16 @@ public class Hall
         this.photographyService = photographyService;
         this.price =price;
         this.hallCapacity = hallCapacity;
+    }
+    
+    public ArrayList<Booking> getBookings()
+    {
+        return this.bookings;
+    }
+    
+    public ArrayList<Booking> getPastBookings()
+    {
+        return this.pastBookings;
     }
     
     public int getId()

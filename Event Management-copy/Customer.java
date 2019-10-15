@@ -20,6 +20,8 @@ public class Customer extends User
     private String answer2;
     private String answer3;
     private ArrayList<Quotation> quotations = new ArrayList<Quotation>();
+    private ArrayList<Booking> bookings = new ArrayList<Booking>();
+    private ArrayList<Booking> pastBookings = new ArrayList<Booking>();
     // private ArrayList<Bookings> customerBookings = new ArrayList<Bookings>();
     /**
      * Constructor for objects of class Customer
@@ -36,6 +38,16 @@ public class Customer extends User
         this.answer3 = answer3;
     }
     
+    public ArrayList<Booking> getBookings()
+    {
+        return this.bookings;
+    }
+    
+    public ArrayList<Booking>getPastBookings()
+    {
+        return this.pastBookings;
+    }
+     
     public String getAnswer1() {
         return answer1;
     }

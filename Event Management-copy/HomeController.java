@@ -210,7 +210,7 @@ public class HomeController
         Accounts.viewHalls();
     }
     
-    public void exitSoftware()
+    public static void exitSoftware()
     {
         System.exit(0);
     }
