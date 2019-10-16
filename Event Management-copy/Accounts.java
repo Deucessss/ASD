@@ -56,27 +56,26 @@ public class Accounts
     public static void viewHalls()
     {
         int count = 0;
-        System.out.println("-----------------------------------------------------------------------------");
-        System.out.printf("%-10s %-30s %-9s %-11s %-11s", "Hall Name", 
-                            "Hall Address", "Catering", "Photography", "Decoration");
-        System.out.println();
-        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println("---------------------------------------------------------------------------------------------------------");
+        System.out.printf("| %-10s | %-30s | %-15s | %-9s | %-11s | %-11s |\n", "Hall Name","Hall Address",
+                          "Contact Number", "Catering", "Photography", "Decoration");
+        System.out.println("---------------------------------------------------------------------------------------------------------");
         for (int i = 0; i < owners.size(); i++)
         {
             for (int j = 0; j< owners.get(i).getHalls().size(); j++)
             {
                 String hallName = owners.get(i).getHalls().get(j).getName();
                 String hallAddress = owners.get(i).getHalls().get(j).getAddress();
+                String contactNum = owners.get(i).getHalls().get(j).getContact();
                 String catering = (owners.get(i).getHalls().get(j).getCateringService() ? "yes" : "no");
                 String photography = (owners.get(i).getHalls().get(j).getPhotographyService() ? "yes" : "no");
                 String decoration = (owners.get(i).getHalls().get(j).getDecorationService() ? "yes" : "no");
-                System.out.format("%-10s %-30s %-9s %-11s %-11s", hallName, hallAddress, 
-                                    catering, photography, decoration);
-                System.out.println();
+                System.out.format("| %-10s | %-30s | %-15s | %-9s | %-11s | %-11s |\n", hallName, hallAddress,
+                                    contactNum, catering, photography, decoration);
+                System.out.println("---------------------------------------------------------------------------------------------------------");
                 count++;
             }
         }
-        System.out.println("-----------------------------------------------------------------------------");
         
         if (count == 0)
         {

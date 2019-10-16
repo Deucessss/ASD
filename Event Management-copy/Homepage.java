@@ -330,7 +330,7 @@ public class Homepage
         System.out.println("Please log in to book this hall");
         System.out.println("Enter 0 to Register");
         System.out.println("Enter 1 to Log in");
-        System.out.println("Enter 2 to go back to home page");
+        System.out.println("Enter 2 to go back to view hall page");
         int choice; //= sc.nextInt();
         while (true)
         {
@@ -359,7 +359,7 @@ public class Homepage
                 displayCustomerRegistrationPage();
                 break;
             case 2:
-                displayHomepage();
+                displayViewHallPage();
                 break;
         }
     }

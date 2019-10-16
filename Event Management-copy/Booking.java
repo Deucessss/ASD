@@ -9,7 +9,8 @@ import java.util.*;
 public class Booking
 {
     // instance variables - replace the example below with your own
-    private int id;
+    private int idOwner;
+    private int idCust;
     private String occasion;
     private int guestNum;
     private boolean cateringService;
@@ -25,12 +26,14 @@ public class Booking
     private boolean updated = false;
     private boolean completed = false;
     private Hall hall;
+    private Customer customer;
     /**
      * Constructor for objects of class Booking
      */
     public Booking(String occasion, int guestNum, boolean cateringSerivce, float cateringCost,
                      boolean photographyService, float photographyCost, boolean decorationService,
-                     float decorationCost, float venueCost, Date startDate, Date endDate, Hall hall)
+                     float decorationCost, float venueCost, Date startDate, Date endDate, Hall hall,
+                     Customer customer)
     {
         this.occasion = occasion;
         this.guestNum = guestNum;
@@ -45,16 +48,28 @@ public class Booking
         this.startDate = startDate;
         this.endDate = endDate;
         this.hall = hall;
+        this.idOwner = hall.getBookings().size() + 1;
+        this.idCust = customer.getBookings().size() + 1;
     }
     
-    public int getId()
+    public int getIdOwner()
     {
-        return this.id;
+        return this.idOwner;
     }
     
-    public void setId(int id)
+    public void setIdOwner(int idOwner)
     {
-        this.id = id;
+        this.idOwner = idOwner;
+    }
+    
+    public int getIdCust()
+    {
+        return this.idCust;
+    }
+    
+    public void setIdCust(int idCust)
+    {
+        this.idCust = idCust;
     }
     
     public String getOccasion()

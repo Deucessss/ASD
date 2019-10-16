@@ -185,8 +185,6 @@ public class HomeController
         String photography = (result.getPhotographyService() ? "yes" : "no");
         String decoration = (result.getDecorationService() ? "yes" : "no");
         
-        
-        
         System.out.println("-----------------------------------------------------------------------------");
         System.out.format("|  %-20s|  %-50s|\n", "Hall Name", name);
         System.out.println("-----------------------------------------------------------------------------");
@@ -202,6 +200,22 @@ public class HomeController
         System.out.println("-----------------------------------------------------------------------------");
         System.out.format("|  %-20s|  %-50s|\n", "Decoration Serivce", decoration);
         System.out.println("-----------------------------------------------------------------------------");
+        if (result.getBookings().size() == 0)
+        {
+            System.out.format("|  %-20s|  %-50s|\n", "Availability", "This hall is Available");
+        }
+        else
+        {
+            System.out.format("|  %-20s|  %-50s|\n", "Availability", "This hall is unavailable between:");
+            for (Booking booking : result.getBookings())
+            {
+                String availability =  CustomerInterface.formatter.format(booking.getStartDate()) + " - " +
+                                CustomerInterface.formatter.format(booking.getEndDate());
+                System.out.format("|  %-20s|  %-50s|\n", "", availability);
+            }
+        }
+        System.out.println("-----------------------------------------------------------------------------");
+        
     }
     
     

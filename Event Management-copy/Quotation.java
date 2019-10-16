@@ -10,7 +10,8 @@ import java.util.*;
 public class Quotation
 {
     // instance variables - replace the example below with your own
-    private int id;
+    private int idOwner;
+    private int idCust;
     private String occasion;
     private int guestNum;
     private boolean cateringService;
@@ -25,7 +26,9 @@ public class Quotation
     private float decorationCost;
     private float venueCost;
     private float totalAmount;
+    private float depositAmount = totalAmount/2;
     private boolean quotationAccepted;
+    private boolean depositPaid = false;
     
     private Customer customer;
     private Hall hall;
@@ -47,18 +50,49 @@ public class Quotation
         this.endDate = endDate;
         this.budget = budget;
         this.hall = hall;
-        this.id = hall.getQuotations().size() + 1;
+        this.idOwner = hall.getQuotations().size() + 1;
+        this.idCust = customer.getQuotations().size() + 1;
         this.customer = customer;
     }
-
-    public int getId()
+    
+    public Customer getCustomer()
     {
-        return this.id;
+        return this.customer;
     }
     
-    public void setId(int id)
+    public float getDepositAmount()
     {
-        this.id = id;
+        return this.depositAmount;
+    }
+    
+    public boolean getDepositPaid()
+    {
+        return this.depositPaid;
+    }
+    
+    public void setDepositPaid(boolean depositPaid)
+    {
+        this.depositPaid = depositPaid;
+    }
+    
+    public int getIdOwner()
+    {
+        return this.idOwner;
+    }
+    
+    public void setIdOwner(int idOwner)
+    {
+        this.idOwner = idOwner;
+    }
+    
+    public int getIdCust()
+    {
+        return this.idCust;
+    }
+    
+    public void setIdCust(int idCust)
+    {
+        this.idCust = idCust;
     }
     
     public String getOccasion()
@@ -215,4 +249,6 @@ public class Quotation
     {
         return this.hall;
     }
+    
+    
 }

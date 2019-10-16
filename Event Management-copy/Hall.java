@@ -14,7 +14,7 @@ public class Hall
     private String contact;
     private String description;
     private int id;
-    private boolean availability;
+    //private boolean availability;
     private float hallDiscount;
     private boolean cateringService;
     private boolean decorationService;
@@ -32,7 +32,7 @@ public class Hall
     /**
      * Constructor for objects of class Hall
      */
-    public Hall(String name, String address, String contact, String description, boolean availability,
+    public Hall(String name, String address, String contact, String description,
                 float hallDiscount,boolean cateringService,boolean decorationService,
                 boolean photographyService,float price, int hallCapacity)
     {
@@ -41,7 +41,7 @@ public class Hall
         this.address = address;
         this.contact = contact;
         this.description = description.replaceAll("(.{50})", String.format("$1|\n|%22s|  ", ""));
-        this.availability = availability;
+        //this.availability = availability;
         this.hallDiscount = hallDiscount;
         this.cateringService = cateringService;
         this.decorationService = decorationService;
@@ -90,15 +90,15 @@ public class Hall
         this.address = newAddress;
     }
     
-    public boolean getAvailabity()
-    {
-        return this.availability;
-    }
+    // public boolean getAvailabity()
+    // {
+        // return this.availability;
+    // }
     
-    public void setAvailability(boolean availability)
-    {
-        this.availability = availability;
-    }
+    // public void setAvailability(boolean availability)
+    // {
+        // this.availability = availability;
+    // }
     
     public String getContact()
     {

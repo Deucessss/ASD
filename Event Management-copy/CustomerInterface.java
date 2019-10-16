@@ -31,7 +31,7 @@ public class CustomerInterface
         System.out.println("Please select from the following options:");
         System.out.println("Press 1 to View All Halls");
         System.out.println("Press 2 to Search for Hall");
-        System.out.println("Press 3 to View Quotations");
+        System.out.println("Press 3 to View Quotations(" + customerController.countRepliedQuotations() + " newly replied)");
         System.out.println("Press 4 to View Bookings");
         System.out.println("Press 5 to Update a Booking");
         System.out.println("Press 6 to view booking History");
@@ -186,6 +186,9 @@ public class CustomerInterface
         String sEndDate;
         Date endDate;
         float budget;
+        
+        HomeController.displayHallDetail(hallName);
+        
         System.out.println("Enter the occasion for the event:");
         occasion = sc.nextLine();
         System.out.println("Enter the number of guest that will attend the event:");
@@ -216,7 +219,16 @@ public class CustomerInterface
             try
             {
                 startDate = formatter.parse(sStartDate);
-                break;
+                if (customerController.checkDate(hallName, startDate))
+                {
+                    break;
+                }
+                else
+                {
+                    System.out.println("Entered date is unavailable");
+                    System.out.println("Please Re-Enter a date:");
+                    sStartDate = sc.nextLine();
+                }
                 
             } catch (ParseException e){
                 sc.nextLine();
@@ -237,7 +249,20 @@ public class CustomerInterface
                 }
                 else
                 {
-                    break;
+                    Calendar c = Calendar.getInstance();
+                    c.setTime(startDate);
+                    c.add(Calendar.DATE, duration);
+                    endDate = c.getTime();
+                    if (customerController.checkDate(hallName, endDate))
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        System.out.println("Entered date is unavailable");
+                        System.out.println("Please Re-enter duration:");
+                        sc.nextLine();
+                    }
                 }
             }catch (java.util.InputMismatchException e){
                 sc.nextLine();
@@ -245,10 +270,7 @@ public class CustomerInterface
                 continue;
             }
         }
-        Calendar c = Calendar.getInstance();
-        c.setTime(startDate);
-        c.add(Calendar.DATE, duration);
-        endDate = c.getTime();
+        
         
         System.out.println("Enter your budget:");
         while (true)
@@ -327,11 +349,11 @@ public class CustomerInterface
         String hallName = sc.nextLine();
         
         while(!customerController.checkHallExist(hallName) && !hallName.equalsIgnoreCase("0"))
-                {
-                    System.out.println("Sorry, there is no hall named "+ hallName);
-                    System.out.println("Please re-enter a hall name:");
-                    hallName = sc.nextLine();
-                }
+        {
+            System.out.println("Sorry, there is no hall named "+ hallName);
+            System.out.println("Please re-enter a hall name:");
+            hallName = sc.nextLine();
+        }
         switch(hallName)
         {
             case "0":
@@ -350,15 +372,15 @@ public class CustomerInterface
         System.out.println("*****************************************************************************************");
         System.out.println("Welcome to the Event Management System - Quotations Page");
         System.out.println("*****************************************************************************************");
-        
+      
         customerController.displayQuotations();
-        System.out.println("Enter a hall id to accept");
+        System.out.println("Enter a quotation id to accept");
         System.out.println("Enter 0 to go back");
-        int hallId;
+        int quotId;
         while (true)
         {
             try{
-                hallId = sc.nextInt();
+                quotId = sc.nextInt();
                 break;
             }catch (java.util.InputMismatchException e){
                 sc.nextLine();
@@ -366,28 +388,14 @@ public class CustomerInterface
                 continue;
             }
         }
-        switch(hallId)
+        switch(quotId)
         {
             case 0:
                 displayCustomerPage();
                 break;
             default:
-                System.out.println("Enter a quotation id to accept");
-                int quotationId;
-                while (true)
+                if (customerController.searchAcceptableQuotation(quotId) == null)
                 {
-                    try{
-                        quotationId = sc.nextInt();
-                        break;
-                    }catch (java.util.InputMismatchException e){
-                        sc.nextLine();
-                        System.out.println("Invalid option. Input must be a number");
-                        continue;
-                    }
-                }
-                if (customerController.searchAcceptableQuotation(hallId, quotationId) == null)
-                {
-                    System.out.print('\u000C');
                     System.out.println("Quotation does not exist or has not been replied by the hall owner "+
                                 "or has been accepted already");
                     System.out.println("Taking you back to quotation page");
@@ -401,13 +409,14 @@ public class CustomerInterface
                 
                 else
                 {
-                    displayAcceptQuotationPage(hallId, quotationId);
+                    displayAcceptQuotationPage(quotId);
                 }
+                break;
         }
         
     }
     
-    public void displayAcceptQuotationPage(int hallId, int quotationId)
+    public void displayAcceptQuotationPage(int quotationId)
     {
         System.out.print('\u000C');
         Scanner sc = new Scanner(System.in);
@@ -415,7 +424,7 @@ public class CustomerInterface
         System.out.println("Welcome to the Event Management System - Accept Quotation");
         System.out.println("*****************************************************************************************");
         
-        customerController.displayRepliedQuotation(customerController.searchAcceptableQuotation(hallId, quotationId));
+        customerController.displayRepliedQuotation(customerController.searchAcceptableQuotation(quotationId));
         
         System.out.println("Enter y to accept quotation and make a booking");
         //System.out.println("Enter n to decline quotation and and go back");
@@ -433,18 +442,17 @@ public class CustomerInterface
                 displayQuotationsPage();
                 break;
             case "y":
-                customerController.acceptQuotation(customerController.searchAcceptableQuotation(hallId, quotationId));
-                System.out.print('\u000C');
-                System.out.println("Quotation has been successfully accepted and a booking has been made for you!");
-                System.out.println("Taking you back to quotation page");
+                customerController.acceptQuotation(customerController.searchAcceptableQuotation(quotationId));
+                System.out.println("Quotation has been successfully accepted!");
+                System.out.println("Please pay half of the total amount to the owner as a deposit!");
+                System.out.println("This booking will be made for you once the owner receives the deposit!");
+                System.out.println("Taking you to your booking page");
                 try{
-                    TimeUnit.SECONDS.sleep(2);
+                    TimeUnit.SECONDS.sleep(3);
                 } catch(InterruptedException ie){
                     Thread.currentThread().interrupt();
                 }
-                
                 displayQuotationsPage();
-                
                 break;
         }
     }

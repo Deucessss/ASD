@@ -43,6 +43,26 @@ public class CustomerController
         }
     }
     
+    public Boolean checkDate(String hallName, Date date)
+    {
+        Hall requestedHall = Accounts.searchHall(hallName);
+        if (date.before(new Date()))
+        {
+            return false;
+        }
+        else
+        {
+            for (Booking booking : requestedHall.getBookings())
+            {
+                if ((date.compareTo(booking.getEndDate()) <= 0) && (date.compareTo(booking.getStartDate())>=0))
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+    
     public void requestQuotation(String hallName, String occasion, int guestNum, boolean cateringService,
                                  boolean photographyService, boolean decorationService,
                                  Date startDate, Date endDate, float budget)
@@ -78,27 +98,58 @@ public class CustomerController
         return false;
     }
     
+    public int countRepliedQuotations()
+    {
+        int count = 0;
+        for (Quotation quotation : customer.getQuotations())
+        {
+            // Count the number of quotations that was replied by the owner and is not accepted by the customer
+            if (quotation.getReplied() && !quotation.getQuotationAccepted())
+            {
+                count++;
+            }
+        }
+        return count;
+    }
+    
     public void displayQuotations()
     {
-        System.out.println("-----------------------------------------------------------------------------");
-        System.out.println("Replied Quotations");
-        System.out.println("-----------------------------------------------------------------------------");
+
+        System.out.println("-----------------------------------------------------------------------------------------");
+        System.out.format("%-35s%-19s%35s\n","|","Replied Quotations","|");
+        System.out.println("-----------------------------------------------------------------------------------------");
+        System.out.format("| %-13s | %-11s | %-13s | %-11s | %-11s | %-12s|\n",
+                          "Quotation Id", "Occasion", "Guest Number", "Start Date", " End Date", "Accepted");
+        System.out.println("-----------------------------------------------------------------------------------------");
         for (Quotation quotation : customer.getQuotations())
         {
             if (quotation.getReplied())
             {
-                displayRepliedQuotation(quotation);
+                System.out.format("| %-13d | %-11s | %-13d | %-11s | %-11s | %-12s|\n",
+                                        quotation.getIdCust(), quotation.getOccasion(), quotation.getGuestNum(),
+                                        CustomerInterface.formatter.format(quotation.getStartDate()),
+                                        CustomerInterface.formatter.format(quotation.getEndDate()),
+                                        ((quotation.getQuotationAccepted()) ? "Yes" : "No"));
+                System.out.println("-----------------------------------------------------------------------------------------");
             }
         }
         
-        System.out.println("-----------------------------------------------------------------------------");
-        System.out.println("Quotations Waiting for Reply");
-        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println("-----------------------------------------------------------------------------------------");
+        System.out.format("%-30s%-29s%30s\n", "|", "Quotations Waiting for Reply", "|");
+        System.out.println("-----------------------------------------------------------------------------------------");
+        System.out.format("| %-13s | %-11s | %-13s | %-11s | %-11s | %-12s|\n",
+                          "Quotation Id", "Occasion", "Guest Number", "Start Date", " End Date", "Budget");
+        System.out.println("-----------------------------------------------------------------------------------------");
         for (Quotation quotation : customer.getQuotations())
         {
             if (!quotation.getReplied())
             {
-                displayUnrepliedQuotation(quotation);
+                System.out.format("| %-13d | %-11s | %-13d | %-11s | %-11s | %-12.2f|\n",
+                                        quotation.getIdCust(), quotation.getOccasion(), quotation.getGuestNum(),
+                                        CustomerInterface.formatter.format(quotation.getStartDate()),
+                                        CustomerInterface.formatter.format(quotation.getEndDate()),
+                                        quotation.getBudget());
+                System.out.println("-----------------------------------------------------------------------------------------");
             }
         }
         
@@ -110,7 +161,7 @@ public class CustomerController
         System.out.println("-----------------------------------------------------------------------------");
         System.out.format("|  %-28s|  %-42s|\n", "Hall Id", quotation.getHall().getId());
         System.out.println("-----------------------------------------------------------------------------");
-        System.out.format("|  %-28s|  %-42s|\n", "Quotation Id", quotation.getId());
+        System.out.format("|  %-28s|  %-42s|\n", "Quotation Id", quotation.getIdCust());
         System.out.println("-----------------------------------------------------------------------------");
         System.out.format("|  %-28s|  %-42s|\n", "Hall Name", quotation.getHall().getName());
         System.out.println("-----------------------------------------------------------------------------");
@@ -153,7 +204,7 @@ public class CustomerController
         System.out.println("-----------------------------------------------------------------------------");
         System.out.format("|  %-28s|  %-42s|\n", "Hall Id", quotation.getHall().getId());
         System.out.println("-----------------------------------------------------------------------------");
-        System.out.format("|  %-28s|  %-42s|\n", "Quotation Id", quotation.getId());
+        System.out.format("|  %-28s|  %-42s|\n", "Quotation Id", quotation.getIdCust());
         System.out.println("-----------------------------------------------------------------------------");
         System.out.format("|  %-28s|  %-42s|\n", "Hall Name", quotation.getHall().getName());
         System.out.println("-----------------------------------------------------------------------------");
@@ -177,12 +228,12 @@ public class CustomerController
         System.out.println("-----------------------------------------------------------------------------");
     }
     
-    public Quotation searchAcceptableQuotation(int hallId, int quotationId)
+    public Quotation searchAcceptableQuotation(int quotationId)
     {
         for (Quotation quotation : customer.getQuotations())
         {
-            if (quotation.getHall().getId() == hallId && quotation.getId() == quotationId 
-                    && !quotation.getQuotationAccepted() && quotation.getReplied())
+            if (quotation.getIdCust() == quotationId && 
+                !quotation.getQuotationAccepted() && quotation.getReplied())
             {
                 return quotation;
             }
@@ -193,27 +244,11 @@ public class CustomerController
     public void acceptQuotation(Quotation quotation)
     {
         quotation.setQuotationAccepted(true);
-        
-        Booking booking = new Booking(quotation.getOccasion(), quotation.getGuestNum(),
-                                      quotation.getCateringService(), quotation.getCateringCost(),
-                                      quotation.getPhotographyService(), quotation.getPhotographyCost(),
-                                      quotation.getDecorationService(), quotation.getDecorationCost(),
-                                      quotation.getVenueCost(), quotation.getStartDate(), quotation.getEndDate(),
-                                      quotation.getHall());
-        
-        
-                                      
-        customer.getBookings().add(booking);
-        quotation.getHall().getBookings().add(booking);
-        
-        //customer.getQuotations().remove(quotation);
-        //quotation.getHall().getQuotations().remove(quotation);
-        //quotation.getHall().getPastQuotations().add(quotation);
-        //booking.setId(customer.getBookings.size());
     }
     
     public void displayBookings()
     {
+        
         if (customer.getBookings().size() > 0)
         {
             System.out.println("-----------------------------------------------------------------------------");
@@ -251,7 +286,7 @@ public class CustomerController
         System.out.println("-----------------------------------------------------------------------------");
         System.out.format("|  %-28s|  %-42s|\n", "Hall Id", booking.getHall().getId());
         System.out.println("-----------------------------------------------------------------------------");
-        System.out.format("|  %-28s|  %-42s|\n", "Quotation Id", booking.getId());
+        System.out.format("|  %-28s|  %-42s|\n", "Quotation Id", booking.getIdCust());
         System.out.println("-----------------------------------------------------------------------------");
         System.out.format("|  %-28s|  %-42s|\n", "Hall Name", booking.getHall().getName());
         System.out.println("-----------------------------------------------------------------------------");
