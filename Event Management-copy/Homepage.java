@@ -331,7 +331,7 @@ public class Homepage
         System.out.println("Enter 0 to Register");
         System.out.println("Enter 1 to Log in");
         System.out.println("Enter 2 to go back to view hall page");
-        int choice; //= sc.nextInt();
+        int choice;
         while (true)
         {
             try{

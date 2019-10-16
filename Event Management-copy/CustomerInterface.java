@@ -46,7 +46,8 @@ public class CustomerInterface
                 choice = sc.nextInt();
                 if (choice < 1 || choice > 9)
                 {
-                    throw(new java.util.InputMismatchException());
+                    System.out.println("Invalid Option. Please re-enter a number between 1 and 9");
+                    continue;
                 }
                 else
                 {
@@ -54,7 +55,7 @@ public class CustomerInterface
                 }
             }catch (java.util.InputMismatchException e){
                 sc.nextLine();
-                System.out.println("Invalid option. Please re-enter a number between 1 and 6");
+                System.out.println("Invalid option. Please re-enter a number between 1 and 9");
                 continue;
             }
         }
@@ -71,6 +72,15 @@ public class CustomerInterface
                 break;
             case 4:
                 displayBookingsPage();
+                break;
+            case 5:
+                displayCustomerPage();
+                break;
+            case 6:
+                displayCustomerPage();
+                break;
+            case 7:
+                displayCustomerPage();
                 break;
             case 8:
                 customerController.logout();
@@ -134,17 +144,18 @@ public class CustomerInterface
         Scanner sc = new Scanner(System.in);
         HomeController.displayHallDetail(hallName);
         System.out.println();
-        System.out.println("Enter 0 to ask for quotation");
-        System.out.println("Enter 1 to go back to home page");
+        System.out.println("Enter 1 to ask for quotation");
+        System.out.println("Enter 2 to go back to home page");
         
         int choice;
         while (true)
         {
             try{
                 choice = sc.nextInt();
-                if (choice != 0 && choice !=1)
+                if (choice != 1 && choice !=2)
                 {
-                    throw(new java.util.InputMismatchException());
+                    System.out.println("Invalid option. Please re-enter a number from 1 to 2");
+                    continue;
                 }
                 else
                 {
@@ -152,16 +163,16 @@ public class CustomerInterface
                 }
             }catch (java.util.InputMismatchException e){
                 sc.nextLine();
-                System.out.println("Invalid option. Please re-enter a number from 0 to 1");
+                System.out.println("Invalid option. Please re-enter a number from 1 to 2");
                 continue;
             }
         }
         switch(choice)
         {
-            case 0:
+            case 1:
                 displaySendQuotationPage(hallName);
                 break;
-            case 1:
+            case 2:
                 displayCustomerPage();
                 break;
         }
@@ -174,9 +185,9 @@ public class CustomerInterface
         System.out.println("Welcome to the Event Management System - Hall: " + hallName);
         System.out.println("*****************************************************************************************");
         Scanner sc = new Scanner(System.in);
-        Boolean catering = false;
-        Boolean photography = false;
-        Boolean decoration = false;
+        boolean catering = false;
+        boolean photography = false;
+        boolean decoration = false;
         String choice;
         String occasion;
         int guestNum;
@@ -198,7 +209,8 @@ public class CustomerInterface
                 guestNum = sc.nextInt();
                 if (guestNum < 0)
                 {
-                    throw(new java.util.InputMismatchException());
+                    System.out.println("Invalid input. Please enter a number that is greater than 0");
+                    continue;
                 }
                 else
                 {
@@ -228,6 +240,7 @@ public class CustomerInterface
                     System.out.println("Entered date is unavailable");
                     System.out.println("Please Re-Enter a date:");
                     sStartDate = sc.nextLine();
+                    continue;
                 }
                 
             } catch (ParseException e){
@@ -235,6 +248,7 @@ public class CustomerInterface
                 System.out.println("Invalid date format. Date format must be dd/mm/yyyy");
                 System.out.println("Please re-enter a date according to the format:");
                 sStartDate = sc.nextLine();
+                continue;
             }
         }
         
@@ -245,7 +259,8 @@ public class CustomerInterface
                 duration = sc.nextInt();
                 if (duration < 0)
                 {
-                    throw(new java.util.InputMismatchException());
+                    System.out.println("Duration must be greater than 0. Please re-enter:");
+                    continue;
                 }
                 else
                 {
@@ -266,7 +281,7 @@ public class CustomerInterface
                 }
             }catch (java.util.InputMismatchException e){
                 sc.nextLine();
-                System.out.println("Invalid input. Duration must be a number greater than 0");
+                System.out.println("Duration must be a number greater than 0. Please re-enter:");
                 continue;
             }
         }
@@ -279,7 +294,8 @@ public class CustomerInterface
                 budget = sc.nextFloat();
                 if (budget < 0)
                 {
-                    throw(new java.util.InputMismatchException());
+                    System.out.println("Duration must be a number greater than 0. Please re-enter:");
+                    continue;
                 }
                 else
                 {
@@ -287,7 +303,7 @@ public class CustomerInterface
                 }
             }catch (java.util.InputMismatchException e){
                 sc.nextLine();
-                System.out.println("Invalid input. Budget must be a number greater than 0");
+                System.out.println("Duration must be a number greater than 0. Please re-enter:");
                 continue;
             }
         }
@@ -296,16 +312,31 @@ public class CustomerInterface
         {
             System.out.println("Do you require catering service for the event?(y/n)");
             choice = sc.nextLine();
+            while(!choice.equalsIgnoreCase("y") && !choice.equalsIgnoreCase("n"))
+            {
+                System.out.println("Please enter either \"y\" or \"n\" for catering service:");
+                choice = sc.nextLine();
+            }
             if (choice.equalsIgnoreCase("y"))
             {
                 catering = true;
             }
+            else
+            {
+                catering = false;
+            }
+            
         }
         
         if (customerController.serviceProvided(hallName).get(1))
         {
             System.out.println("Do you require photography service for the event?(y/n)");
             choice = sc.nextLine();
+            while(!choice.equalsIgnoreCase("y") && !choice.equalsIgnoreCase("n"))
+            {
+                System.out.println("Please enter either \"y\" or \"n\" for photography service:");
+                choice = sc.nextLine();
+            }
             if (choice.equalsIgnoreCase("y"))
             {
                 photography = true;
@@ -316,6 +347,11 @@ public class CustomerInterface
         {
             System.out.println("Do you require decoration service for the event?(y/n)");
             choice = sc.nextLine();
+            while(!choice.equalsIgnoreCase("y") && !choice.equalsIgnoreCase("n"))
+            {
+                System.out.println("Please enter either \"y\" or \"n\" for decoration service:");
+                choice = sc.nextLine();
+            }
             if (choice.equalsIgnoreCase("y"))
             {
                 decoration = true;
@@ -324,7 +360,7 @@ public class CustomerInterface
         
         customerController.requestQuotation(hallName, occasion, guestNum, catering, photography,
                                             decoration, startDate, endDate, budget);
-        System.out.print('\u000C');          
+                                            
         System.out.println("Quotation successfully sent!");
         
         try{

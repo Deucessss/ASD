@@ -27,9 +27,9 @@ public void displayOwnerPage()
     System.out.println("Press 2 to Update a Hall");
     System.out.println("Press 3 to Delete a Hall");
     System.out.println("Press 4 to Update personal Details");
-    System.out.println("Press 5 to View Unreplied Quotations("+ownerController.unrepliedQuotationsCount() +
+    System.out.println("Press 5 to View Unreplied Quotations("+ ownerController.unrepliedQuotationsCount() +
                        " unreplied quotations)");
-    System.out.println("Press 6 to View Replied Quotations("+ownerController.AcceptedQuotationsCount()+
+    System.out.println("Press 6 to View Replied Quotations("+ ownerController.acceptedQuotationsCount() +
                         " accepted quoations)");
     System.out.println("Press 7 to View Bookings");
     System.out.println("Press 8 to Logout");
@@ -42,7 +42,8 @@ public void displayOwnerPage()
             choice = sc.nextInt();
             if (choice < 1 || choice > 9)
             {
-                throw(new java.util.InputMismatchException());
+                System.out.println("Invalid input. Please re-enter a number between 1 and 9");
+                continue;
             }
             else
             {
@@ -50,7 +51,7 @@ public void displayOwnerPage()
             }
         } catch (java.util.InputMismatchException e){
             sc.nextLine();
-            System.out.println("Invalid input. Please re-enter a number between 1 and 6");
+            System.out.println("Invalid input. Please re-enter a number between 1 and 9");
         }
     }
     
@@ -64,6 +65,9 @@ public void displayOwnerPage()
             break;
         case 3:
             displayDeleteHallPage();
+            break;
+        case 4:
+            displayOwnerPage();
             break;
         case 5:
             displayUnrepliedQuotationsPage();
@@ -175,7 +179,8 @@ public void displayAddHallPage()
             hallCapacity = sc.nextInt();
             if (hallCapacity < 50)
             {
-                throw(new java.util.InputMismatchException());
+                System.out.println("The minimum capacity of the hall must be 50");
+                continue;
             }
             else
             {
@@ -183,7 +188,7 @@ public void displayAddHallPage()
             }
         }catch (java.util.InputMismatchException e){
             sc.nextLine();
-            System.out.println("The minimum capacity of the hall must be 100");
+            System.out.println("Hall capacity must be a number greater than 50");
             continue;
         }
     }
@@ -210,7 +215,8 @@ public void displayAddHallPage()
             hallDiscount = sc.nextFloat();
             if (hallDiscount > 100 || hallDiscount < 0)
             {
-                throw(new java.util.InputMismatchException());
+                System.out.println("Hall discount must be between 1 and 100");
+                continue;
             }
             else
             {
@@ -218,15 +224,15 @@ public void displayAddHallPage()
             }
         }catch(java.util.InputMismatchException e){
             sc.nextLine();
-            System.out.println("Hall discount must be between 1 and 100");
+            System.out.println("Hall discount must be a number");
             continue;
         }
     }
     ownerController.addHall(name,address,contact,description,
                             hallDiscount,cateringService,decorationService,
                             photographyService,price,hallCapacity);
-    System.out.print('\u000C');
-    System.out.println("Hall successfully added!");
+    
+    System.out.println("Hall has been successfully added!");
     System.out.println("Taking you back to your home page");
     try{
         TimeUnit.SECONDS.sleep(2);
@@ -250,14 +256,15 @@ public void displayUpdateHallPage()
         System.out.println("Sorry, you have not added any hall yet");
         System.out.println("Press 1 to add a hall");
         System.out.println("Press 2 to go back");
-        int option;// = sc.nextInt();
+        int option;
         while (true)
         {
             try{
                 option = sc.nextInt();
                 if (option != 1 && option != 2)
                 {
-                    throw(new java.util.InputMismatchException());
+                    System.out.println("Invalid option. Please choose from 1 and 2");
+                    continue;
                 }
                 else
                 {
@@ -291,7 +298,8 @@ public void displayUpdateHallPage()
                 hallNum = sc.nextInt();
                 if (hallNum > ownerController.getOwner().getHalls().size())
                 {
-                    throw(new java.util.InputMismatchException());
+                    System.out.println("Hall does not exist. Please enter another hall number:");
+                    continue;
                 }
                 else
                 {
@@ -299,7 +307,8 @@ public void displayUpdateHallPage()
                 }
             }catch(java.util.InputMismatchException e){
                 sc.nextLine();
-                System.out.println("Invalid input. Please re-enter a hall number or go back by entering 0");
+                System.out.println("Hall number is a number." +  
+                            "Please re-enter a hall number or go back by entering 0");
                 continue;
                 }
         }
@@ -336,7 +345,8 @@ public void displayEditHallPage(int hallNum)
             attribute = sc.nextInt();
             if (attribute < 1 || attribute > 5)
             {
-                throw(new java.util.InputMismatchException());
+                System.out.println("Please enter a number from 1 to 5");
+                continue;
             }
             else
             {
@@ -344,7 +354,7 @@ public void displayEditHallPage(int hallNum)
             }
         }catch(java.util.InputMismatchException e){
             sc.nextLine();
-            System.out.println("Invalid Input. Please enter a number from 1 to 5");
+            System.out.println("Please enter a number from 1 to 5");
             continue;
         }
     }
@@ -423,7 +433,7 @@ public void displayDeleteHallPage()
                 option = sc.nextInt();
                 if (option < 1 || option > 2)
                 {
-                    throw(new java.util.InputMismatchException());
+                    continue;
                 }
                 else
                 {
@@ -457,7 +467,8 @@ public void displayDeleteHallPage()
                 hallNum = sc.nextInt();
                 if (hallNum > ownerController.getOwner().getHalls().size())
                 {
-                    throw(new java.util.InputMismatchException());
+                    System.out.println("Hall does not exist. Please re-enter a number: ");
+                    continue;
                 }
                 else
                 {
@@ -842,7 +853,7 @@ public void displayDeleteHallPage()
         ownerController.displayBookings();
         System.out.println("Enter 0 to go back");
         System.out.println("Enter a hall id to choose a hall");
-        int hallId;// = sc.nextInt();
+        int hallId;
         while (true)
         {
             try{

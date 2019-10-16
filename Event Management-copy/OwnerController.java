@@ -289,16 +289,19 @@ public class OwnerController
         return count;
     }
     
-    public int AcceptedQuotationsCount()
+    public int acceptedQuotationsCount()
     {
         int count = 0;
         for (Hall hall : owner.getHalls())
         {
-            for (Quotation quotation : hall.getQuotations())
+            if (hall.getPastQuotations().size() > 0)
             {
-                if (quotation.getQuotationAccepted())
+                for (Quotation quotation : hall.getPastQuotations())
                 {
-                    count++;
+                    if (quotation.getQuotationAccepted())
+                    {
+                        count++;
+                    }
                 }
             }
         }
