@@ -16,43 +16,20 @@ public class CustomerController
     public CustomerController()
     {
         // initialise instance variables
-        
+
     }
     
-    public void searchHall(String hallName)
-    {
-        CustomerInterface ci = new CustomerInterface();
-        ci.getCustomerController().setCustomer(customer);
-        switch(hallName)
-        {
-            case "0":
-                ci.displayCustomerPage();
-                break;
-            default:
-                if (Accounts.searchHall(hallName) == null)
-                {
-                    
-                    ci.displayNoSearchResultPage(hallName);
-                }
-                else
-                {
-                   ci.displayHallPage(hallName);
-                }
-                break;
-                
-        }
-    }
-    
+
     public Boolean checkDate(String hallName, Date date)
     {
-        Hall requestedHall = Accounts.searchHall(hallName);
+
         if (date.before(new Date()))
         {
             return false;
         }
         else
         {
-            for (Booking booking : requestedHall.getBookings())
+            for (Booking booking : Accounts.searchHall(hallName).getBookings())
             {
                 if ((date.compareTo(booking.getEndDate()) <= 0) && (date.compareTo(booking.getStartDate())>=0))
                 {
@@ -62,33 +39,34 @@ public class CustomerController
         }
         return true;
     }
-    
+
     public void requestQuotation(String hallName, String occasion, int guestNum, boolean cateringService,
                                  boolean photographyService, boolean decorationService,
                                  Date startDate, Date endDate, float budget)
     {
-        Hall requestedHall = Accounts.searchHall(hallName);
+
         Quotation quotation = new Quotation(occasion, guestNum, cateringService, photographyService,
-                                            decorationService, startDate, endDate, budget, requestedHall, customer);
-        requestedHall.getQuotations().add(quotation);
+                                            decorationService, startDate, endDate, budget,
+                                            Accounts.searchHall(hallName), customer);
+        Accounts.searchHall(hallName).getQuotations().add(quotation);
         customer.getQuotations().add(quotation);
     }
-    
+
     public ArrayList<Boolean> serviceProvided(String hallName)
     {
-        Hall requestedHall = Accounts.searchHall(hallName);
+
         ArrayList<Boolean> services = new ArrayList<Boolean>();
-        services.add(requestedHall.getCateringService());
-        services.add(requestedHall.getPhotographyService());
-        services.add(requestedHall.getDecorationService());
+        services.add(Accounts.searchHall(hallName).getCateringService());
+        services.add(Accounts.searchHall(hallName).getPhotographyService());
+        services.add(Accounts.searchHall(hallName).getDecorationService());
         return services;
     }
-    
+
     public void viewAllHalls()
     {
         Accounts.viewHalls();
     }
-    
+
     public boolean checkHallExist(String hallName)
     {
         if (Accounts.searchHall(hallName) != null)
@@ -97,7 +75,7 @@ public class CustomerController
         }
         return false;
     }
-    
+
     public int countRepliedQuotations()
     {
         int count = 0;
@@ -111,7 +89,7 @@ public class CustomerController
         }
         return count;
     }
-    
+
     public void displayQuotations()
     {
 
@@ -133,7 +111,7 @@ public class CustomerController
                 System.out.println("-----------------------------------------------------------------------------------------");
             }
         }
-        
+
         System.out.println("-----------------------------------------------------------------------------------------");
         System.out.format("%-30s%-29s%30s\n", "|", "Quotations Waiting for Reply", "|");
         System.out.println("-----------------------------------------------------------------------------------------");
@@ -152,10 +130,10 @@ public class CustomerController
                 System.out.println("-----------------------------------------------------------------------------------------");
             }
         }
-        
+
     }
-    
-    
+
+
     public void displayRepliedQuotation(Quotation quotation)
     {
         System.out.println("-----------------------------------------------------------------------------");
@@ -178,12 +156,12 @@ public class CustomerController
         System.out.println("-----------------------------------------------------------------------------");
         System.out.format("|  %-28s|  %-42s|\n", "Catering Cost", quotation.getCateringCost());
         System.out.println("-----------------------------------------------------------------------------");
-        System.out.format("|  %-28s|  %-42s|\n", "Require Photography Service", 
+        System.out.format("|  %-28s|  %-42s|\n", "Require Photography Service",
                             ((quotation.getPhotographyService()) ? "Required" : "Not Required"));
         System.out.println("-----------------------------------------------------------------------------");
         System.out.format("|  %-28s|  %-42s|\n", "Photography Cost", quotation.getPhotographyCost());
         System.out.println("-----------------------------------------------------------------------------");
-        System.out.format("|  %-28s|  %-42s|\n", "Require Decoration Service", 
+        System.out.format("|  %-28s|  %-42s|\n", "Require Decoration Service",
                             ((quotation.getDecorationService()) ? "Required" : "Not Required")) ;
         System.out.println("-----------------------------------------------------------------------------");
         System.out.format("|  %-28s|  %-42s|\n", "Decoration Cost", quotation.getDecorationCost());
@@ -194,11 +172,11 @@ public class CustomerController
         System.out.println("-----------------------------------------------------------------------------");
         System.out.format("|  %-28s|  %-42.2f|\n", "Budget", quotation.getBudget());
         System.out.println("-----------------------------------------------------------------------------");
-        System.out.format("|  %-28s|  %-42s|\n", "Accepted", 
+        System.out.format("|  %-28s|  %-42s|\n", "Accepted",
                             ((quotation.getQuotationAccepted()) ? "yes" : "no"));
         System.out.println("-----------------------------------------------------------------------------");
     }
-    
+
     public void displayUnrepliedQuotation(Quotation quotation)
     {
         System.out.println("-----------------------------------------------------------------------------");
@@ -219,20 +197,20 @@ public class CustomerController
         System.out.format("|  %-28s|  %-42s|\n", "Require Catering Service",
                             ((quotation.getCateringService()) ? "Required" : "Not Required"));
         System.out.println("-----------------------------------------------------------------------------");
-        System.out.format("|  %-28s|  %-42s|\n", "Require Photography Service", 
+        System.out.format("|  %-28s|  %-42s|\n", "Require Photography Service",
                             ((quotation.getPhotographyService()) ? "Required" : "Not Required"));
         System.out.println("-----------------------------------------------------------------------------");
-        System.out.format("|  %-28s|  %-42s|\n", "Require Decoration Service", 
+        System.out.format("|  %-28s|  %-42s|\n", "Require Decoration Service",
                             ((quotation.getDecorationService()) ? "Required" : "Not Required")) ;
         System.out.format("|  %-28s|  %-42.2f|\n", "Budget", quotation.getBudget());
         System.out.println("-----------------------------------------------------------------------------");
     }
-    
+
     public Quotation searchAcceptableQuotation(int quotationId)
     {
         for (Quotation quotation : customer.getQuotations())
         {
-            if (quotation.getIdCust() == quotationId && 
+            if (quotation.getIdCust() == quotationId &&
                 !quotation.getQuotationAccepted() && quotation.getReplied())
             {
                 return quotation;
@@ -240,15 +218,15 @@ public class CustomerController
         }
         return null;
     }
-    
+
     public void acceptQuotation(Quotation quotation)
     {
         quotation.setQuotationAccepted(true);
     }
-    
+
     public void displayBookings()
     {
-        
+
         if (customer.getBookings().size() > 0)
         {
             System.out.println("-----------------------------------------------------------------------------");
@@ -263,7 +241,7 @@ public class CustomerController
         {
             System.out.println("You have no active booking yet");
         }
-        
+
         if (customer.getPastBookings().size() > 0)
         {
             System.out.println("-----------------------------------------------------------------------------");
@@ -278,9 +256,9 @@ public class CustomerController
         {
             System.out.println("You have no past booking yet");
         }
-        
+
     }
-    
+
     public void displayBooking(Booking booking)
     {
         System.out.println("-----------------------------------------------------------------------------");
@@ -303,12 +281,12 @@ public class CustomerController
         System.out.println("-----------------------------------------------------------------------------");
         System.out.format("|  %-28s|  %-42s|\n", "Catering Cost", booking.getCateringCost());
         System.out.println("-----------------------------------------------------------------------------");
-        System.out.format("|  %-28s|  %-42s|\n", "Require Photography Service", 
+        System.out.format("|  %-28s|  %-42s|\n", "Require Photography Service",
                             ((booking.getPhotographyService()) ? "Required" : "Not Required"));
         System.out.println("-----------------------------------------------------------------------------");
         System.out.format("|  %-28s|  %-42s|\n", "Photography Cost", booking.getPhotographyCost());
         System.out.println("-----------------------------------------------------------------------------");
-        System.out.format("|  %-28s|  %-42s|\n", "Require Decoration Service", 
+        System.out.format("|  %-28s|  %-42s|\n", "Require Decoration Service",
                             ((booking.getDecorationService()) ? "Required" : "Not Required")) ;
         System.out.println("-----------------------------------------------------------------------------");
         System.out.format("|  %-28s|  %-42s|\n", "Decoration Cost", booking.getDecorationCost());
@@ -318,18 +296,18 @@ public class CustomerController
         System.out.format("|  %-28s|  %-42s|\n", "Total Amount", booking.getTotalAmount());
         System.out.println("-----------------------------------------------------------------------------");
     }
-    
+
     public void logout()
     {
         Homepage hp = new Homepage();
         hp.displayHomepage();
     }
-    
+
     public Customer getCustomer()
     {
         return this.customer;
     }
-    
+
     public void setCustomer(Customer customer)
     {
         this.customer = customer;

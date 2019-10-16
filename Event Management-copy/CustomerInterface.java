@@ -18,16 +18,16 @@ public class CustomerInterface
         // initialise instance variables
         customerController = new CustomerController();
     }
-    
+
     public void displayCustomerPage()
     {
         System.out.print('\u000C');
         Scanner sc = new Scanner(System.in);
         System.out.println("*****************************************************************************************");
-        System.out.println("Welcome to the Event Management System  Hello, " + 
+        System.out.println("Welcome to the Event Management System  Hello, " +
                             this.customerController.getCustomer().getFirstName());
         System.out.println("*****************************************************************************************");
-        
+
         System.out.println("Please select from the following options:");
         System.out.println("Press 1 to View All Halls");
         System.out.println("Press 2 to Search for Hall");
@@ -90,7 +90,36 @@ public class CustomerInterface
                 break;
         }
     }
-    
+
+    public void displayViewAllHalls()
+    {
+        System.out.print('\u000C');
+        Scanner sc = new Scanner(System.in);
+        System.out.println("*****************************************************************************************");
+        System.out.println("Welcome to the Event Management System - View Halls");
+        System.out.println("*****************************************************************************************");
+        customerController.viewAllHalls();
+        System.out.println("Enter hall name to view hall details");
+        System.out.println("Enter 0 to go back");
+        String hallName = sc.nextLine();
+
+        while(!customerController.checkHallExist(hallName) && !hallName.equalsIgnoreCase("0"))
+        {
+            System.out.println("Sorry, there is no hall named "+ hallName);
+            System.out.println("Please re-enter a hall name:");
+            hallName = sc.nextLine();
+        }
+        switch(hallName)
+        {
+            case "0":
+                displayCustomerPage();
+                break;
+            default:
+                displayHallPage(hallName);
+                break;
+        }
+    }
+
     public void displaySearchPage()
     {
         System.out.print('\u000C');
@@ -101,40 +130,24 @@ public class CustomerInterface
         System.out.println("Please enter a hall name to search:");
         System.out.println("Press 0 to go back");
         String hallName = sc.nextLine();
+        while (!customerController.checkHallExist(hallName))
+        {
+          System.out.println("Sorry, there is no hall named '" + hallName + "'");
+          System.out.println("Enter a hall name to search again");
+          System.out.println("Enter 0 to go back to homepage");
+          hallName = sc.nextLine();
+        }
         switch (hallName)
         {
             case "0":
                 displayCustomerPage();
                 break;
             default:
-                customerController.searchHall(hallName);
+                displayHallPage(hallName);
                 break;
         }
     }
-    
-    public void displayNoSearchResultPage(String hallName)
-    {
-        System.out.print('\u000C');
-        System.out.println("*****************************************************************************************");
-        System.out.println("Welcome to the Event Management System - Search Result");
-        System.out.println("*****************************************************************************************");
-        Scanner sc = new Scanner(System.in);
 
-        System.out.println("Sorry, there is no hall named '" + hallName + "'");
-        System.out.println("Enter a hall name to search again");
-        System.out.println("Press 0 to go back to homepage");
-        String newHallName = sc.nextLine();
-        switch(newHallName)
-        {
-            case "0":
-                displayCustomerPage();
-                break;
-            default:
-                customerController.searchHall(newHallName);
-                break;
-        }
-    }
-    
     public void displayHallPage(String hallName)
     {
         System.out.print('\u000C');
@@ -146,7 +159,7 @@ public class CustomerInterface
         System.out.println();
         System.out.println("Enter 1 to ask for quotation");
         System.out.println("Enter 2 to go back to home page");
-        
+
         int choice;
         while (true)
         {
@@ -177,7 +190,7 @@ public class CustomerInterface
                 break;
         }
     }
-    
+
     public void displaySendQuotationPage(String hallName)
     {
         System.out.print('\u000C');
@@ -197,9 +210,9 @@ public class CustomerInterface
         String sEndDate;
         Date endDate;
         float budget;
-        
+
         HomeController.displayHallDetail(hallName);
-        
+
         System.out.println("Enter the occasion for the event:");
         occasion = sc.nextLine();
         System.out.println("Enter the number of guest that will attend the event:");
@@ -242,7 +255,7 @@ public class CustomerInterface
                     sStartDate = sc.nextLine();
                     continue;
                 }
-                
+
             } catch (ParseException e){
                 sc.nextLine();
                 System.out.println("Invalid date format. Date format must be dd/mm/yyyy");
@@ -251,7 +264,7 @@ public class CustomerInterface
                 continue;
             }
         }
-        
+
         System.out.println("Enter the duration of the event in days:");
         while (true)
         {
@@ -285,8 +298,8 @@ public class CustomerInterface
                 continue;
             }
         }
-        
-        
+
+
         System.out.println("Enter your budget:");
         while (true)
         {
@@ -325,9 +338,9 @@ public class CustomerInterface
             {
                 catering = false;
             }
-            
+
         }
-        
+
         if (customerController.serviceProvided(hallName).get(1))
         {
             System.out.println("Do you require photography service for the event?(y/n)");
@@ -342,7 +355,7 @@ public class CustomerInterface
                 photography = true;
             }
         }
-        
+
         if (customerController.serviceProvided(hallName).get(2))
         {
             System.out.println("Do you require decoration service for the event?(y/n)");
@@ -357,50 +370,21 @@ public class CustomerInterface
                 decoration = true;
             }
         }
-        
+
         customerController.requestQuotation(hallName, occasion, guestNum, catering, photography,
                                             decoration, startDate, endDate, budget);
-                                            
+
         System.out.println("Quotation successfully sent!");
-        
+
         try{
             TimeUnit.SECONDS.sleep(2);
         } catch(InterruptedException ie){
             Thread.currentThread().interrupt();
         }
-        
+
         displayHallPage(hallName);
     }
-    
-    public void displayViewAllHalls()
-    {
-        System.out.print('\u000C');
-        Scanner sc = new Scanner(System.in);
-        System.out.println("*****************************************************************************************");
-        System.out.println("Welcome to the Event Management System - View Halls");
-        System.out.println("*****************************************************************************************");
-        customerController.viewAllHalls();
-        System.out.println("Enter hall name to view hall details");
-        System.out.println("Enter 0 to go back");
-        String hallName = sc.nextLine();
-        
-        while(!customerController.checkHallExist(hallName) && !hallName.equalsIgnoreCase("0"))
-        {
-            System.out.println("Sorry, there is no hall named "+ hallName);
-            System.out.println("Please re-enter a hall name:");
-            hallName = sc.nextLine();
-        }
-        switch(hallName)
-        {
-            case "0":
-                displayCustomerPage();
-                break;
-            default:
-                displayHallPage(hallName);
-                break;
-        }
-    }
-    
+
     public void displayQuotationsPage()
     {
         System.out.print('\u000C');
@@ -408,9 +392,20 @@ public class CustomerInterface
         System.out.println("*****************************************************************************************");
         System.out.println("Welcome to the Event Management System - Quotations Page");
         System.out.println("*****************************************************************************************");
-      
-        customerController.displayQuotations();
-        System.out.println("Enter a quotation id to accept");
+
+        if (customerController.getCustomer().getQuotations().size()>0)
+        {
+          customerController.displayQuotations();
+          System.out.println("Enter a quotation id to accept");
+        }
+        else
+        {
+          System.out.println();
+          System.out.println("You haven't sent any quotations yet.");
+          System.out.println("To send a quotation, please go to a hall page "+
+                             "and choose send quotation");
+          System.out.println();
+        }
         System.out.println("Enter 0 to go back");
         int quotId;
         while (true)
@@ -442,16 +437,16 @@ public class CustomerInterface
                     }
                     displayQuotationsPage();
                 }
-                
+
                 else
                 {
                     displayAcceptQuotationPage(quotId);
                 }
                 break;
         }
-        
+
     }
-    
+
     public void displayAcceptQuotationPage(int quotationId)
     {
         System.out.print('\u000C');
@@ -459,9 +454,9 @@ public class CustomerInterface
         System.out.println("*****************************************************************************************");
         System.out.println("Welcome to the Event Management System - Accept Quotation");
         System.out.println("*****************************************************************************************");
-        
+
         customerController.displayRepliedQuotation(customerController.searchAcceptableQuotation(quotationId));
-        
+
         System.out.println("Enter y to accept quotation and make a booking");
         //System.out.println("Enter n to decline quotation and and go back");
         System.out.println("Enter 0 to go back");
@@ -492,7 +487,7 @@ public class CustomerInterface
                 break;
         }
     }
-    
+
     public void displayBookingsPage()
     {
         System.out.print('\u000C');
@@ -500,21 +495,25 @@ public class CustomerInterface
         System.out.println("*****************************************************************************************");
         System.out.println("Welcome to the Event Management System - Your Bookings");
         System.out.println("*****************************************************************************************");
-        
+
         customerController.displayBookings();
-        
-        System.out.println("Enter the booking id from the active booking list to edit your booking:");
+
+        if (customerController.getCustomer().getBookings().size() > 0)
+        {
+            System.out.println("Enter the booking id from the active booking "+
+                               "list to edit your booking:");
+        }
         System.out.println("Enter 0 to go back");
-        
+
         String choice = sc.nextLine();
         switch(choice)
         {
             default:
                 displayCustomerPage();
         }
-        
+
     }
-    
+
     public CustomerController getCustomerController()
     {
         return this.customerController;
