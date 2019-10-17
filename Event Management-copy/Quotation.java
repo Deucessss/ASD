@@ -20,16 +20,15 @@ public class Quotation
     private Date startDate;
     private Date endDate;
     private float budget;
-    private boolean replied = false;
     private float cateringCost;
     private float photographyCost;
     private float decorationCost;
     private float venueCost;
     private float totalAmount;
-    private float depositAmount = totalAmount/2;
-    private boolean quotationAccepted;
+    private float depositAmount;
+    private boolean quotationAccepted = false;
     private boolean depositPaid = false;
-    
+    private boolean replied = false;
     private Customer customer;
     private Hall hall;
     
@@ -37,7 +36,7 @@ public class Quotation
     /**
      * Constructor for objects of class Quotation
      */
-    public Quotation(String occasion, int guestNum, boolean cateringSerivce,
+    public Quotation(String occasion, int guestNum, boolean cateringService,
                      boolean photographyService, boolean decorationService,
                      Date startDate, Date endDate, float budget, Hall hall, Customer customer)
     {
@@ -50,9 +49,10 @@ public class Quotation
         this.endDate = endDate;
         this.budget = budget;
         this.hall = hall;
+        this.customer = customer;
         this.idOwner = hall.getQuotations().size() + 1;
         this.idCust = customer.getQuotations().size() + 1;
-        this.customer = customer;
+        
     }
     
     public Customer getCustomer()

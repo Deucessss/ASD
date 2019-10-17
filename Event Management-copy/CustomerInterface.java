@@ -220,6 +220,7 @@ public class CustomerInterface
         {
             try{
                 guestNum = sc.nextInt();
+                sc.nextLine();
                 if (guestNum < 0)
                 {
                     System.out.println("Invalid input. Please enter a number that is greater than 0");
@@ -235,7 +236,6 @@ public class CustomerInterface
                 continue;
             }
         }
-        sc.nextLine();
         System.out.println("Enter the start date for the event(dd/mm/yyyy):");
         sStartDate = sc.nextLine();
         formatter.setLenient(false);
@@ -244,13 +244,12 @@ public class CustomerInterface
             try
             {
                 startDate = formatter.parse(sStartDate);
-                if (customerController.checkDate(hallName, startDate))
+                if (customerController.checkDate(hallName, startDate,0))
                 {
                     break;
                 }
                 else
                 {
-                    System.out.println("Entered date is unavailable");
                     System.out.println("Please Re-Enter a date:");
                     sStartDate = sc.nextLine();
                     continue;
@@ -270,6 +269,7 @@ public class CustomerInterface
         {
             try{
                 duration = sc.nextInt();
+                sc.nextLine();
                 if (duration < 0)
                 {
                     System.out.println("Duration must be greater than 0. Please re-enter:");
@@ -281,13 +281,12 @@ public class CustomerInterface
                     c.setTime(startDate);
                     c.add(Calendar.DATE, duration);
                     endDate = c.getTime();
-                    if (customerController.checkDate(hallName, endDate))
+                    if (customerController.checkDate(hallName, endDate,0))
                     {
                         break;
                     }
                     else
                     {
-                        System.out.println("Entered date is unavailable");
                         System.out.println("Please Re-enter duration:");
                         sc.nextLine();
                     }
@@ -305,6 +304,7 @@ public class CustomerInterface
         {
             try{
                 budget = sc.nextFloat();
+                sc.nextLine();
                 if (budget < 0)
                 {
                     System.out.println("Duration must be a number greater than 0. Please re-enter:");
@@ -320,7 +320,6 @@ public class CustomerInterface
                 continue;
             }
         }
-        sc.nextLine();
         if (customerController.serviceProvided(hallName).get(0))
         {
             System.out.println("Do you require catering service for the event?(y/n)");
@@ -338,7 +337,6 @@ public class CustomerInterface
             {
                 catering = false;
             }
-
         }
 
         if (customerController.serviceProvided(hallName).get(1))
@@ -396,7 +394,7 @@ public class CustomerInterface
         if (customerController.getCustomer().getQuotations().size()>0)
         {
           customerController.displayQuotations();
-          System.out.println("Enter a quotation id to accept");
+          System.out.println("Enter a quotation id to view detail");
         }
         else
         {
@@ -501,19 +499,326 @@ public class CustomerInterface
         if (customerController.getCustomer().getBookings().size() > 0)
         {
             System.out.println("Enter the booking id from the active booking "+
-                               "list to edit your booking:");
+                               "list to view booking detail:");
         }
         System.out.println("Enter 0 to go back");
 
-        String choice = sc.nextLine();
-        switch(choice)
+        int bookingId;
+        while(true)
         {
-            default:
+            try{
+                bookingId = sc.nextInt();
+                if (bookingId < 0 &&
+                    bookingId > customerController.getCustomer().getBookings().size())
+                {
+                    System.out.println("There is no such booking. Please re-enter a booking id");
+                    System.out.println("Enter 0 to go back");
+                    continue;
+                }
+                else
+                {
+                    break;
+                }
+            }catch(java.util.InputMismatchException e){
+                System.out.println("Your choice must be a number. Please re-enter: ");
+                continue;
+            }
+        }
+        switch(bookingId)
+        {
+            case 0:
                 displayCustomerPage();
+                break;
+            default:
+                displayBookingPage(bookingId);
+                break;
+        }
+    }
+
+    public void displayBookingPage(int bookingId)
+    {
+        System.out.print('\u000C');
+        Scanner sc = new Scanner(System.in);
+        System.out.println("*****************************************************************************************");
+        System.out.println("Welcome to the Event Management System - Your Bookings");
+        System.out.println("*****************************************************************************************");
+
+        customerController.displayBooking(customerController.getBookingByIdCust(bookingId));
+
+        ArrayList<String> updatableAttributes = new ArrayList<String>();
+        updatableAttributes.add("Occasion");
+        updatableAttributes.add("Guest Number");
+        updatableAttributes.add("Event Date");
+        updatableAttributes.add("Catering Service");
+        updatableAttributes.add("Photography Service");
+        updatableAttributes.add("Decoration Service");
+
+        String updatedOccasion = null;
+        int updatedGuestNumber = 0;
+        Date updatedStartDate = null;
+        Date updatedEndDate = null;
+
+        System.out.println("Enter 0 to go back");
+        for (int i = 1; i <= updatableAttributes.size(); i++ )
+        {
+            System.out.println("Enter "+i+" to Update "+
+                                updatableAttributes.get(i-1));
+        }
+        int attribute;
+        while(true)
+        {
+            try{
+                attribute = sc.nextInt();
+                sc.nextLine();
+                break;
+            }catch(java.util.InputMismatchException e){
+                sc.nextLine();
+                System.out.println("Invalid input."+
+                                    " You must enter a number between 0 and 8");
+                System.out.println("Please re-enter:");
+                continue;
+            }
+        }
+        switch(attribute)
+        {
+            case 0:
+                displayBookingsPage();
+                break;
+            case 1:
+                System.out.println("Please enter an occasion:");
+                updatedOccasion = sc.nextLine();
+                if(updatedOccasion.equalsIgnoreCase(customerController.getBookingByIdCust(bookingId)
+                                                                      .getOccasion()))
+                {
+                    System.out.println("Your entered occasion is the same as the current occasion");
+                    System.out.println("Occasion is not updated!");
+                    updatedOccasion = null;
+                }
+                else
+                {
+                    customerController.updateOccasion(bookingId, updatedOccasion);
+                    System.out.println("Request to update occasion has been sent!");
+                }
+                try{
+                    TimeUnit.SECONDS.sleep(2);
+                } catch(InterruptedException ie){
+                    Thread.currentThread().interrupt();
+                }
+                displayBookingPage(bookingId);
+                break;
+            case 2:
+                System.out.println("Please enter a guest number:");
+                while(true)
+                {
+                    try{
+                        updatedGuestNumber = sc.nextInt();
+                        sc.nextLine();
+                        if (updatedGuestNumber == customerController.getBookingByIdCust(bookingId)
+                                                                    .getGuestNum())
+                        {
+                            System.out.println("Your entered guest number is the same as the current guest number");
+                            System.out.println("Guest number is not updated!");
+                            updatedGuestNumber = 0;
+                        }
+                        else
+                        {
+                            customerController.updateGuestNumber(bookingId, updatedGuestNumber);
+                            System.out.println("Request to update guest number has been sent!");
+                        }
+                        break;
+                    }catch(java.util.InputMismatchException e){
+                        sc.nextLine();
+                        System.out.println("Please enter a number:");
+                        continue;
+                    }
+                }
+                try{
+                    TimeUnit.SECONDS.sleep(2);
+                } catch(InterruptedException ie){
+                    Thread.currentThread().interrupt();
+                }
+                displayBookingPage(bookingId);
+                break;
+            case 3:
+                System.out.println("Please enter a start date in the form of dd/mm/yyyy");
+                String sStartDate = sc.nextLine();
+                formatter.setLenient(false);
+                while(true)
+                {
+                    try
+                    {
+                        updatedStartDate = formatter.parse(sStartDate);
+                        if (customerController.checkDate(
+                        customerController.getBookingByIdCust(bookingId)
+                                          .getHall().getName(),
+                                           updatedStartDate, bookingId))
+                        {
+                            System.out.println("Please Enter a duration for the event:");
+                            break;
+                        }
+                        else
+                        {
+                            System.out.println("Please Re-Enter a date:");
+                            sStartDate = sc.nextLine();
+                            continue;
+                        }
+
+                    } catch (ParseException e){
+                        sc.nextLine();
+                        System.out.println("Invalid date format. Date format must be dd/mm/yyyy");
+                        System.out.println("Please re-enter a date according to the format:");
+                        sStartDate = sc.nextLine();
+                        continue;
+                    }
+                }
+                while (true)
+                {
+                    try{
+                        int duration = sc.nextInt();
+                        sc.nextLine();
+                        if (duration < 0)
+                        {
+                            System.out.println("Duration must be greater than 0. Please re-enter:");
+                            continue;
+                        }
+                        else
+                        {
+                            Calendar c = Calendar.getInstance();
+                            c.setTime(updatedStartDate);
+                            c.add(Calendar.DATE, duration);
+                            updatedEndDate = c.getTime();
+                            if (customerController.checkDate(customerController.getBookingByIdCust(bookingId)
+                                              .getHall().getName(),
+                                               updatedEndDate, bookingId))
+                            {
+                                customerController.updateEventDate(bookingId, updatedStartDate, updatedEndDate);
+                                System.out.println("Request to change the event date has been sent!");
+                            }
+                            else
+                            {
+                                System.out.println("Event date is not updated!");
+                                updatedStartDate = null;
+                                updatedEndDate = null;
+                                sc.nextLine();
+                            }
+                            break;
+                        }
+                    }catch (java.util.InputMismatchException e){
+                        sc.nextLine();
+                        System.out.println("Duration must be a number greater than 0. Please re-enter:");
+                        continue;
+                    }
+                }
+                try{
+                    TimeUnit.SECONDS.sleep(2);
+                } catch(InterruptedException ie){
+                    Thread.currentThread().interrupt();
+                }
+                displayBookingPage(bookingId);
+                break;
+            case 4:
+                if(customerController.getBookingByIdCust(bookingId)
+                                     .getHall().getCateringService())
+                {
+                    System.out.println("Are you sure that you want to change catering service?(y/n)");
+                    String choice = sc.nextLine();
+                    while(!choice.equalsIgnoreCase("y") && !choice.equalsIgnoreCase("n"))
+                    {
+                        System.out.println("Please enter either \"y\" or \"n\":");
+                        choice = sc.nextLine();
+                    }
+                    if (choice.equalsIgnoreCase("y"))
+                    {
+                        customerController.updateCateringService(bookingId);
+                        System.out.println("Request to update catering service has been sent!");
+                    }
+                    else
+                    {
+                        System.out.println("Catering service is not updated!");
+                    }
+                }
+                else
+                {
+                    System.out.println("Sorry, this hall does not provide catering service!");
+                }
+                try{
+                    TimeUnit.SECONDS.sleep(2);
+                } catch(InterruptedException ie){
+                    Thread.currentThread().interrupt();
+                }
+                displayBookingPage(bookingId);
+                break;
+            case 5:
+                if(customerController.getBookingByIdCust(bookingId)
+                                     .getHall().getPhotographyService())
+                {
+                    System.out.println("Are you sure that you want to change photography service?(y/n)");
+                    String choice = sc.nextLine();
+                    while(!choice.equalsIgnoreCase("y") && !choice.equalsIgnoreCase("n"))
+                    {
+                        System.out.println("Please enter either \"y\" or \"n\":");
+                        choice = sc.nextLine();
+                    }
+                    if (choice.equalsIgnoreCase("y"))
+                    {
+                        customerController.updatePhotographyService(bookingId);
+                        System.out.println("Request to update photography service has been sent!");
+                    }
+                    else
+                    {
+                        System.out.println("Photography service is not updated!");
+                    }
+                }
+                else
+                {
+                    System.out.println("Sorry, this hall does not provide Photography service!");
+                }
+                try{
+                    TimeUnit.SECONDS.sleep(2);
+                } catch(InterruptedException ie){
+                    Thread.currentThread().interrupt();
+                }
+                displayBookingPage(bookingId);
+                break;
+            case 6:
+                if(customerController.getBookingByIdCust(bookingId)
+                                     .getHall().getDecorationService())
+                {
+                    System.out.println("Are you sure that you want to change photography service?(y/n)");
+                    String choice = sc.nextLine();
+                    while(!choice.equalsIgnoreCase("y") && !choice.equalsIgnoreCase("n"))
+                    {
+                        System.out.println("Please enter either \"y\" or \"n\":");
+                        choice = sc.nextLine();
+                    }
+                    if (choice.equalsIgnoreCase("y"))
+                    {
+                        customerController.updateDecorationService(bookingId);
+                        System.out.println("Request to update decoration service has been sent!");
+                    }
+                    else
+                    {
+                        System.out.println("Decoration service is not updated!");
+                    }
+                }
+                else
+                {
+                    System.out.println("Sorry, this hall does not provide Decoration service!");
+                }
+                try{
+                    TimeUnit.SECONDS.sleep(2);
+                } catch(InterruptedException ie){
+                    Thread.currentThread().interrupt();
+                }
+                displayBookingPage(bookingId);
+                break;
+            default:
+                System.out.println("Inpute must be a number between 0 and 8");
+                System.out.println("Please re-enter:");
+                break;
         }
 
     }
-
     public CustomerController getCustomerController()
     {
         return this.customerController;

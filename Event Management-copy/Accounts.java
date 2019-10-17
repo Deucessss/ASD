@@ -66,15 +66,26 @@ public class Accounts
         Hall hall10 = new Hall("Hall10",address10,contact,"hall10",10,true,true,true,
                                100,120);
         owner1.getHalls().add(hall1);
+        hall1.setId(1);
         owner1.getHalls().add(hall2);
+        hall2.setId(2);
         owner1.getHalls().add(hall3);
+        hall3.setId(3);
+        
         owner2.getHalls().add(hall4);
+        hall4.setId(1);
         owner2.getHalls().add(hall5);
+        hall5.setId(2);
         owner2.getHalls().add(hall6);
+        hall6.setId(3);
         owner3.getHalls().add(hall7);
+        hall7.setId(1);
         owner3.getHalls().add(hall8);
+        hall8.setId(2);
         owner3.getHalls().add(hall9);
+        hall9.setId(3);
         owner3.getHalls().add(hall10);
+        hall10.setId(4);
 
         owners.add(owner1);
         owners.add(owner2);
