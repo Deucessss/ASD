@@ -13,7 +13,13 @@ public class Homepage
         // initialise instance variables
         this.homeController = new HomeController();
     }
-    
+
+    public void main()
+    {
+      Accounts.initialiseAccounts();
+      displayHomepage();
+    }
+
     public void displayHomepage()
     {
         System.out.print('\u000C');
@@ -21,7 +27,7 @@ public class Homepage
         System.out.println("*****************************************************************************************");
         System.out.println("Welcome to the Event Management System - Homepage");
         System.out.println("*****************************************************************************************");
-    
+
         System.out.println("Please select from the following options:");
         System.out.println("Press 1 to Register Customer");
         System.out.println("Press 2 to Register Owner");
@@ -52,7 +58,7 @@ public class Homepage
         }
         switch(choice)
         {
-            case 1:   
+            case 1:
                 displayCustomerRegistrationPage();
                 displayHomepage();
                 break;
@@ -75,10 +81,10 @@ public class Homepage
             case 8:
                 homeController.exitSoftware();
                 break;
-            
+
         }
     }
-    
+
     public void displayCustomerRegistrationPage()
     {
         System.out.print('\u000C');
@@ -88,7 +94,7 @@ public class Homepage
         System.out.println("*****************************************************************************************");
         System.out.println("Enter Your Email");
         String email=sc.nextLine();
-        while(checkEmailFormat(email) && homeController.checkCustomerEmail(email))
+        while(checkEmailFormat(email) || homeController.checkCustomerEmailExist(email))
         {
             email=sc.nextLine();
         }
@@ -155,18 +161,11 @@ public class Homepage
             System.out.println("Please enter answer between 1 to 25 characters");
             answer2=sc.nextLine();
         }
-        System.out.println("what is your favourite subject?");
-        String answer3 =sc.nextLine();
-        while(answer3.length()<1)
-        {
-            System.out.println("Please enter answer between 1 to 25 characters");
-            answer3=sc.nextLine();
-        }
-        
-        homeController.registerCustomer(firstName, lastName, email, password, contact, 
-                                         address, concession, answer1, answer2, answer3);
+
+        homeController.registerCustomer(firstName, lastName, email, password, contact,
+                                         address, concession, answer1, answer2);
     }
-    
+
     public void displayOwnerRegistrationPage()
     {
         System.out.print('\u000C');
@@ -176,7 +175,7 @@ public class Homepage
         System.out.println("*****************************************************************************************");
         System.out.println("Enter Your Email");
         String email=sc.nextLine();
-        while(checkEmailFormat(email) && homeController.checkOwnerEmail(email))
+        while(checkEmailFormat(email) || homeController.checkOwnerEmailExist(email))
         {
             email=sc.nextLine();
         }
@@ -222,16 +221,16 @@ public class Homepage
             System.out.println("Invalid address.Please re-enter:");
             address = sc.nextLine();
         }
-        
+
         homeController.registerOwner(firstName,lastName, email, password,
                                      contact, address);
     }
-    
+
     public boolean checkEmailFormat(String email)
     {
         if(email.matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$"))
         {
-            return false; 
+            return false;
         }
         else
         {
@@ -239,7 +238,7 @@ public class Homepage
             return true;
         }
     }
-    
+
     public void displayUserLoginPage(int userType)
     {
         System.out.print('\u000C');
@@ -257,7 +256,7 @@ public class Homepage
         String userPassword = sc.next();
         homeController.checkLoginInfo(userType, userEmail, userPassword);
     }
-    
+
     public void displayAdminLoginPage()
     {
         System.out.print('\u000C');
@@ -271,7 +270,7 @@ public class Homepage
         String adminPassword = sc.next();
         homeController.adminLogin(adminName, adminPassword);
     }
-    
+
     public void displaySearchPage()
     {
         System.out.print('\u000C');
@@ -282,7 +281,7 @@ public class Homepage
         System.out.println("Please enter a hall name to search:");
         System.out.println("Press 0 to go back");
         String hallName = sc.nextLine();
- 
+
         switch (hallName)
         {
             case "0":
@@ -293,7 +292,7 @@ public class Homepage
                 break;
         }
     }
-    
+
     public void displayNoSearchResultPage(String hallName)
     {
         System.out.print('\u000C');
@@ -301,7 +300,7 @@ public class Homepage
         System.out.println("Welcome to the Event Management System - Search Result");
         System.out.println("*****************************************************************************************");
         Scanner sc = new Scanner(System.in);
-    
+
         System.out.println("Sorry, there is hall named '"+hallName+ "'");
         System.out.println("Enter a hall name to search again");
         System.out.println("Press 0 to go back to homepage");
@@ -316,7 +315,7 @@ public class Homepage
                 break;
         }
     }
-    
+
     public void displayHallPage(String hallName)
     {
         System.out.print('\u000C');
@@ -324,7 +323,7 @@ public class Homepage
         System.out.println("Welcome to the Event Management System - Hal: " + hallName);
         System.out.println("*****************************************************************************************");
         Scanner sc = new Scanner(System.in);
-    
+
         homeController.displayHallDetail(hallName);
         System.out.println();
         System.out.println("Please log in to book this hall");
@@ -363,10 +362,10 @@ public class Homepage
                 break;
         }
     }
-    
+
     public void displayViewHallPage()
     {
-        
+
         System.out.print('\u000C');
         Scanner sc = new Scanner(System.in);
         System.out.println("*****************************************************************************************");
@@ -376,7 +375,7 @@ public class Homepage
         System.out.println("Enter hall name to view hall details");
         System.out.println("Enter 0 to go back");
         String hallName = sc.nextLine();
-        
+
         while(!homeController.checkHallExist(hallName) && !hallName.equalsIgnoreCase("0"))
                 {
                     System.out.println("Sorry, there is no hall named "+ hallName);
@@ -392,6 +391,6 @@ public class Homepage
                 displayHallPage(hallName);
                 break;
         }
-        
+
     }
 }

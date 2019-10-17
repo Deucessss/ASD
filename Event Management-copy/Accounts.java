@@ -12,32 +12,101 @@ public class Accounts
     {
         // initialise instance variables
     }
-    
+
+    public static void initialiseAccounts()
+    {
+        String firstName = "a";
+        String lastName = "a";
+        String email1 = "qwe@qwe.com";
+        String email2 = "asd@asd.com";
+        String email3 = "zxc@zxc.com";
+        String password = "qweqwe";
+        String contact = "1234567890";
+        String address1 = "1 Victoria Street Melbourne VIC 3000";
+        String address2 = "2 Victoria Street Melbourne VIC 3000";
+        String address3 = "3 Victoria Street Melbourne VIC 3000";
+        String address4 = "4 Victoria Street Melbourne VIC 3000";
+        String address5 = "5 Victoria Street Melbourne VIC 3000";
+        String address6 = "6 Victoria Street Melbourne VIC 3000";
+        String address7 = "7 Victoria Street Melbourne VIC 3000";
+        String address8 = "8 Victoria Street Melbourne VIC 3000";
+        String address9 = "9 Victoria Street Melbourne VIC 3000";
+        String address10 = "10 Victoria Street, Melbourne VIC 3000";
+        String concession = "none";
+        String answer = "a";
+
+
+        Customer customer = new Customer(firstName,lastName,email1,password,
+                                         contact,address1,concession,answer,answer);
+        customers.add(customer);
+        Owner owner1 = new Owner(firstName,lastName,email1,password,contact,
+                                 address1);
+        Owner owner2 = new Owner(firstName,lastName,email2,password,contact,
+                                 address1);
+        Owner owner3 = new Owner(firstName,lastName,email3,password,contact,
+                                address1);
+        Hall hall1 = new Hall("Hall1",address1,contact,"hall1",10,true,true,true,
+                             100,120);
+        Hall hall2 = new Hall("Hall2",address2,contact,"hall2",10,true,true,true,
+                              100,120);
+        Hall hall3 = new Hall("Hall3",address3,contact,"hall3",10,true,true,true,
+                              100,120);
+        Hall hall4 = new Hall("Hall4",address4,contact,"hall4",10,true,true,true,
+                              100,120);
+        Hall hall5 = new Hall("Hall5",address5,contact,"hall5",10,true,true,true,
+                              100,120);
+        Hall hall6 = new Hall("Hall6",address6,contact,"hall6",10,true,true,true,
+                              100,120);
+        Hall hall7 = new Hall("Hall7",address7,contact,"hall7",10,true,true,true,
+                              100,120);
+        Hall hall8 = new Hall("Hall8",address8,contact,"hall8",10,true,true,true,
+                              100,120);
+        Hall hall9 = new Hall("Hall9",address9,contact,"hall9",10,true,true,true,
+                               100,120);
+        Hall hall10 = new Hall("Hall10",address10,contact,"hall10",10,true,true,true,
+                               100,120);
+        owner1.getHalls().add(hall1);
+        owner1.getHalls().add(hall2);
+        owner1.getHalls().add(hall3);
+        owner2.getHalls().add(hall4);
+        owner2.getHalls().add(hall5);
+        owner2.getHalls().add(hall6);
+        owner3.getHalls().add(hall7);
+        owner3.getHalls().add(hall8);
+        owner3.getHalls().add(hall9);
+        owner3.getHalls().add(hall10);
+
+        owners.add(owner1);
+        owners.add(owner2);
+        owners.add(owner3);
+
+    }
+
     public static ArrayList<Customer> getCustomers()
     {
         return customers;
     }
-    
+
     public static void addCustomer(Customer customer)
     {
         customers.add(customer);
     }
-    
+
     public static ArrayList<Owner> getOwners()
     {
         return owners;
     }
-    
+
     public static void addOwner(Owner owner)
     {
         owners.add(owner);
     }
-    
+
     public static Admin getAdmin()
     {
         return admin;
     }
-    
+
     public static Hall searchHall(String hallName)
     {
         for (Owner owner : owners)
@@ -52,14 +121,14 @@ public class Accounts
         }
         return null;
     }
-    
+
     public static void viewHalls()
     {
         int count = 0;
-        System.out.println("---------------------------------------------------------------------------------------------------------");
-        System.out.printf("| %-10s | %-30s | %-15s | %-9s | %-11s | %-11s |\n", "Hall Name","Hall Address",
+        System.out.println("-------------------------------------------------------------------------------------------------------------------");
+        System.out.printf("| %-10s | %-40s | %-15s | %-9s | %-11s | %-11s |\n", "Hall Name","Hall Address",
                           "Contact Number", "Catering", "Photography", "Decoration");
-        System.out.println("---------------------------------------------------------------------------------------------------------");
+        System.out.println("-------------------------------------------------------------------------------------------------------------------");
         for (int i = 0; i < owners.size(); i++)
         {
             for (int j = 0; j< owners.get(i).getHalls().size(); j++)
@@ -70,18 +139,18 @@ public class Accounts
                 String catering = (owners.get(i).getHalls().get(j).getCateringService() ? "yes" : "no");
                 String photography = (owners.get(i).getHalls().get(j).getPhotographyService() ? "yes" : "no");
                 String decoration = (owners.get(i).getHalls().get(j).getDecorationService() ? "yes" : "no");
-                System.out.format("| %-10s | %-30s | %-15s | %-9s | %-11s | %-11s |\n", hallName, hallAddress,
+                System.out.format("| %-10s | %-40s | %-15s | %-9s | %-11s | %-11s |\n", hallName, hallAddress,
                                     contactNum, catering, photography, decoration);
-                System.out.println("---------------------------------------------------------------------------------------------------------");
+                System.out.println("-------------------------------------------------------------------------------------------------------------------");
                 count++;
             }
         }
-        
+
         if (count == 0)
         {
             System.out.println("Sorry, there is not hall yet!");
         }
-        
+
     }
-    
+
 }

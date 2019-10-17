@@ -1,4 +1,4 @@
-        
+
         /**
  * Write a description of class HomeController here.
  *
@@ -9,27 +9,27 @@ import java.util.*;
 public class HomeController
 {
         // instance variables - replace the example below with your own
-            
+
     /**
      * Constructor for objects of class HomeController
      */
     public HomeController()
     {
         // initialise instance variables
-        
+
         }
-        
-        public void registerCustomer(String firstName, String lastName, 
-                        String email, String password,
-                        String contact, String address, String concession,
-                    String answer1, String answer2, String answer3)
+
+    public void registerCustomer(String firstName, String lastName,
+                                 String email, String password,
+                                 String contact, String address, String concession,
+                                 String answer1, String answer2)
     {
-        Customer customer = new Customer(firstName, lastName, email, password, contact, 
-                                         address, concession, answer1, answer2, answer3);
+        Customer customer = new Customer(firstName, lastName, email, password, contact,
+                                         address, concession, answer1, answer2);
         Accounts.addCustomer(customer);
     }
-    
-    public boolean checkCustomerEmail(String email)
+
+    public boolean checkCustomerEmailExist(String email)
     {
         if (Accounts.getCustomers().size() !=0 )
         {
@@ -38,37 +38,36 @@ public class HomeController
                 if (Accounts.getCustomers().get(i).getEmail().equalsIgnoreCase(email))
                 {
                     System.out.println("This email as already been registered. Please re-enter");
-                    return false;
+                    return true;
                 }
             }
         }
-        return true; 
+        return false;
     }
-        
+
         public void registerOwner(String firstName, String lastName, String email, String password,
                      String contact, String address)
         {
-            ArrayList<Hall> halls = new ArrayList<Hall>();
-            Owner owner = new Owner(firstName,lastName, email, password, contact, address, halls);
+            Owner owner = new Owner(firstName,lastName, email, password, contact, address);
         Accounts.addOwner(owner);
     }
-    
-    public boolean checkOwnerEmail (String email)
+
+    public boolean checkOwnerEmailExist(String email)
     {
         if (Accounts.getOwners().size() != 0 )
         {
             for (int i = 0; i < Accounts.getOwners().size(); i++)
             {
                 if (Accounts.getOwners().get(i).getEmail().equalsIgnoreCase(email))
-                {   
+                {
                     System.out.println("This email as already been registered. Please re-enter");
-                    return false;
+                    return true;
                 }
             }
         }
-        return true;
+        return false;
     }
-    
+
     public void checkLoginInfo(int userType, String email, String password)
     {
         boolean loginSuccess = false;
@@ -125,7 +124,7 @@ public class HomeController
             hp.displayUserLoginPage(userType);
         }
     }
-    
+
     public void adminLogin(String adminName, String adminPwd)
     {
         if (adminName.equals(Accounts.getAdmin().getEmail()) &&
@@ -141,7 +140,7 @@ public class HomeController
             hp.displayAdminLoginPage();
         }
     }
-            
+
     public static void searchHall(String hallName)
     {
         Homepage hp = new Homepage();
@@ -160,10 +159,10 @@ public class HomeController
                     hp.displayHallPage(hallName);
                 }
                 break;
-                
+
         }
     }
-    
+
     public static boolean checkHallExist(String hallName)
     {
         if (Accounts.searchHall(hallName) != null)
@@ -171,9 +170,9 @@ public class HomeController
             return true;
         }
         return false;
-        
+
     }
-    
+
     public static void displayHallDetail(String hallName)
     {
         Hall result = Accounts.searchHall(hallName);
@@ -184,7 +183,7 @@ public class HomeController
         String catering = (result.getCateringService() ? "yes" : "no");
         String photography = (result.getPhotographyService() ? "yes" : "no");
         String decoration = (result.getDecorationService() ? "yes" : "no");
-        
+
         System.out.println("-----------------------------------------------------------------------------");
         System.out.format("|  %-20s|  %-50s|\n", "Hall Name", name);
         System.out.println("-----------------------------------------------------------------------------");
@@ -215,15 +214,15 @@ public class HomeController
             }
         }
         System.out.println("-----------------------------------------------------------------------------");
-        
+
     }
-    
-    
+
+
     public void viewAllHalls()
     {
         Accounts.viewHalls();
     }
-    
+
     public static void exitSoftware()
     {
         System.exit(0);
