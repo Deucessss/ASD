@@ -33,18 +33,17 @@ public class CustomerInterface
         System.out.println("Press 2 to Search for Hall");
         System.out.println("Press 3 to View Quotations(" + customerController.countRepliedQuotations() + " newly replied)");
         System.out.println("Press 4 to View Bookings");
-        System.out.println("Press 5 to Update a Booking");
-        System.out.println("Press 6 to view booking History");
-        System.out.println("Press 7 to Update personal Details");
-        System.out.println("Press 8 to Logout");
-        System.out.println("press 9 to Exit");
+        System.out.println("Press 5 to view booking History");
+        System.out.println("Press 6 to Update personal Details");
+        System.out.println("Press 7 to Logout");
+        System.out.println("press 8 to Exit");
         System.out.println("Please enter your choice:");
         int choice;
         while (true)
         {
             try{
                 choice = sc.nextInt();
-                if (choice < 1 || choice > 9)
+                if (choice < 1 || choice > 8)
                 {
                     System.out.println("Invalid Option. Please re-enter a number between 1 and 9");
                     continue;
@@ -74,18 +73,15 @@ public class CustomerInterface
                 displayBookingsPage();
                 break;
             case 5:
-                displayCustomerPage();
+                displayBookingHistory();
                 break;
             case 6:
                 displayCustomerPage();
                 break;
             case 7:
-                displayCustomerPage();
-                break;
-            case 8:
                 customerController.logout();
                 break;
-            case 9:
+            case 8:
                 HomeController.exitSoftware();
                 break;
         }
@@ -819,6 +815,314 @@ public class CustomerInterface
         }
 
     }
+
+    public void displayBookingHistory()
+    {
+        System.out.print('\u000C');
+        Scanner sc = new Scanner(System.in);
+        System.out.println("*****************************************************************************************");
+        System.out.println("Welcome to the Event Management System -  Booking History");
+        System.out.println("*****************************************************************************************");
+
+        if (customerController.getCustomer().getPastBookings().size()>0)
+        {
+            System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.format("| %-10s | %-8s | %-12s | %-10s | %-10s | %-13s | %-16s | %-15s | %-10s | %-12s | %-5s |\n",
+                               "Booking Id", "Occasion", "Guest Number",
+                               "Start Date", "End Date", "Catering Cost",
+                               "Photography Cost", "Decoration Cost",
+                               "Venue Cost", "Total Amount", "Rated");
+            System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------");
+            for (int i = 0; i < customerController.getCustomer().getPastBookings().size(); i++)
+            {
+                System.out.format("| %-10s | %-8s | %-12s | %-10s | %-10s | %-13s | %-16s | %-15s | %-10s | %-12s | %-5s |\n",
+                                  customerController.getCustomer().getPastBookings().get(i).getIdCust(),
+                                  customerController.getCustomer().getPastBookings().get(i).getOccasion(),
+                                  customerController.getCustomer().getPastBookings().get(i).getGuestNum(),
+                                  formatter.format(customerController.getCustomer().getPastBookings().get(i).getStartDate()),
+                                  formatter.format(customerController.getCustomer().getPastBookings().get(i).getEndDate()),
+                                  customerController.getCustomer().getPastBookings().get(i).getCateringCost(),
+                                  customerController.getCustomer().getPastBookings().get(i).getPhotographyCost(),
+                                  customerController.getCustomer().getPastBookings().get(i).getDecorationCost(),
+                                  customerController.getCustomer().getPastBookings().get(i).getVenueCost(),
+                                  customerController.getCustomer().getPastBookings().get(i).getTotalAmount(),
+                                  (customerController.getCustomer().getPastBookings().get(i).isRated()) ? "yes" : "no");
+                System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------------");
+
+            }
+        }
+        else
+        {
+            System.out.println("You don't have any completed bookings!");
+        }
+
+        System.out.println("Enter 0 to go back");
+        System.out.println("Enter booking id to view details");
+
+        int bookingId;
+
+        while(true)
+        {
+            try{
+                bookingId = sc.nextInt();
+                if (bookingId != 0 && bookingId > customerController.getCustomer().getPastBookings().size())
+                {
+                    System.out.println("The booking you requested doesn't exist!");
+                    System.out.println("Please re-enter:");
+                    continue;
+                }
+                else
+                {
+                    break;
+                }
+            }catch(java.util.InputMismatchException e){
+                sc.nextLine();
+                System.out.println("Invalid input. Please enter a number: ");
+                continue;
+            }
+        }
+
+        switch(bookingId)
+        {
+            case 0:
+                displayCustomerPage();
+                break;
+            default:
+                displayPastBookingDetailPage(bookingId);
+                break;
+        }
+    }
+
+    public void displayPastBookingDetailPage(int bookingId)
+    {
+        System.out.print('\u000C');
+        Scanner sc = new Scanner(System.in);
+        System.out.println("*****************************************************************************************");
+        System.out.println("Welcome to the Event Management System - Past Booking");
+        System.out.println("*****************************************************************************************");
+
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "Hall Id",
+                         customerController.getPastBookingByIdCust(bookingId).getHall().getId());
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "Booking Id",
+                         customerController.getPastBookingByIdCust(bookingId).getIdCust());
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "Hall Name",
+                         customerController.getPastBookingByIdCust(bookingId).getHall().getName());
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "Start Date",
+                         CustomerInterface.formatter.format(customerController.getPastBookingByIdCust(bookingId).getStartDate()));
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "End Date",
+                         CustomerInterface.formatter.format(customerController.getPastBookingByIdCust(bookingId).getEndDate()));
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "Occasion",
+                         customerController.getPastBookingByIdCust(bookingId).getOccasion());
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42d|\n", "Guest Number", customerController.getPastBookingByIdCust(bookingId).getGuestNum());
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "Require Catering Service",
+                            ((customerController.getPastBookingByIdCust(bookingId).isCateringService()) ? "Required" : "Not Required"));
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "Catering Cost", customerController.getPastBookingByIdCust(bookingId).getCateringCost());
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "Require Photography Service",
+                            ((customerController.getPastBookingByIdCust(bookingId).isPhotographyService()) ? "Required" : "Not Required"));
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "Photography Cost", customerController.getPastBookingByIdCust(bookingId).getPhotographyCost());
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "Require Decoration Service",
+                            ((customerController.getPastBookingByIdCust(bookingId).isDecorationService()) ? "Required" : "Not Required")) ;
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "Decoration Cost", customerController.getPastBookingByIdCust(bookingId).getDecorationCost());
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "Venue Cost", customerController.getPastBookingByIdCust(bookingId).getVenueCost());
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-28s|  %-42s|\n", "Total Amount", customerController.getPastBookingByIdCust(bookingId).getTotalAmount());
+        System.out.println("-----------------------------------------------------------------------------");
+        if(customerController.getPastBookingByIdCust(bookingId).isRated())
+        {
+            if (customerController.getPastBookingByIdCust(bookingId).isCateringService())
+            {
+                System.out.format("|  %-28s|  %-42s|\n", "Catering Rating", customerController.getPastBookingByIdCust(bookingId).getRating().getCateringRating());
+                System.out.println("-----------------------------------------------------------------------------");
+            }
+            if (customerController.getPastBookingByIdCust(bookingId).isPhotographyService())
+            {
+                System.out.format("|  %-28s|  %-42s|\n", "Photography Rating", customerController.getPastBookingByIdCust(bookingId).getRating().getPhotographyRating());
+                System.out.println("-----------------------------------------------------------------------------");
+            }
+            if (customerController.getPastBookingByIdCust(bookingId).isDecorationService())
+            {
+                System.out.format("|  %-28s|  %-42s|\n", "Decoration Rating", customerController.getPastBookingByIdCust(bookingId).getRating().getDecorationRating());
+                System.out.println("-----------------------------------------------------------------------------");
+            }
+            System.out.format("|  %-28s|  %-42s|\n", "Overall Rating", customerController.getPastBookingByIdCust(bookingId).getRating().getHallRating());
+            System.out.println("-----------------------------------------------------------------------------");
+        }
+            System.out.println();
+        if (!customerController.getPastBookingByIdCust(bookingId).isRated())
+        {
+            System.out.println("Enter 0 to go back");
+            System.out.println("Enter 1 to rate this booking");
+            int choice;
+            while(true)
+            {
+                try{
+                    choice = sc.nextInt();
+                    if (choice !=0 && choice != 1)
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }catch(java.util.InputMismatchException e){
+                    sc.nextLine();
+                    System.out.println("Invalid Input. Please re-enter either 0 or 1");
+                    continue;
+                }
+            }
+            sc.nextLine();
+            switch(choice)
+            {
+                case 0:
+                    displayBookingHistory();
+                    break;
+                case 1:
+                    if (customerController.getPastBookingByIdCust(bookingId).isCateringService())
+                    {
+                        System.out.println("Enter your rating for the catering service of this hall:");
+                        int cateringRating;
+                        while(true)
+                        {
+                            try{
+                                cateringRating = sc.nextInt();
+                                if(cateringRating<0 || cateringRating > 5)
+                                {
+                                    System.out.println("Rating must be between 0 and 5. Please Re-enter:");
+                                    continue;
+                                }
+                                else{
+                                    customerController.getPastBookingByIdCust(bookingId).getRating().setCateringRating(cateringRating);
+                                    break;
+                                }
+                            }catch(java.util.InputMismatchException e){
+                                System.out.println("Please Enter a number");
+                                sc.nextLine();
+                                continue;
+                            }
+                        }
+                    }
+                    if (customerController.getPastBookingByIdCust(bookingId).isPhotographyService())
+                    {
+                        System.out.println("Enter your rating for the photography service of this hall:");
+                        int photographyRating;
+                        while(true)
+                        {
+                            try{
+                                photographyRating = sc.nextInt();
+                                if(photographyRating<0 || photographyRating > 5)
+                                {
+                                    System.out.println("Rating must be between 0 and 5. Please Re-enter:");
+                                    continue;
+                                }
+                                else{
+                                    customerController.getPastBookingByIdCust(bookingId).getRating().setPhotographyRating(photographyRating);
+                                    break;
+                                }
+                            }catch(java.util.InputMismatchException e){
+                                System.out.println("Please Enter a number");
+                                sc.nextLine();
+                                continue;
+                            }
+                        }
+                    }
+                    if (customerController.getPastBookingByIdCust(bookingId).isDecorationService())
+                    {
+                        System.out.println("Enter your rating for the decoration service of this hall:");
+                        int decorationRating;
+                        while(true)
+                        {
+                            try{
+                                decorationRating = sc.nextInt();
+                                if(decorationRating<0 || decorationRating > 5)
+                                {
+                                    System.out.println("Rating must be between 0 and 5. Please Re-enter:");
+                                    continue;
+                                }
+                                else{
+                                    customerController.getPastBookingByIdCust(bookingId).getRating().setDecorationRating(decorationRating);
+                                    break;
+                                }
+                            }catch(java.util.InputMismatchException e){
+                                System.out.println("Please Enter a number");
+                                sc.nextLine();
+                                continue;
+                            }
+                        }
+                    }
+                    System.out.println("Enter your overall rating for this hall:");
+                    int hallRating;
+                    while(true)
+                    {
+                        try{
+                            hallRating = sc.nextInt();
+                            if(hallRating<0 || hallRating > 5)
+                            {
+                                System.out.println("Rating must be between 0 and 5. Please Re-enter:");
+                                continue;
+                            }
+                            else{
+                                customerController.getPastBookingByIdCust(bookingId).getRating().setHallRating(hallRating);
+                                break;
+                            }
+                        }catch(java.util.InputMismatchException e){
+                            System.out.println("Please Enter a number");
+                            sc.nextLine();
+                            continue;
+                        }
+                    }
+                    customerController.getPastBookingByIdCust(bookingId).setRated(true);
+                    customerController.getPastBookingByIdCust(bookingId).getHall().calculateAverageRating();
+                    System.out.println("This hall has been rated! Thank you!");
+                    try{
+                        TimeUnit.SECONDS.sleep(2);
+                    } catch(InterruptedException ie){
+                        Thread.currentThread().interrupt();
+                    }
+                    displayPastBookingDetailPage(bookingId);
+                    break;
+            }
+        }
+        else
+        {
+            System.out.println("Enter 0 to go back");
+            int choice;
+            while(true)
+            {
+                try{
+                    choice = sc.nextInt();
+                    if (choice == 0)
+                    {
+                        displayBookingHistory();
+                        break;
+                    }
+                    else{
+                        System.out.println("Invalid Input. Enter 0 to go back");
+                        continue;
+                    }
+                }catch(java.util.InputMismatchException e){
+                    System.out.println("Invalid Input. Enter 0 to go back");
+                    sc.nextLine();
+                    continue;
+                }
+            }
+        }
+    }
+
     public CustomerController getCustomerController()
     {
         return this.customerController;

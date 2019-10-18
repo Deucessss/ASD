@@ -898,13 +898,13 @@ public void displayDeleteHallPage()
                 }
                 else
                 {
-                    displayOwnerPage();
+                    displayBookingPage(hallId, bookingId);
                 }
                 break;
         }
     }
 
-    public void displayBookingPage()
+    public void displayBookingPage(int hallId,int bookingId)
     {
         System.out.print('\u000C');
         System.out.printf("%s\n",lineBreak);
@@ -912,6 +912,63 @@ public void displayDeleteHallPage()
         System.out.printf("%s\n",lineBreak);
         Scanner sc = new Scanner(System.in);
 
+        ownerController.displayBookingDetails(ownerController.searchBooking(hallId, bookingId));
+
+        if (ownerController.searchBooking(hallId, bookingId).isUpdated())
+        {
+            System.out.println("Enter 0 to go back");
+            System.out.println("Enter \"Accept\" to accept update");
+            System.out.println("Enter \"Reject\" to reject update");
+
+            String choice = sc.nextLine();
+            while (!choice.equalsIgnoreCase("0") &&
+                   !choice.equalsIgnoreCase("Accept") &&
+                   !choice.equalsIgnoreCase("Reject"))
+            {
+                System.out.println("Invalid Input");
+                System.out.println("Enter 0 to go back");
+                System.out.println("Enter \"Accept\" to accept update");
+                System.out.println("Enter \"Reject\" to reject update");
+            }
+
+            switch(choice)
+            {
+                case "0":
+                    displayBookingsPage();
+                    break;
+                case "accept":
+                    ownerController.acceptUpdate(ownerController.searchBooking(hallId, bookingId));
+                    System.out.println("Update has been successfully updated!");
+                    try{
+                    TimeUnit.SECONDS.sleep(2);
+                    } catch(InterruptedException ie){
+                        Thread.currentThread().interrupt();
+                    }
+                    displayBookingPage(hallId, bookingId);
+                    break;
+                case "reject":
+                    ownerController.rejectUpdate(ownerController.searchBooking(hallId,bookingId));
+                    System.out.println("Update has been successfully rejected!");
+                    try{
+                    TimeUnit.SECONDS.sleep(2);
+                    } catch(InterruptedException ie){
+                        Thread.currentThread().interrupt();
+                    }
+                    displayBookingPage(hallId, bookingId);
+
+                    break;
+            }
+        }
+        else
+        {
+            System.out.println("Enter 0 to go back");
+            String choice = sc.nextLine();
+            while (!choice.equalsIgnoreCase("0"))
+            {
+                System.out.println("Enter 0 to go back");
+            }
+            displayBookingsPage();
+        }
 
 
     }

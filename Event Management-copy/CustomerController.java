@@ -252,32 +252,30 @@ public class CustomerController
 
         if (customer.getBookings().size() > 0)
         {
-            System.out.println("-----------------------------------------------------------------------------");
-            System.out.println("Active Booking");
-            System.out.println("-----------------------------------------------------------------------------");
+            System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.format("| %-10s | %-8s | %-12s | %-10s | %-10s | %-13s | %-16s | %-15s | %-10s | %-12s |\n",
+                               "Booking Id", "Occasion", "Guest Number",
+                               "Start Date", "End Date", "Catering Cost",
+                               "Photography Cost", "Decoration Cost",
+                               "Venue Cost", "Total Amount");
+            System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------");
             for (Booking booking : customer.getBookings())
             {
-                displayBooking(booking);
+                System.out.format("| %-10s | %-8s | %-12s | %-10s | %-10s | %-13s | %-16s | %-15s | %-10s | %-12s |\n",
+                                  booking.getIdCust(), booking.getOccasion(),
+                                  booking.getGuestNum(),
+                                  CustomerInterface.formatter.format(booking.getStartDate()),
+                                  CustomerInterface.formatter.format(booking.getEndDate()),
+                                  booking.getCateringCost(),
+                                  booking.getPhotographyCost(),
+                                  booking.getDecorationCost(),
+                                  booking.getVenueCost(), booking.getTotalAmount());
+                System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------");
             }
         }
         else
         {
             System.out.println("You have no active booking yet");
-        }
-
-        if (customer.getPastBookings().size() > 0)
-        {
-            System.out.println("-----------------------------------------------------------------------------");
-            System.out.println("Past Booking");
-            System.out.println("-----------------------------------------------------------------------------");
-            for (Booking booking : customer.getPastBookings())
-            {
-                displayBooking(booking);
-            }
-        }
-        else
-        {
-            System.out.println("You have no past booking yet");
         }
 
     }
@@ -319,10 +317,7 @@ public class CustomerController
         System.out.format("|  %-28s|  %-42s|\n", "Total Amount", booking.getTotalAmount());
         System.out.println("-----------------------------------------------------------------------------");
 
-        if (booking.isOccasionUpdated() || booking.isGuestNumUpdated() ||
-            booking.isEventDateUpdated() || booking.isCateringServiceUpdated() ||
-            booking.isPhotographyServiceUpdated()
-            || booking.isDecorationServiceUpdated())
+        if (booking.isUpdated())
         {
             System.out.println("-----------------------------------------------------------------------------");
             System.out.println("Update to the booking is waiting for reply from the owner");
@@ -369,11 +364,13 @@ public class CustomerController
     {
         getBookingByIdCust(bookingId).setOccasionUpdated(true);
         getBookingByIdCust(bookingId).setUpdatedOccasion(occasion);
+        getBookingByIdCust(bookingId).setUpdated(true);
     }
     public void updateGuestNumber(int bookingId, int guestNum)
     {
         getBookingByIdCust(bookingId).setGuestNumUpdated(true);
         getBookingByIdCust(bookingId).setUpdatedGuestNum(guestNum);
+        getBookingByIdCust(bookingId).setUpdated(true);
     }
 
     public void updateEventDate(int bookingId, Date startDate, Date endDate)
@@ -381,16 +378,22 @@ public class CustomerController
         getBookingByIdCust(bookingId).setEventDateUpdated(true);
         getBookingByIdCust(bookingId).setUpdatedStartDate(startDate);
         getBookingByIdCust(bookingId).setUpdatedEndDate(endDate);
+        getBookingByIdCust(bookingId).setUpdated(true);
+
     }
 
     public void updateCateringService(int bookingId)
     {
         getBookingByIdCust(bookingId).setCateringServiceUpdated(true);
+        getBookingByIdCust(bookingId).setUpdated(true);
+
     }
 
     public void updatePhotographyService(int bookingId)
     {
         getBookingByIdCust(bookingId).setPhotographyServiceUpdated(true);
+        getBookingByIdCust(bookingId).setUpdated(true);
+
 
     }
 
@@ -398,12 +401,28 @@ public class CustomerController
     {
 
         getBookingByIdCust(bookingId).setDecorationServiceUpdated(true);
+        getBookingByIdCust(bookingId).setUpdated(true);
 
     }
+
+
+
 
     public Booking getBookingByIdCust(int idCust)
     {
         for (Booking booking : customer.getBookings())
+        {
+            if (booking.getIdCust() == idCust)
+            {
+                return booking;
+            }
+        }
+        return null;
+    }
+
+    public Booking getPastBookingByIdCust(int idCust)
+    {
+        for (Booking booking : customer.getPastBookings())
         {
             if (booking.getIdCust() == idCust)
             {

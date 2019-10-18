@@ -71,7 +71,7 @@ public class Accounts
         hall2.setId(2);
         owner1.getHalls().add(hall3);
         hall3.setId(3);
-        
+
         owner2.getHalls().add(hall4);
         hall4.setId(1);
         owner2.getHalls().add(hall5);
@@ -91,6 +91,9 @@ public class Accounts
         owners.add(owner2);
         owners.add(owner3);
 
+        Booking booking = new Booking("asd",2,true,20,true,20,true,20,20,new Date(),new Date(),hall1,customer);
+        customer.getPastBookings().add(booking);
+        hall1.getPastBookings().add(booking);
     }
 
     public static ArrayList<Customer> getCustomers()
@@ -136,10 +139,10 @@ public class Accounts
     public static void viewHalls()
     {
         int count = 0;
-        System.out.println("-------------------------------------------------------------------------------------------------------------------");
-        System.out.printf("| %-10s | %-40s | %-15s | %-9s | %-11s | %-11s |\n", "Hall Name","Hall Address",
-                          "Contact Number", "Catering", "Photography", "Decoration");
-        System.out.println("-------------------------------------------------------------------------------------------------------------------");
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+        System.out.printf("| %-10s | %-40s | %-14s | %-9s | %-11s | %-11s | %-6s |\n", "Hall Name","Hall Address",
+                          "Contact Number", "Catering", "Photography", "Decoration", "Rating");
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------");
         for (int i = 0; i < owners.size(); i++)
         {
             for (int j = 0; j< owners.get(i).getHalls().size(); j++)
@@ -150,9 +153,10 @@ public class Accounts
                 String catering = (owners.get(i).getHalls().get(j).getCateringService() ? "yes" : "no");
                 String photography = (owners.get(i).getHalls().get(j).getPhotographyService() ? "yes" : "no");
                 String decoration = (owners.get(i).getHalls().get(j).getDecorationService() ? "yes" : "no");
-                System.out.format("| %-10s | %-40s | %-15s | %-9s | %-11s | %-11s |\n", hallName, hallAddress,
-                                    contactNum, catering, photography, decoration);
-                System.out.println("-------------------------------------------------------------------------------------------------------------------");
+                float averageRating = (owners.get(i).getHalls().get(j).getAverageRating());
+                System.out.format("| %-10s | %-40s | %-14s | %-9s | %-11s | %-11s | %-6.2f |\n", hallName, hallAddress,
+                                    contactNum, catering, photography, decoration, averageRating);
+                System.out.println("---------------------------------------------------------------------------------------------------------------------------");
                 count++;
             }
         }
@@ -161,7 +165,7 @@ public class Accounts
         {
             System.out.println("Sorry, there is not hall yet!");
         }
-
     }
+
 
 }

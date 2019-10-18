@@ -1,0 +1,21 @@
+#BlueJ class context
+comment0.target=Rating
+comment1.params=
+comment1.target=Rating()
+comment2.params=
+comment2.target=int\ getCateringRating()
+comment3.params=cateringRating
+comment3.target=void\ setCateringRating(int)
+comment4.params=
+comment4.target=int\ getPhotographyRating()
+comment5.params=photographyRating
+comment5.target=void\ setPhotographyRating(int)
+comment6.params=
+comment6.target=int\ getDecorationRating()
+comment7.params=decorationRating
+comment7.target=void\ setDecorationRating(int)
+comment8.params=
+comment8.target=int\ getHallRating()
+comment9.params=hallRating
+comment9.target=void\ setHallRating(int)
+numComments=10

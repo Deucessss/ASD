@@ -64,6 +64,10 @@ public class Quotation
     {
         return this.depositAmount;
     }
+    public void setDepositAmount(float depositAmount)
+    {
+        this.depositAmount = depositAmount;
+    }
     
     public boolean getDepositPaid()
     {

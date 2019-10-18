@@ -226,7 +226,7 @@ public class OwnerController
         quotation.setDecorationCost(decorationCost);
         quotation.setVenueCost(venueCost);
         quotation.setTotalAmount(cateringCost + decorationCost + photographyCost + venueCost);
-        quotation.setDepositAmount(quotation.getTotalAmount/2);
+        quotation.setDepositAmount(quotation.getTotalAmount()/2);
         quotation.setReplied(true);
 
         quotation.setIdOwner(quotation.getHall().getPastQuotations().size() + 1);
@@ -360,7 +360,7 @@ public class OwnerController
         System.out.println("-----------------------------------------------------------------------------");
         System.out.format("|  %-28s|  %-42s|\n", "Hall Id", booking.getHall().getId());
         System.out.println("-----------------------------------------------------------------------------");
-        System.out.format("|  %-28s|  %-42s|\n", "Booking Id", booking.getIdOwner();
+        System.out.format("|  %-28s|  %-42s|\n", "Booking Id", booking.getIdOwner());
         System.out.println("-----------------------------------------------------------------------------");
         System.out.format("|  %-28s|  %-42s|\n", "Hall Name", booking.getHall().getName());
         System.out.println("-----------------------------------------------------------------------------");
@@ -392,10 +392,7 @@ public class OwnerController
         System.out.format("|  %-28s|  %-42s|\n", "Total Amount", booking.getTotalAmount());
         System.out.println("-----------------------------------------------------------------------------");
 
-        if (booking.isOccasionUpdated() || booking.isGuestNumUpdated() ||
-            booking.isEventDateUpdated() || booking.isCateringServiceUpdated() ||
-            booking.isPhotographyServiceUpdated()
-            || booking.isDecorationServiceUpdated())
+        if (booking.isUpdated())
         {
             System.out.println("-----------------------------------------------------------------------------");
             System.out.println("Update Request");
@@ -421,6 +418,7 @@ public class OwnerController
                 System.out.format("|  %-28s|  %-42s|\n", "Require Catering Service",
                                     ((booking.isCateringService()) ? "Not Required" : "Required"));
                 System.out.println("-----------------------------------------------------------------------------");
+
             }
             if(booking.getHall().getPhotographyService() && booking.isPhotographyServiceUpdated())
             {
@@ -434,10 +432,139 @@ public class OwnerController
                                     ((booking.isDecorationServiceUpdated()) ? "Not Required" : "Required"));
                 System.out.println("-----------------------------------------------------------------------------");
             }
-
-
-
         }
+    }
+
+    public void acceptUpdate(Booking booking)
+    {
+        Scanner sc = new Scanner(System.in);
+        if (booking.isOccasionUpdated())
+        {
+            booking.setOccasion(booking.getUpdatedOccasion());
+            booking.setOccasionUpdated(false);
+        }
+
+        if (booking.isGuestNumUpdated())
+        {
+            booking.setGuestNum(booking.getUpdatedGuestNum());
+            booking.setGuestNumUpdated(false);
+        }
+
+        if (booking.isEventDateUpdated())
+        {
+            booking.setStartDate(booking.getUpdatedStartDate());
+            booking.setEndDate(booking.getUpdatedEndDate());
+            booking.setEventDateUpdated(false);
+        }
+        if(booking.isCateringServiceUpdated())
+        {
+            booking.setCateringService(!booking.isCateringService());
+            if (booking.isCateringService())
+            {
+                System.out.println("Enter the catering cost: ");
+                float cateringCost;
+                while (true)
+                {
+                    try{
+                        cateringCost = sc.nextFloat();
+                        break;
+                    }catch(java.util.InputMismatchException e){
+                        sc.nextLine();
+                        System.out.println("Catering cost must be a number!");
+                        System.out.println("Please re-enter catering cost:");
+                        continue;
+                    }
+                }
+                booking.setCateringCost(cateringCost);
+                booking.setTotalAmount(booking.getTotalAmount() +
+                                       booking.getCateringCost());
+            }
+            else
+            {
+                booking.setCateringCost(0);
+            }
+            sc.nextLine();
+            booking.setCateringServiceUpdated(false);
+        }
+
+
+        if(booking.isPhotographyServiceUpdated())
+        {
+            booking.setPhotographyService(!booking.isDecorationService());
+            if(booking.isPhotographyService())
+            {
+                System.out.println("Enter the photography cost: ");
+                float photographyCost;
+                while (true)
+                {
+                    try{
+                        photographyCost = sc.nextFloat();
+                        break;
+                    }catch(java.util.InputMismatchException e){
+                        sc.nextLine();
+                        System.out.println("Photography cost must be a number!");
+                        System.out.println("Please re-enter photography cost:");
+                        continue;
+                    }
+                }
+                booking.setPhotographyCost(photographyCost);
+                booking.setTotalAmount(booking.getTotalAmount() +
+                                       booking.getPhotographyCost());
+                sc.nextLine();
+            }
+            else
+            {
+                booking.setPhotographyCost(0);
+            }
+            booking.setPhotographyServiceUpdated(false);
+        }
+
+        if(booking.isDecorationServiceUpdated())
+        {
+            booking.setDecorationService(!booking.isDecorationService());
+            if(booking.isDecorationService())
+            {
+                System.out.println("Enter the decoration cost: ");
+                float decorationCost;
+                while (true)
+                {
+                    try{
+                        decorationCost = sc.nextFloat();
+                        break;
+                    }catch(java.util.InputMismatchException e){
+                        sc.nextLine();
+                        System.out.println("Decoration cost must be a number!");
+                        System.out.println("Please re-enter decoration cost:");
+                        continue;
+                    }
+                }
+                sc.nextLine();
+                booking.setDecorationCost(decorationCost);
+                booking.setTotalAmount(booking.getTotalAmount() +
+                                       booking.getDecorationCost());
+            }
+            else
+            {
+                booking.setDecorationCost(0);
+            }
+            booking.setDecorationServiceUpdated(false);
+        }
+        booking.setUpdated(false);
+    }
+
+    public void rejectUpdate(Booking booking)
+    {
+        booking.setOccasionUpdated(false);
+        booking.setUpdatedOccasion(null);
+        booking.setGuestNumUpdated(false);
+        booking.setUpdatedGuestNum(0);
+        booking.setEventDateUpdated(false);
+        booking.setUpdatedStartDate(null);
+        booking.setUpdatedEndDate(null);
+        booking.setCateringServiceUpdated(false);
+        booking.setPhotographyServiceUpdated(false);
+        booking.setDecorationServiceUpdated(false);
+        booking.setUpdated(false);
     }
 
     public void logout()
