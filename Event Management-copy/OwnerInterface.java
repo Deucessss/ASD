@@ -54,7 +54,7 @@ public void displayOwnerPage()
             System.out.println("Invalid input. Please re-enter a number between 1 and 9");
         }
     }
-    
+
     switch(choice)
     {
         case 1:
@@ -84,7 +84,7 @@ public void displayOwnerPage()
         case 9:
             HomeController.exitSoftware();
             break;
-    } 
+    }
 }
 
 public void displayAddHallPage()
@@ -154,7 +154,7 @@ public void displayAddHallPage()
     {
         cateringService = false;
     }
-    
+
     System.out.println("Enter the Decoration Serice of the hall(y/n):");
     String decoration = sc.nextLine();
     boolean decorationService;
@@ -192,7 +192,7 @@ public void displayAddHallPage()
             continue;
         }
     }
-    
+
     System.out.println("Please Enter the Price of the Hall");
     float price;
     while (true)
@@ -208,7 +208,7 @@ public void displayAddHallPage()
     }
     System.out.println("Enter hall Discount:");
     float hallDiscount;
-    
+
     while (true)
     {
         try{
@@ -231,7 +231,7 @@ public void displayAddHallPage()
     ownerController.addHall(name,address,contact,description,
                             hallDiscount,cateringService,decorationService,
                             photographyService,price,hallCapacity);
-    
+
     System.out.println("Hall has been successfully added!");
     System.out.println("Taking you back to your home page");
     try{
@@ -239,9 +239,9 @@ public void displayAddHallPage()
         } catch(InterruptedException ie){
             Thread.currentThread().interrupt();
         }
-    
+
     displayOwnerPage();
-    
+
 }
 
 public void displayUpdateHallPage()
@@ -307,7 +307,7 @@ public void displayUpdateHallPage()
                 }
             }catch(java.util.InputMismatchException e){
                 sc.nextLine();
-                System.out.println("Hall number is a number." +  
+                System.out.println("Hall number is a number." +
                             "Please re-enter a hall number or go back by entering 0");
                 continue;
                 }
@@ -328,8 +328,8 @@ public void displayEditHallPage(int hallNum)
 {
     System.out.print('\u000C');
     System.out.printf("%s\n",lineBreak);
-    System.out.println("Event Management System - Edit " +  
-                        ownerController.getOwner().getHalls().get(hallNum-1).getName() + 
+    System.out.println("Event Management System - Edit " +
+                        ownerController.getOwner().getHalls().get(hallNum-1).getName() +
                         " hall");
     System.out.printf("%s\n",lineBreak);
     Scanner sc = new Scanner(System.in);
@@ -397,7 +397,7 @@ public void displayEditHallPage(int hallNum)
             System.out.println("Enter a new description:");
             String newDesc = sc.next();
             while (newDesc.length() > 250)
-            {   
+            {
                 System.out.println("Description character limit is 250. Please re-enter");
                 newDesc = sc.next();
             }
@@ -456,7 +456,7 @@ public void displayDeleteHallPage()
         }
         }
     else
-    {   
+    {
         ownerController.printHalls();
         System.out.println("Enter a hall number to delete");
         System.out.println("Press 0 to go back");
@@ -517,7 +517,7 @@ public void displayDeleteHallPage()
         }
     }
     }
-    
+
     public void displayUnrepliedQuotationsPage()
     {
         System.out.print('\u000C');
@@ -525,13 +525,13 @@ public void displayDeleteHallPage()
         System.out.println("Event Management System - Unreplied Quotations");
         System.out.printf("%s\n",lineBreak);
         Scanner sc = new Scanner(System.in);
-        
+
         ownerController.displayUnrepliedQuotations();
-        
+
         System.out.println("Enter a Hall Id to view quotation details");
         System.out.println("Enter 0 to go back");
         int hallId;
-        
+
         while(true)
         {
             try{
@@ -582,9 +582,9 @@ public void displayDeleteHallPage()
                 }
                 break;
         }
-        
+
     }
-    
+
     public void displayUnrepliedQuotationDetailsPage(int hallId, int quotId)
     {
         System.out.print('\u000C');
@@ -592,7 +592,7 @@ public void displayDeleteHallPage()
         System.out.println("Event Management System - Unreplied Quotations");
         System.out.printf("%s\n",lineBreak);
         Scanner sc = new Scanner(System.in);
-        
+
         ownerController.displayUnrepliedQuotation(ownerController.searchUnrepliedQuotation(hallId, quotId));
         System.out.println("Enter 1 to reply to this quotation");
         System.out.println("Enter 2 to go back to quotation pages");
@@ -628,7 +628,7 @@ public void displayDeleteHallPage()
                 break;
         }
     }
-    
+
     public void displayReplyQuotationPage(int hallID, int quotID)
     {
         System.out.print('\u000C');
@@ -636,14 +636,14 @@ public void displayDeleteHallPage()
         System.out.println("Event Management System - Reply to a quotation");
         System.out.printf("%s\n",lineBreak);
         Scanner sc = new Scanner(System.in);
-        
+
         ownerController.displayUnrepliedQuotation(ownerController.searchUnrepliedQuotation(hallID, quotID));
         float cateringCost = 0;
         float photographyCost = 0;
         float decorationCost = 0;
         float venueCost;
         if (ownerController.searchUnrepliedQuotation(hallID, quotID).getCateringService())
-        {    
+        {
             System.out.println("Enter the cost for catering");
             while(true)
             {
@@ -672,7 +672,7 @@ public void displayDeleteHallPage()
                 }
             }
         }
-        if (ownerController.searchUnrepliedQuotation(hallID, quotID).getDecorationService()) 
+        if (ownerController.searchUnrepliedQuotation(hallID, quotID).getDecorationService())
         {
             System.out.println("Enter the cost for decoration");
             while(true)
@@ -699,23 +699,23 @@ public void displayDeleteHallPage()
                     continue;
                 }
             }
-        
+
         ownerController.replyQuotation(ownerController.searchUnrepliedQuotation(hallID, quotID),
                                     cateringCost, photographyCost, decorationCost, venueCost);
-                                    
+
         System.out.println("Quotation Successfully replied!");
         System.out.println("Taking you back to quotation page");
-        
+
         try{
         TimeUnit.SECONDS.sleep(2);
         } catch(InterruptedException ie){
             Thread.currentThread().interrupt();
         }
-        
+
         displayRepliedQuotationsPage();
-        
+
     }
-    
+
     public void displayRepliedQuotationsPage()
     {
         System.out.print('\u000C');
@@ -723,11 +723,11 @@ public void displayDeleteHallPage()
         System.out.println("Event Management System - Replied Quotations");
         System.out.printf("%s\n",lineBreak);
         Scanner sc = new Scanner(System.in);
-        
+
         ownerController.displayRepliedQuotations();
         System.out.println("Enter a Hall ID to Confirm Receiving Deposit");
         System.out.println("Enter 0 to go back");
-        int hallId;        
+        int hallId;
         while(true)
         {
             try{
@@ -791,7 +791,7 @@ public void displayDeleteHallPage()
                 break;
         }
     }
-    
+
     public void displayAcceptQuotationPage(int hallId, int quotId)
     {
         System.out.print('\u000C');
@@ -799,7 +799,7 @@ public void displayDeleteHallPage()
         System.out.println("Event Management System - Confirm Bookings");
         System.out.printf("%s\n",lineBreak);
         Scanner sc = new Scanner(System.in);
-        
+
         ownerController.displayRepliedQuotation(ownerController.searchRepliedQuotation(hallId, quotId));
         System.out.println();
         System.out.println("Enter \"Confirm\" to confirm that you have received the deposit");
@@ -841,7 +841,7 @@ public void displayDeleteHallPage()
             }
         }
     }
-    
+
     public void displayBookingsPage()
     {
         System.out.print('\u000C');
@@ -849,7 +849,7 @@ public void displayDeleteHallPage()
         System.out.println("Event Management System - Bookings Page");
         System.out.printf("%s\n",lineBreak);
         Scanner sc = new Scanner(System.in);
-        
+
         ownerController.displayBookings();
         System.out.println("Enter 0 to go back");
         System.out.println("Enter a hall id to choose a hall");
@@ -887,28 +887,92 @@ public void displayDeleteHallPage()
                 if (ownerController.searchBooking(hallId, bookingId) == null)
                 {
                     System.out.println("Sorry, we can't find the booking you requested. Please try again");
-                    
+
                     try{
                     TimeUnit.SECONDS.sleep(2);
                     } catch(InterruptedException ie){
                         Thread.currentThread().interrupt();
                     }
-                    
+
                     displayBookingsPage();
                 }
                 else
                 {
-                    displayOwnerPage();
+                    displayBookingPage(hallId, bookingId);
                 }
                 break;
         }
     }
-    
-    public void displayBookingPage()
+
+    public void displayBookingPage(int hallId,int bookingId)
     {
-        
+        System.out.print('\u000C');
+        System.out.printf("%s\n",lineBreak);
+        System.out.println("Event Management System - Booking Detail Page");
+        System.out.printf("%s\n",lineBreak);
+        Scanner sc = new Scanner(System.in);
+
+        ownerController.displayBookingDetails(ownerController.searchBooking(hallId, bookingId));
+
+        if (ownerController.searchBooking(hallId, bookingId).isUpdated())
+        {
+            System.out.println("Enter 0 to go back");
+            System.out.println("Enter \"Accept\" to accept update");
+            System.out.println("Enter \"Reject\" to reject update");
+
+            String choice = sc.nextLine();
+            while (!choice.equalsIgnoreCase("0") &&
+                   !choice.equalsIgnoreCase("Accept") &&
+                   !choice.equalsIgnoreCase("Reject"))
+            {
+                System.out.println("Invalid Input");
+                System.out.println("Enter 0 to go back");
+                System.out.println("Enter \"Accept\" to accept update");
+                System.out.println("Enter \"Reject\" to reject update");
+            }
+
+            switch(choice)
+            {
+                case "0":
+                    displayBookingsPage();
+                    break;
+                case "accept":
+                    ownerController.acceptUpdate(ownerController.searchBooking(hallId, bookingId));
+                    System.out.println("Update has been successfully updated!");
+                    try{
+                    TimeUnit.SECONDS.sleep(2);
+                    } catch(InterruptedException ie){
+                        Thread.currentThread().interrupt();
+                    }
+                    displayBookingPage(hallId, bookingId);
+                    break;
+                case "reject":
+                    ownerController.rejectUpdate(ownerController.searchBooking(hallId,bookingId));
+                    System.out.println("Update has been successfully rejected!");
+                    try{
+                    TimeUnit.SECONDS.sleep(2);
+                    } catch(InterruptedException ie){
+                        Thread.currentThread().interrupt();
+                    }
+                    displayBookingPage(hallId, bookingId);
+
+                    break;
+            }
+        }
+        else
+        {
+            System.out.println("Enter 0 to go back");
+            String choice = sc.nextLine();
+            while (!choice.equalsIgnoreCase("0"))
+            {
+                System.out.println("Enter 0 to go back");
+            }
+            displayBookingsPage();
+        }
+
+
     }
-    
+
     public OwnerController getOwnerController()
     {
         return this.ownerController;

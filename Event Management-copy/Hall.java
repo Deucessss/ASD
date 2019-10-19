@@ -26,6 +26,7 @@ public class Hall
     private ArrayList<Quotation> pastQuotations = new ArrayList<Quotation>();
     private ArrayList<Booking> bookings = new ArrayList<Booking>();
     private ArrayList<Booking> pastBookings = new ArrayList<Booking>();
+    private float averageRating;
     // private OwnerDiscount ownerDiscount;
     // private AdminDiscount adminDiscount;
 
@@ -49,117 +50,138 @@ public class Hall
         this.price =price;
         this.hallCapacity = hallCapacity;
     }
-    
+
+    public float getAverageRating()
+    {
+        return this.averageRating;
+    }
+
+    public void calculateAverageRating()
+    {
+        int count = 0;
+        int rating = 0;
+        for (Booking booking : pastBookings)
+        {
+            if (booking.isRated())
+            {
+                count ++;
+                rating += booking.getRating().getHallRating();
+            }
+        }
+
+        this.averageRating = rating/count;
+    }
+
     public ArrayList<Booking> getBookings()
     {
         return this.bookings;
     }
-    
+
     public ArrayList<Booking> getPastBookings()
     {
         return this.pastBookings;
     }
-    
+
     public int getId()
     {
         return this.id;
     }
-    
+
     public void setId(int id)
     {
         this.id = id;
     }
-    
+
     public String getName()
     {
         return this.name;
     }
-    
+
     public void setName(String newName)
     {
         this.name = newName;
     }
-    
+
     public String getAddress()
     {
         return this.address;
     }
-    
+
     public void setAddress(String newAddress)
     {
         this.address = newAddress;
     }
-    
+
     // public boolean getAvailabity()
     // {
         // return this.availability;
     // }
-    
+
     // public void setAvailability(boolean availability)
     // {
         // this.availability = availability;
     // }
-    
+
     public String getContact()
     {
         return this.contact;
     }
-    
+
     public void setContact(String newContact)
     {
         this.contact = newContact;
     }
-    
+
     public String getDescription()
     {
         return this.description;
     }
-    
+
     public void setDescription(String newDescription)
     {
         this.description = newDescription;
     }
-    
+
     public float getHallDiscount()
     {
         return this.hallDiscount;
     }
-    
+
     public void setHallDiscount(float hallDiscount)
     {
         this.hallDiscount = hallDiscount;
     }
-    
+
     public boolean getPhotographyService()
     {
         return this.photographyService;
     }
-    
+
     public void setPhotographyService(boolean photographyService)
     {
         this.photographyService = photographyService;
     }
-    
+
     public boolean getCateringService()
     {
         return this.cateringService;
     }
-    
+
     public void setCateringService(boolean cateringService)
     {
         this.cateringService = cateringService;
     }
-    
+
     public boolean getDecorationService()
     {
         return this.decorationService;
     }
-    
+
     public void setDecorationService(boolean decorationService)
     {
         this.decorationService = decorationService;
     }
-    
+
     public int getHallRating() {
         return hallRating;
     }
@@ -167,32 +189,32 @@ public class Hall
     public void setHallRating(int hallRating) {
         this.hallRating = hallRating;
     }
-    
+
     public int getHallCapacity()
     {
         return hallCapacity;
     }
-    
+
     public void setHallCapacity(int hallCapacity)
     {
         this.hallCapacity = hallCapacity;
     }
-    
+
     public float getPrice()
     {
         return this.price;
     }
-    
+
     public void setPrice(float price)
     {
         this.price = price;
     }
-    
+
     public ArrayList<Quotation> getQuotations()
     {
         return this.quotations;
     }
-    
+
     public ArrayList<Quotation> getPastQuotations()
     {
         return this.pastQuotations;

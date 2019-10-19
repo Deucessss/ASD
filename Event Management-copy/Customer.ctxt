@@ -1,10 +1,8 @@
 #BlueJ class context
 comment0.target=Customer
-comment1.params=firstName\ lastName\ email\ password\ contact\ address\ concession\ answer1\ answer2\ answer3
-comment1.target=Customer(java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String)
+comment1.params=firstName\ lastName\ email\ password\ contact\ address\ concession\ answer1\ answer2
+comment1.target=Customer(java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String)
 comment1.text=\n\ Constructor\ for\ objects\ of\ class\ Customer\n
-comment10.params=
-comment10.target=java.util.ArrayList\ getQuotations()
 comment2.params=
 comment2.target=java.util.ArrayList\ getBookings()
 comment3.params=
@@ -18,7 +16,5 @@ comment6.target=java.lang.String\ getAnswer2()
 comment7.params=answer2
 comment7.target=void\ setAnswer2(java.lang.String)
 comment8.params=
-comment8.target=java.lang.String\ getAnswer3()
-comment9.params=answer3
-comment9.target=void\ setAnswer3(java.lang.String)
-numComments=11
+comment8.target=java.util.ArrayList\ getQuotations()
+numComments=9
