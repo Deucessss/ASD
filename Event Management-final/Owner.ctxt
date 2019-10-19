@@ -1,0 +1,11 @@
+#BlueJ class context
+comment0.target=Owner
+comment1.params=firstName\ lastName\ email\ password\ contact\ address
+comment1.target=Owner(java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String)
+comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ Owner\r\n
+comment2.params=
+comment2.target=java.util.ArrayList\ getHalls()
+comment2.text=\r\n\ The\ below\ methods\ are\ getters\ and\ setters\ oh\ the\ Owner\ attributes\r\n
+comment3.params=halls
+comment3.target=void\ setHall(java.util.ArrayList)
+numComments=4
