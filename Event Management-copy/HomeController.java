@@ -183,7 +183,41 @@ public class HomeController
         String catering = (result.getCateringService() ? "yes" : "no");
         String photography = (result.getPhotographyService() ? "yes" : "no");
         String decoration = (result.getDecorationService() ? "yes" : "no");
+        float averageCateringRating = 0;
+        float averagePhotographyRating = 0;
+        float averageDecorationRating = 0;
+        int count = 0;
+        for (Booking booking : result.getPastBookings())
+        {
+            if (booking.isRated())
+            {
+                count ++;
+                if (result.getCateringService())
+                {
+                    averageCateringRating += booking.getRating().getCateringRating();
+                }
+                if (result.getPhotographyService())
+                {
+                    averagePhotographyRating += booking.getRating().getPhotographyRating();
+                }
+                if (result.getDecorationService())
+                {
+                    averageDecorationRating += booking.getRating().getDecorationRating();
+                }
+            }
+        }
+        if (count != 0 )
+        {
+            averageCateringRating = averageCateringRating/count;
+            averagePhotographyRating  = averagePhotographyRating/count;
+            averageDecorationRating = averageDecorationRating/count;
+        }
+        
 
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-20s|  %-50s|\n", "Photography Rating", averagePhotographyRating);
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-20s|  %-50s|\n", "Decoration Rating", averageDecorationRating);
         System.out.println("-----------------------------------------------------------------------------");
         System.out.format("|  %-20s|  %-50s|\n", "Hall Name", name);
         System.out.println("-----------------------------------------------------------------------------");
@@ -194,11 +228,26 @@ public class HomeController
         System.out.format("|  %-20s|  %-50s%-50s|\n", "Description", des, "|");
         System.out.println("-----------------------------------------------------------------------------");
         System.out.format("|  %-20s|  %-50s|\n", "Catering Serivce", catering);
+        if (result.getCateringService())
+        {
+            System.out.println("-----------------------------------------------------------------------------");
+            System.out.format("|  %-20s|  %-50s|\n", "Catering Rating", averageCateringRating + "("+count+")");
+        }
         System.out.println("-----------------------------------------------------------------------------");
         System.out.format("|  %-20s|  %-50s|\n", "Photography Serivce", photography);
         System.out.println("-----------------------------------------------------------------------------");
+        if (result.getPhotographyService())
+        {
+            System.out.format("|  %-20s|  %-50s|\n", "Photography Rating", averagePhotographyRating + "("+count+")");
+            System.out.println("-----------------------------------------------------------------------------");
+        }
         System.out.format("|  %-20s|  %-50s|\n", "Decoration Serivce", decoration);
         System.out.println("-----------------------------------------------------------------------------");
+        if (result.getDecorationService())
+        {
+            System.out.format("|  %-20s|  %-50s|\n", "Decoration Rating", averageDecorationRating + "("+count+")");
+            System.out.println("-----------------------------------------------------------------------------");
+        }
         if (result.getBookings().size() == 0)
         {
             System.out.format("|  %-20s|  %-50s|\n", "Availability", "This hall is Available");
