@@ -56,7 +56,7 @@ public class CustomerInterface
                     break;
                 }
             }catch (java.util.InputMismatchException e){
-                sc.nextLine();
+                sc.nextLine().trim();
                 System.out.println("Invalid option. Please re-enter a number between 1 and 9");
                 continue;
             }
@@ -103,13 +103,13 @@ public class CustomerInterface
         customerController.viewAllHalls();
         System.out.println("Enter hall name to view hall details");
         System.out.println("Enter 0 to go back");
-        String hallName = sc.nextLine();
+        String hallName = sc.nextLine().trim();
 
         while(!customerController.checkHallExist(hallName) && !hallName.equalsIgnoreCase("0"))
         {
             System.out.println("Sorry, there is no hall named "+ hallName);
             System.out.println("Please re-enter a hall name:");
-            hallName = sc.nextLine();
+            hallName = sc.nextLine().trim();
         }
         switch(hallName)
         {
@@ -134,13 +134,13 @@ public class CustomerInterface
         Scanner sc = new Scanner(System.in);
         System.out.println("Please enter a hall name to search:");
         System.out.println("Press 0 to go back");
-        String hallName = sc.nextLine();
-        while (!customerController.checkHallExist(hallName))
+        String hallName = sc.nextLine().trim();
+        while (!customerController.checkHallExist(hallName) && !hallName.equalsIgnoreCase("0"))
         {
           System.out.println("Sorry, there is no hall named '" + hallName + "'");
           System.out.println("Enter a hall name to search again");
           System.out.println("Enter 0 to go back to homepage");
-          hallName = sc.nextLine();
+          hallName = sc.nextLine().trim();
         }
         switch (hallName)
         {
@@ -183,7 +183,7 @@ public class CustomerInterface
                     break;
                 }
             }catch (java.util.InputMismatchException e){
-                sc.nextLine();
+                sc.nextLine().trim();
                 System.out.println("Invalid option. Please re-enter a number from 1 to 2");
                 continue;
             }
@@ -225,16 +225,22 @@ public class CustomerInterface
         HomeController.displayHallDetail(hallName);
 
         System.out.println("Enter the occasion for the event:");
-        occasion = sc.nextLine();
+        occasion = sc.nextLine().trim();
         System.out.println("Enter the number of guest that will attend the event:");
         while (true)
         {
             try{
                 guestNum = sc.nextInt();
-                sc.nextLine();
+                sc.nextLine().trim();
                 if (guestNum < 0)
                 {
                     System.out.println("Invalid input. Please enter a number that is greater than 0");
+                    continue;
+                }
+                else if(guestNum>Accounts.searchHall(hallName).getHallCapacity())
+                {
+                    System.out.println("The capacity of this hall is "+Accounts.searchHall(hallName).getHallCapacity());
+                    System.out.println("Pleaes re-enter a guest number:");
                     continue;
                 }
                 else
@@ -242,13 +248,13 @@ public class CustomerInterface
                     break;
                 }
             }catch (java.util.InputMismatchException e){
-                sc.nextLine();
+                sc.nextLine().trim();
                 System.out.println("Invalid input. Please enter a number that is greater than 0");
                 continue;
             }
         }
         System.out.println("Enter the start date for the event(dd/mm/yyyy):");
-        sStartDate = sc.nextLine();
+        sStartDate = sc.nextLine().trim();
         formatter.setLenient(false);
         while(true)
         {
@@ -262,15 +268,15 @@ public class CustomerInterface
                 else
                 {
                     System.out.println("Please Re-Enter a date:");
-                    sStartDate = sc.nextLine();
+                    sStartDate = sc.nextLine().trim();
                     continue;
                 }
 
             } catch (ParseException e){
-                sc.nextLine();
+                sc.nextLine().trim();
                 System.out.println("Invalid date format. Date format must be dd/mm/yyyy");
                 System.out.println("Please re-enter a date according to the format:");
-                sStartDate = sc.nextLine();
+                sStartDate = sc.nextLine().trim();
                 continue;
             }
         }
@@ -280,7 +286,7 @@ public class CustomerInterface
         {
             try{
                 duration = sc.nextInt();
-                sc.nextLine();
+                sc.nextLine().trim();
                 if (duration < 0)
                 {
                     System.out.println("Duration must be greater than 0. Please re-enter:");
@@ -299,11 +305,11 @@ public class CustomerInterface
                     else
                     {
                         System.out.println("Please Re-enter duration:");
-                        sc.nextLine();
+                        sc.nextLine().trim();
                     }
                 }
             }catch (java.util.InputMismatchException e){
-                sc.nextLine();
+                sc.nextLine().trim();
                 System.out.println("Duration must be a number greater than 0. Please re-enter:");
                 continue;
             }
@@ -315,7 +321,7 @@ public class CustomerInterface
         {
             try{
                 budget = sc.nextFloat();
-                sc.nextLine();
+                sc.nextLine().trim();
                 if (budget < 0)
                 {
                     System.out.println("Duration must be a number greater than 0. Please re-enter:");
@@ -326,7 +332,7 @@ public class CustomerInterface
                     break;
                 }
             }catch (java.util.InputMismatchException e){
-                sc.nextLine();
+                sc.nextLine().trim();
                 System.out.println("Duration must be a number greater than 0. Please re-enter:");
                 continue;
             }
@@ -334,11 +340,11 @@ public class CustomerInterface
         if (customerController.serviceProvided(hallName).get(0))
         {
             System.out.println("Do you require catering service for the event?(y/n)");
-            choice = sc.nextLine();
+            choice = sc.nextLine().trim();
             while(!choice.equalsIgnoreCase("y") && !choice.equalsIgnoreCase("n"))
             {
                 System.out.println("Please enter either \"y\" or \"n\" for catering service:");
-                choice = sc.nextLine();
+                choice = sc.nextLine().trim();
             }
             if (choice.equalsIgnoreCase("y"))
             {
@@ -353,11 +359,11 @@ public class CustomerInterface
         if (customerController.serviceProvided(hallName).get(1))
         {
             System.out.println("Do you require photography service for the event?(y/n)");
-            choice = sc.nextLine();
+            choice = sc.nextLine().trim();
             while(!choice.equalsIgnoreCase("y") && !choice.equalsIgnoreCase("n"))
             {
                 System.out.println("Please enter either \"y\" or \"n\" for photography service:");
-                choice = sc.nextLine();
+                choice = sc.nextLine().trim();
             }
             if (choice.equalsIgnoreCase("y"))
             {
@@ -368,11 +374,11 @@ public class CustomerInterface
         if (customerController.serviceProvided(hallName).get(2))
         {
             System.out.println("Do you require decoration service for the event?(y/n)");
-            choice = sc.nextLine();
+            choice = sc.nextLine().trim();
             while(!choice.equalsIgnoreCase("y") && !choice.equalsIgnoreCase("n"))
             {
                 System.out.println("Please enter either \"y\" or \"n\" for decoration service:");
-                choice = sc.nextLine();
+                choice = sc.nextLine().trim();
             }
             if (choice.equalsIgnoreCase("y"))
             {
@@ -426,7 +432,7 @@ public class CustomerInterface
                 quotId = sc.nextInt();
                 break;
             }catch (java.util.InputMismatchException e){
-                sc.nextLine();
+                sc.nextLine().trim();
                 System.out.println("Invalid option. Input must be a number");
                 continue;
             }
@@ -475,12 +481,12 @@ public class CustomerInterface
         System.out.println("Enter y to accept quotation and make a booking");
         //System.out.println("Enter n to decline quotation and and go back");
         System.out.println("Enter 0 to go back");
-        String choice = sc.nextLine();
+        String choice = sc.nextLine().trim();
         while (!choice.equalsIgnoreCase("0") && !choice.equalsIgnoreCase("y"))
         {
             System.out.println("Invalid Option. Please enter either \"y\" to accept quotation and make booking " +
                                                 "or 0 to go back");
-            choice = sc.nextLine();
+            choice = sc.nextLine().trim();
         }
         switch(choice)
         {
@@ -592,10 +598,10 @@ public class CustomerInterface
         {
             try{
                 attribute = sc.nextInt();
-                sc.nextLine();
+                sc.nextLine().trim();
                 break;
             }catch(java.util.InputMismatchException e){
-                sc.nextLine();
+                sc.nextLine().trim();
                 System.out.println("Invalid input."+
                                     " You must enter a number between 0 and 8");
                 System.out.println("Please re-enter:");
@@ -609,7 +615,7 @@ public class CustomerInterface
                 break;
             case 1:
                 System.out.println("Please enter an occasion:");
-                updatedOccasion = sc.nextLine();
+                updatedOccasion = sc.nextLine().trim();
                 if(updatedOccasion.equalsIgnoreCase(customerController.getBookingByIdCust(bookingId)
                                                                       .getOccasion()))
                 {
@@ -635,7 +641,7 @@ public class CustomerInterface
                 {
                     try{
                         updatedGuestNumber = sc.nextInt();
-                        sc.nextLine();
+                        sc.nextLine().trim();
                         if (updatedGuestNumber == customerController.getBookingByIdCust(bookingId)
                                                                     .getGuestNum())
                         {
@@ -650,7 +656,7 @@ public class CustomerInterface
                         }
                         break;
                     }catch(java.util.InputMismatchException e){
-                        sc.nextLine();
+                        sc.nextLine().trim();
                         System.out.println("Please enter a number:");
                         continue;
                     }
@@ -663,74 +669,84 @@ public class CustomerInterface
                 displayBookingPage(bookingId);
                 break;
             case 3:
-                System.out.println("Please enter a start date in the form of dd/mm/yyyy");
-                String sStartDate = sc.nextLine();
-                formatter.setLenient(false);
-                while(true)
+                Date today = new Date();
+                long diff = customerController.getBookingByIdCust(bookingId).getStartDate().getTime() - today.getTime();
+                float days = (diff / (1000*60*60*24));
+                if (days > 2 )
                 {
-                    try
+                    System.out.println("Please enter a start date in the form of dd/mm/yyyy");
+                    String sStartDate = sc.nextLine().trim();
+                    formatter.setLenient(false);
+                    while(true)
                     {
-                        updatedStartDate = formatter.parse(sStartDate);
-                        if (customerController.checkDate(
-                        customerController.getBookingByIdCust(bookingId)
-                                          .getHall().getName(),
-                                           updatedStartDate, bookingId))
+                        try
                         {
-                            System.out.println("Please Enter a duration for the event:");
-                            break;
-                        }
-                        else
-                        {
-                            System.out.println("Please Re-Enter a date:");
-                            sStartDate = sc.nextLine();
-                            continue;
-                        }
-
-                    } catch (ParseException e){
-                        sc.nextLine();
-                        System.out.println("Invalid date format. Date format must be dd/mm/yyyy");
-                        System.out.println("Please re-enter a date according to the format:");
-                        sStartDate = sc.nextLine();
-                        continue;
-                    }
-                }
-                while (true)
-                {
-                    try{
-                        int duration = sc.nextInt();
-                        sc.nextLine();
-                        if (duration < 0)
-                        {
-                            System.out.println("Duration must be greater than 0. Please re-enter:");
-                            continue;
-                        }
-                        else
-                        {
-                            Calendar c = Calendar.getInstance();
-                            c.setTime(updatedStartDate);
-                            c.add(Calendar.DATE, duration);
-                            updatedEndDate = c.getTime();
-                            if (customerController.checkDate(customerController.getBookingByIdCust(bookingId)
+                            updatedStartDate = formatter.parse(sStartDate);
+                            if (customerController.checkDate(
+                            customerController.getBookingByIdCust(bookingId)
                                               .getHall().getName(),
-                                               updatedEndDate, bookingId))
+                                               updatedStartDate, bookingId))
                             {
-                                customerController.updateEventDate(bookingId, updatedStartDate, updatedEndDate);
-                                System.out.println("Request to change the event date has been sent!");
+                                System.out.println("Please Enter a duration for the event:");
+                                break;
                             }
                             else
                             {
-                                System.out.println("Event date is not updated!");
-                                updatedStartDate = null;
-                                updatedEndDate = null;
-                                sc.nextLine();
+                                System.out.println("Please Re-Enter a date:");
+                                sStartDate = sc.nextLine().trim();
+                                continue;
                             }
-                            break;
+
+                        } catch (ParseException e){
+                            sc.nextLine().trim();
+                            System.out.println("Invalid date format. Date format must be dd/mm/yyyy");
+                            System.out.println("Please re-enter a date according to the format:");
+                            sStartDate = sc.nextLine().trim();
+                            continue;
                         }
-                    }catch (java.util.InputMismatchException e){
-                        sc.nextLine();
-                        System.out.println("Duration must be a number greater than 0. Please re-enter:");
-                        continue;
                     }
+                    while (true)
+                    {
+                        try{
+                            int duration = sc.nextInt();
+                            sc.nextLine().trim();
+                            if (duration < 0)
+                            {
+                                System.out.println("Duration must be greater than 0. Please re-enter:");
+                                continue;
+                            }
+                            else
+                            {
+                                Calendar c = Calendar.getInstance();
+                                c.setTime(updatedStartDate);
+                                c.add(Calendar.DATE, duration);
+                                updatedEndDate = c.getTime();
+                                if (customerController.checkDate(customerController.getBookingByIdCust(bookingId)
+                                                  .getHall().getName(),
+                                                   updatedEndDate, bookingId))
+                                {
+                                    customerController.updateEventDate(bookingId, updatedStartDate, updatedEndDate);
+                                    System.out.println("Request to change the event date has been sent!");
+                                }
+                                else
+                                {
+                                    System.out.println("Event date is not updated!");
+                                    updatedStartDate = null;
+                                    updatedEndDate = null;
+                                    sc.nextLine().trim();
+                                }
+                                break;
+                            }
+                        }catch (java.util.InputMismatchException e){
+                            sc.nextLine().trim();
+                            System.out.println("Duration must be a number greater than 0. Please re-enter:");
+                            continue;
+                        }
+                    }
+                }
+                else
+                {
+                    System.out.println("Sorry, you can only update date for event at least 2 days prior to the event!!");
                 }
                 try{
                     TimeUnit.SECONDS.sleep(2);
@@ -744,11 +760,11 @@ public class CustomerInterface
                                      .getHall().getCateringService())
                 {
                     System.out.println("Are you sure that you want to change catering service?(y/n)");
-                    String choice = sc.nextLine();
+                    String choice = sc.nextLine().trim();
                     while(!choice.equalsIgnoreCase("y") && !choice.equalsIgnoreCase("n"))
                     {
                         System.out.println("Please enter either \"y\" or \"n\":");
-                        choice = sc.nextLine();
+                        choice = sc.nextLine().trim();
                     }
                     if (choice.equalsIgnoreCase("y"))
                     {
@@ -776,11 +792,11 @@ public class CustomerInterface
                                      .getHall().getPhotographyService())
                 {
                     System.out.println("Are you sure that you want to change photography service?(y/n)");
-                    String choice = sc.nextLine();
+                    String choice = sc.nextLine().trim();
                     while(!choice.equalsIgnoreCase("y") && !choice.equalsIgnoreCase("n"))
                     {
                         System.out.println("Please enter either \"y\" or \"n\":");
-                        choice = sc.nextLine();
+                        choice = sc.nextLine().trim();
                     }
                     if (choice.equalsIgnoreCase("y"))
                     {
@@ -808,11 +824,11 @@ public class CustomerInterface
                                      .getHall().getDecorationService())
                 {
                     System.out.println("Are you sure that you want to change photography service?(y/n)");
-                    String choice = sc.nextLine();
+                    String choice = sc.nextLine().trim();
                     while(!choice.equalsIgnoreCase("y") && !choice.equalsIgnoreCase("n"))
                     {
                         System.out.println("Please enter either \"y\" or \"n\":");
-                        choice = sc.nextLine();
+                        choice = sc.nextLine().trim();
                     }
                     if (choice.equalsIgnoreCase("y"))
                     {
@@ -906,7 +922,7 @@ public class CustomerInterface
                     break;
                 }
             }catch(java.util.InputMismatchException e){
-                sc.nextLine();
+                sc.nextLine().trim();
                 System.out.println("Invalid input. Please enter a number: ");
                 continue;
             }
@@ -1013,12 +1029,12 @@ public class CustomerInterface
                         break;
                     }
                 }catch(java.util.InputMismatchException e){
-                    sc.nextLine();
+                    sc.nextLine().trim();
                     System.out.println("Invalid Input. Please re-enter either 0 or 1");
                     continue;
                 }
             }
-            sc.nextLine();
+            sc.nextLine().trim();
             switch(choice)
             {
                 case 0:
@@ -1044,7 +1060,7 @@ public class CustomerInterface
                                 }
                             }catch(java.util.InputMismatchException e){
                                 System.out.println("Please Enter a number");
-                                sc.nextLine();
+                                sc.nextLine().trim();
                                 continue;
                             }
                         }
@@ -1068,7 +1084,7 @@ public class CustomerInterface
                                 }
                             }catch(java.util.InputMismatchException e){
                                 System.out.println("Please Enter a number");
-                                sc.nextLine();
+                                sc.nextLine().trim();
                                 continue;
                             }
                         }
@@ -1092,7 +1108,7 @@ public class CustomerInterface
                                 }
                             }catch(java.util.InputMismatchException e){
                                 System.out.println("Please Enter a number");
-                                sc.nextLine();
+                                sc.nextLine().trim();
                                 continue;
                             }
                         }
@@ -1114,7 +1130,7 @@ public class CustomerInterface
                             }
                         }catch(java.util.InputMismatchException e){
                             System.out.println("Please Enter a number");
-                            sc.nextLine();
+                            sc.nextLine().trim();
                             continue;
                         }
                     }
@@ -1149,7 +1165,7 @@ public class CustomerInterface
                     }
                 }catch(java.util.InputMismatchException e){
                     System.out.println("Invalid Input. Enter 0 to go back");
-                    sc.nextLine();
+                    sc.nextLine().trim();
                     continue;
                 }
             }

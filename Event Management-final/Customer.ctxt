@@ -2,10 +2,10 @@
 comment0.target=Customer
 comment1.params=firstName\ lastName\ email\ password\ contact\ address\ concession\ answer1\ answer2
 comment1.target=Customer(java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String)
-comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ Customer\r\n
+comment1.text=\n\ Constructor\ for\ objects\ of\ class\ Customer\n
 comment2.params=
 comment2.target=java.util.ArrayList\ getBookings()
-comment2.text=\r\n\ The\ below\ methods\ are\ getters\ and\ setters\ oh\ the\ Customer\ attributes\r\n
+comment2.text=\n\ The\ below\ methods\ are\ getters\ and\ setters\ oh\ the\ Customer\ attributes\n
 comment3.params=
 comment3.target=java.util.ArrayList\ getPastBookings()
 comment4.params=

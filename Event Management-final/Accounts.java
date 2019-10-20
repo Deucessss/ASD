@@ -157,10 +157,10 @@ public class Accounts
     public static void viewHalls()
     {
         int count = 0;
-        System.out.println("---------------------------------------------------------------------------------------------------------------------------");
-        System.out.printf("| %-10s | %-40s | %-14s | %-9s | %-11s | %-11s | %-6s |\n", "Hall Name","Hall Address",
+        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.printf("| %-20s | %-40s | %-14s | %-9s | %-11s | %-11s | %-6s |\n", "Hall Name","Hall Address",
                           "Contact Number", "Catering", "Photography", "Decoration", "Rating");
-        System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+        System.out.println("-------------------------------------------------------------------------------------------------------------------------------------");
         for (int i = 0; i < owners.size(); i++)
         {
             for (int j = 0; j< owners.get(i).getHalls().size(); j++)
@@ -172,9 +172,18 @@ public class Accounts
                 String photography = (owners.get(i).getHalls().get(j).getPhotographyService() ? "yes" : "no");
                 String decoration = (owners.get(i).getHalls().get(j).getDecorationService() ? "yes" : "no");
                 float averageRating = (owners.get(i).getHalls().get(j).getAverageRating());
-                System.out.format("| %-10s | %-40s | %-14s | %-9s | %-11s | %-11s | %-6.2f |\n", hallName, hallAddress,
-                                    contactNum, catering, photography, decoration, averageRating);
-                System.out.println("---------------------------------------------------------------------------------------------------------------------------");
+                int ratingCount = 0;
+                for (int k = 0; k < owners.get(i).getHalls().get(j).getPastBookings().size(); k++)
+                {
+                    if (owners.get(k).getHalls().get(j).getPastBookings().get(k).isRated())
+                    {
+                        ratingCount ++;
+                    }
+                }
+
+                System.out.format("| %-20s | %-40s | %-14s | %-9s | %-11s | %-11s | %-6s |\n", hallName, hallAddress,
+                                    contactNum, catering, photography, decoration, averageRating+"(" + ratingCount+")");
+                System.out.println("-------------------------------------------------------------------------------------------------------------------------------------");
                 count++;
             }
         }

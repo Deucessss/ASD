@@ -15,7 +15,7 @@ public class AdminInterface
      * Constructor for objects of class AdminInterface
      */
     public AdminInterface()
-    {   
+    {
         this.adminController = new AdminController();// initialise instance variables
     }
 
@@ -28,7 +28,7 @@ public class AdminInterface
         System.out.println("*****************************************************************************************");
         System.out.println("Welcome to the Event Management System");
         System.out.println("*****************************************************************************************");
-        
+
         System.out.println("Please select from the following options:");
         System.out.println("Press 1 to Add Discount");
         System.out.println("Press 2 to Delete Discount");
@@ -46,6 +46,9 @@ public class AdminInterface
         {
             case 5:
                 adminController.logout();
+                break;
+            default:
+                displayAdminPage();
                 break;
         }
     }

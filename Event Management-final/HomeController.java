@@ -210,6 +210,8 @@ public class HomeController
         String catering = (result.getCateringService() ? "yes" : "no");
         String photography = (result.getPhotographyService() ? "yes" : "no");
         String decoration = (result.getDecorationService() ? "yes" : "no");
+        int capacity = result.getHallCapacity();
+        float discount = result.getHallDiscount();
         float averageCateringRating = 0;
         float averagePhotographyRating = 0;
         float averageDecorationRating = 0;
@@ -239,12 +241,7 @@ public class HomeController
             averagePhotographyRating  = averagePhotographyRating/count;
             averageDecorationRating = averageDecorationRating/count;
         }
-        
 
-        System.out.println("-----------------------------------------------------------------------------");
-        System.out.format("|  %-20s|  %-50s|\n", "Photography Rating", averagePhotographyRating);
-        System.out.println("-----------------------------------------------------------------------------");
-        System.out.format("|  %-20s|  %-50s|\n", "Decoration Rating", averageDecorationRating);
         System.out.println("-----------------------------------------------------------------------------");
         System.out.format("|  %-20s|  %-50s|\n", "Hall Name", name);
         System.out.println("-----------------------------------------------------------------------------");
@@ -290,6 +287,11 @@ public class HomeController
             }
         }
         System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-20s|  %-50s|\n", "Capacity", capacity);
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-20s|  %-50s|\n", "Discount", discount+"%");
+        System.out.println("-----------------------------------------------------------------------------");
+
 
     }
 

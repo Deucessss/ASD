@@ -2,8 +2,8 @@
 comment0.target=AdminInterface
 comment1.params=
 comment1.target=AdminInterface()
-comment1.text=\r\n\ Constructor\ for\ objects\ of\ class\ AdminInterface\r\n
+comment1.text=\n\ Constructor\ for\ objects\ of\ class\ AdminInterface\n
 comment2.params=
 comment2.target=void\ displayAdminPage()
-comment2.text=\r\n\ This\ method\ displays\ the\ menu\ for\ the\ admin\r\n
+comment2.text=\n\ This\ method\ displays\ the\ menu\ for\ the\ admin\n
 numComments=3

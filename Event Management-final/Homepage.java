@@ -58,7 +58,7 @@ public class Homepage
                     break;
                 }
             } catch (java.util.InputMismatchException e){
-                sc.nextLine();
+                sc.nextLine().trim();
                 System.out.println("Please choose from 1 to 8");
             }
         }
@@ -66,11 +66,9 @@ public class Homepage
         {
             case 1:
                 displayCustomerRegistrationPage();
-                displayHomepage();
                 break;
             case 2:
                 displayOwnerRegistrationPage();
-                displayHomepage();
                 break;
             case 3: case 4:
                 displayUserLoginPage(choice);
@@ -102,77 +100,78 @@ public class Homepage
         System.out.println("Welcome to the Event Management System - Customer Registration");
         System.out.println("*****************************************************************************************");
         System.out.println("Enter Your Email");
-        String email=sc.nextLine();
+        String email=sc.nextLine().trim();
         while(checkEmailFormat(email) || homeController.checkCustomerEmailExist(email))
         {
-            email=sc.nextLine();
+            email=sc.nextLine().trim();
         }
         System.out.println("Enter the Password");
-        String password=sc.nextLine();
+        String password=sc.nextLine().trim();
         while(password.length() < 6 || password.length()>20)
         {
             System.out.println("Please enter Password between 6 to 20 characters");
-            password=sc.nextLine();
+            password=sc.nextLine().trim();
         }
         System.out.println("Please Enter your Password Again");
-        String confirmPassword=sc.nextLine();
+        String confirmPassword=sc.nextLine().trim();
         while(!confirmPassword.equalsIgnoreCase(password))
         {
             System.out.println("Passsword and Confirm Password does not match. Please re-enter:");
-            confirmPassword = sc.nextLine();
+            confirmPassword = sc.nextLine().trim();
         }
         System.out.println("Enter your First Name");
-        String firstName=sc.nextLine();
+        String firstName=sc.nextLine().trim();
         while(firstName.length()<3 || firstName.length()>25)
         {
             System.out.println("Please enter First Name between 1 to 25 characters");
-            firstName=sc.nextLine();
+            firstName=sc.nextLine().trim();
         }
         System.out.println("Enter your Last Name");
-        String lastName=sc.nextLine();
+        String lastName=sc.nextLine().trim();
         while(lastName.length()<1 || lastName.length()>25)
         {
             System.out.println("Please enter Last Name between 1 to 25 characters");
-            lastName=sc.nextLine();
+            lastName=sc.nextLine().trim();
         }
         System.out.println("Enter Your Contact Number(Optional)");
-        String contact=sc.nextLine();
+        String contact=sc.nextLine().trim();
         while(contact.length() != 0 && contact.length() != 10)
         {
             System.out.println("Contact should be 10 digits. Please re-enter");
-            contact=sc.nextLine();
+            contact=sc.nextLine().trim();
         }
         System.out.println("Enter your address(optional)");
-        String address = sc.nextLine();
+        String address = sc.nextLine().trim();
         while(address.length() > 30)
         {
             System.out.println("Address is too long.Please re-enter:");
-            address = sc.nextLine();
+            address = sc.nextLine().trim();
         }
         System.out.println("Enter your concession(Senior/Veteran/None)");
-        String concession = sc.nextLine();
+        String concession = sc.nextLine().trim();
         while(!concession.equalsIgnoreCase("Senior") && !concession.equalsIgnoreCase("Veteran") && !concession.equalsIgnoreCase("None"))
         {
             System.out.println("Invalid option. Please select from senior, veteran and none");
-            concession = sc.nextLine();
+            concession = sc.nextLine().trim();
         }
         System.out.println("What is your first car?");
-        String answer1 =sc.nextLine();
+        String answer1 =sc.nextLine().trim();
         while(answer1.length()<1)
         {
             System.out.println("Please enter answer between 1 to 25 characters");
-            answer1=sc.nextLine();
+            answer1=sc.nextLine().trim();
         }
         System.out.println("what is your mother maidens name?");
-        String answer2 =sc.nextLine();
+        String answer2 =sc.nextLine().trim();
         while(answer2.length()<1)
         {
             System.out.println("Please enter answer between 1 to 25 characters");
-            answer2=sc.nextLine();
+            answer2=sc.nextLine().trim();
         }
 
         homeController.registerCustomer(firstName, lastName, email, password, contact,
                                          address, concession, answer1, answer2);
+        displayHomepage();
     }
 
     /**
@@ -186,56 +185,57 @@ public class Homepage
         System.out.println("Welcome to the Event Management System - Owner Registration");
         System.out.println("*****************************************************************************************");
         System.out.println("Enter Your Email");
-        String email=sc.nextLine();
+        String email=sc.nextLine().trim();
         while(checkEmailFormat(email) || homeController.checkOwnerEmailExist(email))
         {
-            email=sc.nextLine();
+            email=sc.nextLine().trim();
         }
         System.out.println("Enter the Password");
-        String password=sc.nextLine();
+        String password=sc.nextLine().trim();
         while(password.length() < 6 || password.length()>20)
         {
             System.out.println("Please enter Password between 6 to 20 characters");
-            password=sc.nextLine();
+            password=sc.nextLine().trim();
         }
         System.out.println("Please Enter your Password Again");
-        String confirmPassword=sc.nextLine();
+        String confirmPassword=sc.nextLine().trim();
         while(!confirmPassword.equalsIgnoreCase(password))
         {
             System.out.println("Passsword and Confirm Password does not match. Please re-enter:");
-            confirmPassword = sc.nextLine();
+            confirmPassword = sc.nextLine().trim();
         }
         System.out.println("Enter your First Name");
-        String firstName=sc.nextLine();
+        String firstName=sc.nextLine().trim();
         while(firstName.length()<3 || firstName.length()>25)
         {
             System.out.println("Please enter First Name between 1 to 25 characters");
-            firstName=sc.nextLine();
+            firstName=sc.nextLine().trim();
         }
         System.out.println("Enter your Last Name");
-        String lastName=sc.nextLine();
+        String lastName=sc.nextLine().trim();
         while(lastName.length()<1 || lastName.length()>25)
         {
             System.out.println("Please enter Last Name between 1 to 25 characters");
-            lastName=sc.nextLine();
+            lastName=sc.nextLine().trim();
         }
         System.out.println("Enter Your Contact Number");
-        String contact=sc.nextLine();
+        String contact=sc.nextLine().trim();
         while(contact.length() != 10)
         {
             System.out.println("Contact should be 10 digits. Please re-enter");
-            contact=sc.nextLine();
+            contact=sc.nextLine().trim();
         }
         System.out.println("Enter your address");
-        String address = sc.nextLine();
-        while(address.length() < 5 || address.length() > 30)
+        String address = sc.nextLine().trim();
+        while(address.length() < 5 || address.length() > 40)
         {
-            System.out.println("Invalid address.Please re-enter:");
-            address = sc.nextLine();
+            System.out.println("Length of address must be greater than 5 and less than 40. Please re-enter:");
+            address = sc.nextLine().trim();
         }
 
         homeController.registerOwner(firstName,lastName, email, password,
                                      contact, address);
+        displayHomepage();
     }
 
     /**
@@ -304,7 +304,7 @@ public class Homepage
         Scanner sc = new Scanner(System.in);
         System.out.println("Please enter a hall name to search:");
         System.out.println("Press 0 to go back");
-        String hallName = sc.nextLine();
+        String hallName = sc.nextLine().trim();
 
         switch (hallName)
         {
@@ -331,7 +331,7 @@ public class Homepage
         System.out.println("Sorry, there is hall named '"+hallName+ "'");
         System.out.println("Enter a hall name to search again");
         System.out.println("Press 0 to go back to homepage");
-        String newHallName = sc.nextLine();
+        String newHallName = sc.nextLine().trim();
         switch(newHallName)
         {
             case "0":
@@ -357,9 +357,9 @@ public class Homepage
         homeController.displayHallDetail(hallName);
         System.out.println();
         System.out.println("Please log in to book this hall");
-        System.out.println("Enter 0 to Register");
+        System.out.println("Enter 0 to bo back");
         System.out.println("Enter 1 to Log in");
-        System.out.println("Enter 2 to go back to view hall page");
+        System.out.println("Enter 2 to register");
         int choice;
         while (true)
         {
@@ -374,7 +374,7 @@ public class Homepage
                     break;
                 }
             } catch (java.util.InputMismatchException e){
-                sc.nextLine();
+                sc.nextLine().trim();
                 System.out.println("Please choose from 0 to 2");
                 continue;
             }
@@ -382,13 +382,13 @@ public class Homepage
         switch(choice)
         {
             case 0:
-                displayUserLoginPage(3);
+                displayViewHallPage();
                 break;
             case 1:
-                displayCustomerRegistrationPage();
+                displayUserLoginPage(3);
                 break;
             case 2:
-                displayViewHallPage();
+                displayCustomerRegistrationPage();
                 break;
         }
     }
@@ -407,13 +407,13 @@ public class Homepage
         homeController.viewAllHalls();
         System.out.println("Enter hall name to view hall details");
         System.out.println("Enter 0 to go back");
-        String hallName = sc.nextLine();
+        String hallName = sc.nextLine().trim();
 
         while(!homeController.checkHallExist(hallName) && !hallName.equalsIgnoreCase("0"))
                 {
                     System.out.println("Sorry, there is no hall named "+ hallName);
                     System.out.println("Please re-enter a hall name:");
-                    hallName = sc.nextLine();
+                    hallName = sc.nextLine().trim();
                 }
         switch(hallName)
         {

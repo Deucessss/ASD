@@ -52,7 +52,7 @@ public void displayOwnerPage()
                 break;
             }
         } catch (java.util.InputMismatchException e){
-            sc.nextLine();
+            sc.nextLine().trim();
             System.out.println("Invalid input. Please re-enter a number between 1 and 9");
         }
     }
@@ -100,40 +100,48 @@ public void displayAddHallPage()
     System.out.printf("%s\n",lineBreak);
     Scanner sc = new Scanner(System.in);
     System.out.println("Enter hall name:");
-    String name = sc.nextLine();
-    while(name.length() < 1 || name.length() > 25)
+    String name = sc.nextLine().trim();
+    name = name.trim();
+    while(name.length() < 1 || name.length() > 20)
     {
-        System.out.println("Please re-enter a name between 1 and 25 characters");
-        name = sc.nextLine();
+        System.out.println("Please re-enter a name between 1 and 20 characters");
+        name = sc.nextLine().trim();
+        name = name.trim();
+    }
+    while (ownerController.checkHallNameExist(name))
+    {
+        System.out.println("This hall name has been taken. Please enter a different name:");
+        name = sc.nextLine().trim();
+        name = name.trim();
     }
     System.out.println("Enter the address of the hall:");
-    String address = sc.nextLine();
+    String address = sc.nextLine().trim();
     while(address.length() < 1 || address.length() > 50)
     {
         System.out.println("Please re-enter an address between 1 and 50 characters");
-        address = sc.nextLine();
+        address = sc.nextLine().trim();
     }
     System.out.println("Enter the contact phone number for this hall:");
-    String contact = sc.nextLine();
+    String contact = sc.nextLine().trim();
     while(contact.length() != 10)
     {
         System.out.println("Invalid contact number. Must be 10 digits");
-        contact = sc.nextLine();
+        contact = sc.nextLine().trim();
     }
     System.out.println("Enter the description of the hall:");
-    String description = sc.nextLine();
+    String description = sc.nextLine().trim();
     while(description.length() > 250)
     {
         System.out.println("Description character limit is 250. Please re-enter");
-        description = sc.nextLine();
+        description = sc.nextLine().trim();
     }
     System.out.println("Enter the Photography Serice of the hall (y/n):");
-    String photography = sc.nextLine();
+    String photography = sc.nextLine().trim();
     boolean photographyService;
     while(!(photography.equalsIgnoreCase("y") || photography.equalsIgnoreCase("n")))
     {
      System.out.println("Please re-enter the photography service of the hall(y/n):");
-     photography = sc.nextLine();
+     photography = sc.nextLine().trim();
     }
     if(photography.equalsIgnoreCase("y") )
     {
@@ -144,12 +152,12 @@ public void displayAddHallPage()
         photographyService = false;
     }
     System.out.println("Enter the Catering Serice of the hall (y/n):");
-    String catering = sc.nextLine();
+    String catering = sc.nextLine().trim();
     boolean cateringService;
     while(!(catering.equalsIgnoreCase("y") || catering.equalsIgnoreCase("n")))
     {
      System.out.println("Please re-enter the catering service of the hall(y/n):");
-     catering = sc.nextLine();
+     catering = sc.nextLine().trim();
     }
     if(catering.equalsIgnoreCase("y") )
     {
@@ -161,12 +169,12 @@ public void displayAddHallPage()
     }
 
     System.out.println("Enter the Decoration Serice of the hall(y/n):");
-    String decoration = sc.nextLine();
+    String decoration = sc.nextLine().trim();
     boolean decorationService;
     while(!(decoration.equalsIgnoreCase("y") || decoration.equalsIgnoreCase("n")))
     {
          System.out.println("Please re-enter the decoration service of the hall(y/n):");
-         decoration = sc.nextLine();
+         decoration = sc.nextLine().trim();
     }
     if(decoration.equalsIgnoreCase("y") )
     {
@@ -192,7 +200,7 @@ public void displayAddHallPage()
                 break;
             }
         }catch (java.util.InputMismatchException e){
-            sc.nextLine();
+            sc.nextLine().trim();
             System.out.println("Hall capacity must be a number greater than 50");
             continue;
         }
@@ -206,7 +214,7 @@ public void displayAddHallPage()
             price = sc.nextFloat();
             break;
         }catch(java.util.InputMismatchException e){
-            sc.nextLine();
+            sc.nextLine().trim();
             System.out.println("Price must be a numbers");
             continue;
         }
@@ -228,7 +236,7 @@ public void displayAddHallPage()
                 break;
             }
         }catch(java.util.InputMismatchException e){
-            sc.nextLine();
+            sc.nextLine().trim();
             System.out.println("Hall discount must be a number");
             continue;
         }
@@ -279,7 +287,7 @@ public void displayUpdateHallPage()
                     break;
                 }
             }catch(java.util.InputMismatchException e){
-                sc.nextLine();
+                sc.nextLine().trim();
                 System.out.println("Invalid option. Please choose from 1 and 2");
                 continue;
             }
@@ -314,7 +322,7 @@ public void displayUpdateHallPage()
                     break;
                 }
             }catch(java.util.InputMismatchException e){
-                sc.nextLine();
+                sc.nextLine().trim();
                 System.out.println("Hall number is a number." +
                             "Please re-enter a hall number or go back by entering 0");
                 continue;
@@ -344,52 +352,69 @@ public void displayEditHallPage(int hallNum)
                         " hall");
     System.out.printf("%s\n",lineBreak);
     Scanner sc = new Scanner(System.in);
+    ownerController.printHall(hallNum);
+    System.out.println("Press 0 to go back");
     System.out.println("Press 1 to change hall name");
     System.out.println("Press 2 to change hall address");
     System.out.println("Press 3 to change hall contact");
     System.out.println("Press 4 to change hall description");
-    System.out.println("Press 5 to choose go back");
-    int attribute = sc.nextInt();
+    System.out.println("Press 5 to change Catering service");
+    System.out.println("Press 6 to change Photography service");
+    System.out.println("Press 7 to change Decoration service");
+    System.out.println("Press 8 to change hall capacity");
+    System.out.println("Press 9 to change hall discount");
+
+    int attribute;
     while (true)
     {
         try{
             attribute = sc.nextInt();
-            if (attribute < 1 || attribute > 5)
+            if (attribute < 0 || attribute > 9)
             {
-                System.out.println("Please enter a number from 1 to 5");
+                System.out.println("Please enter a number between 0 and 9");
                 continue;
             }
             else
             {
+                sc.nextLine().trim();
                 break;
             }
         }catch(java.util.InputMismatchException e){
-            sc.nextLine();
+            sc.nextLine().trim();
             System.out.println("Please enter a number from 1 to 5");
             continue;
         }
     }
     switch(attribute)
     {
+        case 0:
+            displayUpdateHallPage();
+            break;
         case 1:
             System.out.printf("Current name of the hall: %s\n", ownerController.getOwner().getHalls().get(hallNum-1).getName());
             System.out.println("Enter a new name:");
-            String newName = sc.next();
-            while(newName.length() < 1 || newName.length() > 25)
+            String newName = sc.nextLine().trim();
+            newName = newName.trim();
+            while(newName.length() < 1 || newName.length() > 20)
             {
-                System.out.println("Please re-enter a name between 1 and 25 characters");
-                newName = sc.next();
+                System.out.println("Please re-enter a name between 1 and 20 characters");
+                newName = sc.nextLine().trim();
+            }
+            while(ownerController.checkHallNameExist(newName))
+            {
+                System.out.println("This name has already been taken. Please enter a different name: ");
+                newName = sc.nextLine().trim();
             }
             ownerController.getOwner().getHalls().get(hallNum-1).setName(newName);
             System.out.println("Name changed successfully");
             break;
         case 2:
             System.out.println("Enter a new address:");
-            String newAddress = sc.next();
+            String newAddress = sc.nextLine().trim();
             while(newAddress.length() < 1 || newAddress.length() > 50)
             {
                 System.out.println("Please re-enter an address between 1 and 50 characters");
-                newAddress = sc.next();
+                newAddress = sc.nextLine().trim();
             }
             ownerController.getOwner().getHalls().get(hallNum-1).setAddress(newAddress);
             break;
@@ -406,20 +431,101 @@ public void displayEditHallPage(int hallNum)
         case 4:
         // !!!keep track of description input !!!
             System.out.println("Enter a new description:");
-            String newDesc = sc.next();
+            String newDesc = sc.nextLine().trim();
             while (newDesc.length() > 250)
             {
                 System.out.println("Description character limit is 250. Please re-enter");
-                newDesc = sc.next();
+                newDesc = sc.nextLine().trim();
             }
+            newDesc = newDesc.replaceAll("(.{50})", String.format("$1|\n|%22s|  ", ""));
             ownerController.getOwner().getHalls().get(hallNum-1).setDescription(newDesc);
             break;
         case 5:
-            displayUpdateHallPage();
+            System.out.println("Enter (y/n) to change catering service");
+            String catering = sc.nextLine().trim();
+            while (!catering.equalsIgnoreCase("y") && !catering.equalsIgnoreCase("n"))
+            {
+                System.out.println("Please enter either \"y\" to change catering service " +
+                "or \"n\" to keep current catering service:");
+                catering = sc.nextLine().trim();
+            }
+            if (catering.equalsIgnoreCase("y"))
+            {
+                ownerController.getOwner().getHalls().get(hallNum-1).setCateringService(!ownerController.getOwner().getHalls().get(hallNum-1).getCateringService());
+            }
+            break;
+        case 6:
+            System.out.println("Enter (y/n) to change photography service");
+            String photography = sc.nextLine().trim();
+            while (!photography.equalsIgnoreCase("y") && !photography.equalsIgnoreCase("n"))
+            {
+                System.out.println("Please enter either \"y\" to change photography service " +
+                "or \"n\" to keep current photography service:");
+                photography = sc.nextLine().trim();
+            }
+            if (photography.equalsIgnoreCase("y"))
+            {
+                ownerController.getOwner().getHalls().get(hallNum-1).setPhotographyService(!ownerController.getOwner().getHalls().get(hallNum-1).getPhotographyService());
+            }
+            break;
+        case 7:
+            System.out.println("Enter (y/n) to change photography service");
+            String decoration = sc.nextLine().trim();
+            while (!decoration.equalsIgnoreCase("y") && !decoration.equalsIgnoreCase("n"))
+            {
+                System.out.println("Please enter either \"y\" to change decoration service " +
+                "or \"n\" to keep current decoration service:");
+                photography = sc.nextLine().trim();
+            }
+            if (decoration.equalsIgnoreCase("y"))
+            {
+                ownerController.getOwner().getHalls().get(hallNum-1).setDecorationService(!ownerController.getOwner().getHalls().get(hallNum-1).getDecorationService());
+            }
+            break;
+        case 8:
+            System.out.println("Enter a new hall capacity:");
+            int newCapacity;
+            while (true)
+            {
+                try{
+                    newCapacity = sc.nextInt();
+                    sc.nextLine().trim();
+                    break;
+                }catch(java.util.InputMismatchException e){
+                    sc.nextLine().trim();
+                    System.out.println("Hall capacity must be a number! Please re-enter a hall capacity:");
+                    continue;
+                }
+            }
+            ownerController.getOwner().getHalls().get(hallNum-1).setHallCapacity(newCapacity);
+            break;
+        case 9:
+            System.out.println("Enter a new hall discount between 0 and 100:");
+            float newDiscount;
+            while (true)
+            {
+                try{
+                    newDiscount = sc.nextFloat();
+                    if (newDiscount < 0 || newDiscount > 100)
+                    {
+                        System.out.println("Hall Discount must be between 0 and 100! Please re-enter:");
+                        continue;
+                    }
+                    else
+                    {
+                        sc.nextLine().trim();
+                        break;
+                    }
+                }catch(java.util.InputMismatchException e){
+                    sc.nextLine().trim();
+                    System.out.println("Hall discount must be a number between 0 and 100. Please re-enter:");
+                    continue;
+                }
+            }
+            ownerController.getOwner().getHalls().get(hallNum-1).setHallDiscount(newDiscount);
             break;
     }
-    System.out.printf("%s\n",lineBreak);
-    if (attribute != 5)
+    if (attribute != 0)
     {
         displayEditHallPage(hallNum);
     }
@@ -454,7 +560,7 @@ public void displayDeleteHallPage()
                     break;
                 }
             }catch(java.util.InputMismatchException e){
-                sc.nextLine();
+                sc.nextLine().trim();
                 System.out.println("Invalid Input. Please enter a number from 1 to 2");
                 continue;
             }
@@ -489,7 +595,7 @@ public void displayDeleteHallPage()
                     break;
                 }
             }catch(java.util.InputMismatchException e){
-                sc.nextLine();
+                sc.nextLine().trim();
                 System.out.println("Invalid input. Please re-enter a hall number or go back by entering 0");
                 continue;
             }
@@ -555,7 +661,7 @@ public void displayDeleteHallPage()
                 hallId = sc.nextInt();
                 break;
             }catch(java.util.InputMismatchException e){
-                sc.nextLine();
+                sc.nextLine().trim();
                 System.out.println("Hall Id must be a number");
                 continue;
             }
@@ -574,7 +680,7 @@ public void displayDeleteHallPage()
                         quotId = sc.nextInt();
                         break;
                     }catch(java.util.InputMismatchException e){
-                        sc.nextLine();
+                        sc.nextLine().trim();
                         System.out.println("Quotation ID must be a number");
                         continue;
                     }
@@ -632,7 +738,7 @@ public void displayDeleteHallPage()
                     break;
                 }
             }catch(java.util.InputMismatchException e){
-                sc.nextLine();
+                sc.nextLine().trim();
                 System.out.println("Input must be either 1 or 2");
                 System.out.println("Please re-enter:");
                 continue;
@@ -674,7 +780,7 @@ public void displayDeleteHallPage()
                     cateringCost = sc.nextFloat();
                     break;
                 }catch(java.util.InputMismatchException e){
-                    sc.nextLine();
+                    sc.nextLine().trim();
                     System.out.println("Cost must be numers. Please re-enter cost for catering");
                     continue;
                 }
@@ -689,7 +795,7 @@ public void displayDeleteHallPage()
                     photographyCost = sc.nextFloat();
                     break;
                 }catch(java.util.InputMismatchException e){
-                    sc.nextLine();
+                    sc.nextLine().trim();
                     System.out.println("Cost must be numers. Please re-enter cost for photography");
                     continue;
                 }
@@ -704,7 +810,7 @@ public void displayDeleteHallPage()
                     decorationCost = sc.nextFloat();
                     break;
                 }catch(java.util.InputMismatchException e){
-                    sc.nextLine();
+                    sc.nextLine().trim();
                     System.out.println("Cost must be numers. Please re-enter cost for decoration");
                     continue;
                 }
@@ -717,7 +823,7 @@ public void displayDeleteHallPage()
                     venueCost = sc.nextFloat();
                     break;
                 }catch(java.util.InputMismatchException e){
-                    sc.nextLine();
+                    sc.nextLine().trim();
                     System.out.println("Cost must be numers. Please re-enter cost for catering");
                     continue;
                 }
@@ -760,7 +866,7 @@ public void displayDeleteHallPage()
                 hallId = sc.nextInt();
                 break;
             }catch(java.util.InputMismatchException e){
-                sc.nextLine();
+                sc.nextLine().trim();
                 System.out.println("Hall Id must be a number");
                 continue;
             }
@@ -779,7 +885,7 @@ public void displayDeleteHallPage()
                         quotId = sc.nextInt();
                         break;
                     }catch(java.util.InputMismatchException e){
-                        sc.nextLine();
+                        sc.nextLine().trim();
                         System.out.println("Quotation ID must be a number");
                         continue;
                     }
@@ -834,7 +940,7 @@ public void displayDeleteHallPage()
         System.out.println("Enter \"Confirm\" to confirm that you have received the deposit");
         System.out.println("Enter \"Reject\" to reject this booking");
         System.out.println("Enter 0 to go back");
-        String choice = sc.nextLine();
+        String choice = sc.nextLine().trim();
         while (true)
         {
             if (choice.equalsIgnoreCase("confirm"))
@@ -866,7 +972,7 @@ public void displayDeleteHallPage()
             {
                 System.out.println("Invalid Input. Please enter \"Confirm\", \"Reject\" or 0");
                 System.out.println("Please Re-enter:");
-                choice = sc.nextLine();
+                choice = sc.nextLine().trim();
             }
         }
     }
@@ -892,7 +998,7 @@ public void displayDeleteHallPage()
                 hallId = sc.nextInt();
                 break;
             }catch(java.util.InputMismatchException e){
-                sc.nextLine();
+                sc.nextLine().trim();
                 System.out.println("Hall id must be a number. Please re-enter a hall id");
                 continue;
             }
@@ -911,7 +1017,7 @@ public void displayDeleteHallPage()
                         bookingId = sc.nextInt();
                         break;
                     }catch(java.util.InputMismatchException e){
-                        sc.nextLine();
+                        sc.nextLine().trim();
                         System.out.println("Booking id must be a number. Please re-enter a booking id");
                         continue;
                     }
@@ -955,7 +1061,7 @@ public void displayDeleteHallPage()
             System.out.println("Enter \"Accept\" to accept update");
             System.out.println("Enter \"Reject\" to reject update");
 
-            String choice = sc.nextLine();
+            String choice = sc.nextLine().trim();
             while (!choice.equalsIgnoreCase("0") &&
                    !choice.equalsIgnoreCase("Accept") &&
                    !choice.equalsIgnoreCase("Reject"))
@@ -997,16 +1103,16 @@ public void displayDeleteHallPage()
         else
         {
             System.out.println("Enter 0 to go back");
-            String choice = sc.nextLine();
+            String choice = sc.nextLine().trim();
             while (!choice.equalsIgnoreCase("0"))
             {
                 System.out.println("Enter 0 to go back");
             }
             displayBookingsPage();
         }
-
-
     }
+
+
 
     /**
     * This method return onwe controller

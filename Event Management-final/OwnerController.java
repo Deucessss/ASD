@@ -11,6 +11,21 @@ public class OwnerController
         // initialise instance variables
     }
 
+    public boolean checkHallNameExist(String hallName)
+    {
+        for (Owner owner : Accounts.getOwners())
+        {
+            for (Hall hall : owner.getHalls())
+            {
+                if (hall.getName().equalsIgnoreCase(hallName))
+                {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     /**
      * This method is used for adding halls.
      */
@@ -31,17 +46,25 @@ public class OwnerController
      */
     public void printHalls()
     {
-        System.out.println("-----------------------------------------------------------------------------");
-        System.out.printf("%-5s %-15s %-25s %-15s %-30s", "id","Hall Name", "Hall Address",
-                          "Contact Number", "Description");
-        System.out.println();
-        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------");
+        System.out.format("| %-2s | %-20s | %-40s | %-14s | %-8s | %-11s | %-10s | %-8s | %-8s |\n", "Id", "Name", "Address",
+                              "Contact Number", "Catering",
+                              "Photography", "Decoration",
+                              "Discount", "Capacity");
+        System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------");
         for (int i = 0; i < this.owner.getHalls().size(); i++)
         {
-            printHall(i);
+            System.out.format("| %-2s | %-20s | %-40s | %-14s | %-8s | %-11s | %-10s | %-8s | %-8s |\n",
+                              i+1, owner.getHalls().get(i).getName(),
+                              owner.getHalls().get(i).getAddress(),
+                              owner.getHalls().get(i).getContact(),
+                              owner.getHalls().get(i).getCateringService() ? "Yes" : "No",
+                              owner.getHalls().get(i).getPhotographyService() ? "Yes" : "No",
+                              owner.getHalls().get(i).getDecorationService() ? "Yes" : "No",
+                              owner.getHalls().get(i).getHallDiscount(),
+                              owner.getHalls().get(i).getHallCapacity());
         }
-        System.out.println();
-        System.out.println("-----------------------------------------------------------------------------");
+        System.out.println("-----------------------------------------------------------------------------------------------------------------------------------------------------");
     }
 
     /**
@@ -49,13 +72,26 @@ public class OwnerController
      */
     public void printHall(int index)
     {
-        String name = this.owner.getHalls().get(index).getName();
-            String address = this.owner.getHalls().get(index).getAddress();
-            String contact = this.owner.getHalls().get(index).getContact();
-            String description = this.owner.getHalls().get(index).getDescription();
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-20s|  %-50s|\n", "Hall Name", owner.getHalls().get(index - 1).getName());
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-20s|  %-50s|\n", "Hall Address", owner.getHalls().get(index - 1).getAddress());
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-20s|  %-50s|\n", "Contact Number", owner.getHalls().get(index - 1).getContact());
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-20s|  %-50s%-50s|\n", "Description", owner.getHalls().get(index - 1).getDescription(), "|");
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-20s|  %-50s|\n", "Catering Serivce", owner.getHalls().get(index - 1).getCateringService() ? "Yes" : "No");
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-20s|  %-50s|\n", "Photography Serivce", owner.getHalls().get(index - 1).getPhotographyService() ? "Yes" : "No");
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-20s|  %-50s|\n", "Decoration Serivce", owner.getHalls().get(index - 1).getDecorationService() ? "Yes" : "No");
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-20s|  %-50s|\n", "Capacity", owner.getHalls().get(index - 1).getHallCapacity());
+        System.out.println("-----------------------------------------------------------------------------");
+        System.out.format("|  %-20s|  %-50s|\n", "Discount", owner.getHalls().get(index - 1).getHallDiscount()+"%");
+        System.out.println("-----------------------------------------------------------------------------");
 
-            System.out.printf("%-5d %-15s %-25s %-15s %-30s",
-                            index+1,name,address,contact,description);
     }
 
     /**
@@ -251,11 +287,24 @@ public class OwnerController
     public void replyQuotation(Quotation quotation, float cateringCost, float photographyCost, float decorationCost,
                                 float venueCost)
     {
+
+        float hallDiscount = 0.01f*(100 - quotation.getHall().getHallDiscount());
+        // apply hall discount
+        float totalAmount = (cateringCost+decorationCost+photographyCost) * hallDiscount;
+        if (quotation.getCustomer().getPastBookings().size() == 0
+            && quotation.getCustomer().getBookings().size() == 0)
+        {
+            // for first booking of each customer, apply 10% discount
+            totalAmount = totalAmount * 0.9f;
+        }
+
+
+
         quotation.setCateringCost(cateringCost);
         quotation.setPhotographyCost(photographyCost);
         quotation.setDecorationCost(decorationCost);
         quotation.setVenueCost(venueCost);
-        quotation.setTotalAmount(cateringCost + decorationCost + photographyCost + venueCost);
+        quotation.setTotalAmount(totalAmount);
         quotation.setDepositAmount(quotation.getTotalAmount()/2);
         quotation.setReplied(true);
 
